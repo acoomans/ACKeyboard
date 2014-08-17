@@ -200,6 +200,8 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     self.deleteButton = [Key keyWithStyle:KeyStyleDark image:image];
     [self.deleteButton setImage:highlightedImage forState:UIControlStateHighlighted];
     [self.deleteButton addTarget:self action:@selector(deleteButtonTapped:) forControlEvents:UIControlEventTouchDown];
+    [self.deleteButton addTarget:self action:@selector(deleteButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
+    [self.deleteButton addTarget:self action:@selector(deleteButtonReleased:) forControlEvents:UIControlEventTouchUpOutside];
     [self.view addSubview:self.deleteButton];
     
     NSLayoutConstraint *deleteButtonRightSideConstraint = [NSLayoutConstraint constraintWithItem:self.deleteButton
@@ -368,14 +370,18 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 - (IBAction)deleteButtonTapped:(id)sender {
     [self deleteBackward];
     
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:kDeleteTimerInterval
+                                                      target:self
+                                                    selector:@selector(deleteTimerFireMethod:)
+                                                    userInfo:nil
+                                                     repeats:YES];
+    self.deleteTimer = timer;
+    
     __weak typeof(self)weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
-        weakSelf.deleteTimer = [NSTimer scheduledTimerWithTimeInterval:kDeleteTimerInterval
-                                                   target:self
-                                                 selector:@selector(deleteTimerFireMethod:)
-                                                 userInfo:nil
-                                                  repeats:YES];
-        [weakSelf.deleteTimer fire];
+        if (timer == self.deleteTimer) {
+            [weakSelf.deleteTimer fire];
+        }
     });
 }
 
@@ -386,6 +392,11 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
         [timer invalidate];
         self.deleteTimer = nil;
     }
+}
+
+- (IBAction)deleteButtonReleased:(id)sender {
+    [self.deleteTimer invalidate];
+    self.deleteTimer = nil;
 }
 
 - (void)deleteBackward {
