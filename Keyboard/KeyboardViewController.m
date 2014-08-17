@@ -348,7 +348,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
                                                                       range:NSMakeRange(0, beforeInput.length)];
     if ([matches count] > 0) {
         [self.textDocumentProxy deleteBackward];
-        [self.textDocumentProxy insertText:@". "];
+        [self.textDocumentProxy insertText:@"! "];
     } else {
         [self.textDocumentProxy insertText:@" "];
     }
