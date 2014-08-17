@@ -12,7 +12,7 @@
 
 
 static CGFloat kKeysEdgeMargin = 2.5;
-static CGFloat kKeysBottonMargin = 3.0;
+static CGFloat kKeysBottomMargin = 3.0;
 static CGFloat kKeysRowMargin = 15.0;
 static NSTimeInterval kDeleteTimerInterval = 0.1;
 
@@ -83,7 +83,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
                                                                                              toItem:self.view
                                                                                           attribute:NSLayoutAttributeBottom
                                                                                          multiplier:1.0
-                                                                                           constant:-kKeysBottonMargin];
+                                                                                           constant:-kKeysBottomMargin];
     [self.view addConstraints:@[nextKeyboardButtonLeftSideConstraint,
                                 nextKeyboardButtonWidthConstraint,
                                 nextKeyboardButtonBottomConstraint,
@@ -117,7 +117,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
                                                                                        toItem:self.view
                                                                                     attribute:NSLayoutAttributeBottom
                                                                                    multiplier:1.0
-                                                                                     constant:-kKeysBottonMargin];
+                                                                                     constant:-kKeysBottomMargin];
     [self.view addConstraints:@[returnButtonWidthConstraint,
                                 returnButtonRightSideConstraint,
                                 returnButtonBottomConstraint,
@@ -151,7 +151,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
                                                                                       toItem:self.view
                                                                                    attribute:NSLayoutAttributeBottom
                                                                                   multiplier:1.0
-                                                                                    constant:-kKeysBottonMargin];
+                                                                                    constant:-kKeysBottomMargin];
     [self.view addConstraints:@[spaceButtonLeftSideConstraint,
                                 spaceButtonRightSideConstraint,
                                 spaceButtonBottomConstraint,
