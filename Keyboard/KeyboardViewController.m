@@ -51,9 +51,9 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     [self addNextKeyboardButton];
     [self addReturnButton];
     [self addSpaceButton];
-    [self addYoButton];
     [self addDeleteButton];
     [self addShiftButton];
+    [self addYoButton];
 }
 
 
@@ -152,9 +152,18 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
                                                                                    attribute:NSLayoutAttributeBottom
                                                                                   multiplier:1.0
                                                                                     constant:-kKeysBottomMargin];
+    
+    NSLayoutConstraint *spaceButtonHeightConstraint = [NSLayoutConstraint constraintWithItem:self.spaceButton
+                                                                                   attribute:NSLayoutAttributeHeight
+                                                                                   relatedBy:NSLayoutRelationEqual
+                                                                                      toItem:self.nextKeyboardButton
+                                                                                   attribute:NSLayoutAttributeHeight
+                                                                                  multiplier:1.0
+                                                                                    constant:0.0];
     [self.view addConstraints:@[spaceButtonLeftSideConstraint,
                                 spaceButtonRightSideConstraint,
                                 spaceButtonBottomConstraint,
+                                spaceButtonHeightConstraint,
                                 ]];
 }
 
@@ -163,33 +172,42 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     [self.yoButton addTarget:self action:@selector(yoButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.yoButton];
     
-    NSLayoutConstraint *yoButtonHorizontalConstraint = [NSLayoutConstraint constraintWithItem:self.yoButton
-                                                                                    attribute:NSLayoutAttributeCenterX
+    NSLayoutConstraint *yoButtonTopConstraint = [NSLayoutConstraint constraintWithItem:self.yoButton
+                                                                              attribute:NSLayoutAttributeTop
+                                                                              relatedBy:NSLayoutRelationEqual
+                                                                                 toItem:self.view
+                                                                              attribute:NSLayoutAttributeTop
+                                                                             multiplier:1.0
+                                                                               constant:12];
+    
+    NSLayoutConstraint *yoButtonLeftConstraint = [NSLayoutConstraint constraintWithItem:self.yoButton
+                                                                                    attribute:NSLayoutAttributeLeft
                                                                                     relatedBy:NSLayoutRelationEqual
-                                                                                       toItem:self.view
-                                                                                    attribute:NSLayoutAttributeCenterX
+                                                                                       toItem:self.shiftButton
+                                                                                    attribute:NSLayoutAttributeRight
                                                                                    multiplier:1.0
-                                                                                     constant:0.0];
+                                                                               constant:11.0];
     
-    NSLayoutConstraint *yoButtonVerticalConstraint = [NSLayoutConstraint constraintWithItem:self.yoButton
-                                                                                  attribute:NSLayoutAttributeCenterY
-                                                                                  relatedBy:NSLayoutRelationEqual
-                                                                                     toItem:self.view
-                                                                                  attribute:NSLayoutAttributeCenterY
-                                                                                 multiplier:1.0
-                                                                                   constant:-22.0];
+    NSLayoutConstraint *yoButtonRightConstraint = [NSLayoutConstraint constraintWithItem:self.yoButton
+                                                                              attribute:NSLayoutAttributeRight
+                                                                              relatedBy:NSLayoutRelationEqual
+                                                                                 toItem:self.deleteButton
+                                                                              attribute:NSLayoutAttributeLeft
+                                                                             multiplier:1.0
+                                                                               constant:-11.0];
     
-    NSLayoutConstraint *yoButtonWidthConstraint = [NSLayoutConstraint constraintWithItem:self.yoButton
-                                                                               attribute:NSLayoutAttributeWidth
-                                                                               relatedBy:NSLayoutRelationEqual
-                                                                                  toItem:nil
-                                                                               attribute:NSLayoutAttributeNotAnAttribute
-                                                                              multiplier:1.0
-                                                                                constant:70.0];
+    NSLayoutConstraint *yoButtonBottomConstraint = [NSLayoutConstraint constraintWithItem:self.yoButton
+                                                                             attribute:NSLayoutAttributeBottom
+                                                                             relatedBy:NSLayoutRelationEqual
+                                                                                toItem:self.spaceButton
+                                                                             attribute:NSLayoutAttributeTop
+                                                                            multiplier:1.0
+                                                                              constant:-kKeysRowMargin];
     
-    [self.view addConstraints:@[yoButtonHorizontalConstraint,
-                                yoButtonVerticalConstraint,
-                                yoButtonWidthConstraint,
+    [self.view addConstraints:@[yoButtonTopConstraint,
+                                yoButtonLeftConstraint,
+                                yoButtonRightConstraint,
+                                yoButtonBottomConstraint,
                                 ]];
 }
 
