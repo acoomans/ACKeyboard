@@ -7,7 +7,8 @@
 //
 
 #import "KeyboardViewController.h"
-#import "UIButton+Key.h"
+#import "Key.h"
+#import "LockKey.h"
 
 
 static CGFloat kKeysEdgeMargin = 2.5;
@@ -17,12 +18,12 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 
 
 @interface KeyboardViewController ()
-@property (nonatomic, strong) UIButton *nextKeyboardButton;
-@property (nonatomic, strong) UIButton *spaceButton;
-@property (nonatomic, strong) UIButton *returnButton;
-@property (nonatomic, strong) UIButton *yoButton;
-@property (nonatomic, strong) UIButton *deleteButton;
-@property (nonatomic, strong) UIButton *shiftButton;
+@property (nonatomic, strong) Key *nextKeyboardButton;
+@property (nonatomic, strong) Key *spaceButton;
+@property (nonatomic, strong) Key *returnButton;
+@property (nonatomic, strong) Key *yoButton;
+@property (nonatomic, strong) Key *deleteButton;
+@property (nonatomic, strong) LockKey *shiftButton;
 @property (nonatomic, strong) NSRegularExpression *endOfSentenceRegularExpression;
 @property (nonatomic, strong) NSTimer *deleteTimer;
 @end
@@ -52,12 +53,12 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     [self addSpaceButton];
     [self addYoButton];
     [self addDeleteButton];
-//    [self addShiftButton];
+    [self addShiftButton];
 }
 
 
 - (void)addNextKeyboardButton {
-    self.nextKeyboardButton = [UIButton buttonWithKeyStyle:UIButtonKeyStyleDark image:[UIImage imageNamed:@"global_portrait"]];
+    self.nextKeyboardButton = [Key keyWithStyle:KeyStyleDark image:[UIImage imageNamed:@"global_portrait"]];
     [self.nextKeyboardButton addTarget:self action:@selector(advanceToNextInputMode) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.nextKeyboardButton];
     NSLayoutConstraint *nextKeyboardButtonLeftSideConstraint = [NSLayoutConstraint constraintWithItem:self.nextKeyboardButton
@@ -90,7 +91,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)addReturnButton {
-    self.returnButton = [UIButton buttonWithKeyStyle:UIButtonKeyStyleDark title:@"return"];
+    self.returnButton = [Key keyWithStyle:KeyStyleDark title:@"return"];
     [self.returnButton addTarget:self action:@selector(returnButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.returnButton];
     
@@ -124,7 +125,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)addSpaceButton {
-    self.spaceButton = [UIButton buttonWithKeyStyle:UIButtonKeyStyleLight title:@"space"];
+    self.spaceButton = [Key keyWithStyle:KeyStyleLight title:@"space"];
     [self.spaceButton addTarget:self action:@selector(spaceButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.spaceButton];
     
@@ -158,7 +159,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)addYoButton {
-    self.yoButton = [UIButton buttonWithKeyStyle:UIButtonKeyStyleLight title:@"yo"];
+    self.yoButton = [Key keyWithStyle:KeyStyleLight title:@"yo"];
     [self.yoButton addTarget:self action:@selector(yoButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.yoButton];
     
@@ -176,7 +177,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
                                                                                      toItem:self.view
                                                                                   attribute:NSLayoutAttributeCenterY
                                                                                  multiplier:1.0
-                                                                                   constant:0.0];
+                                                                                   constant:-22.0];
     
     NSLayoutConstraint *yoButtonWidthConstraint = [NSLayoutConstraint constraintWithItem:self.yoButton
                                                                                attribute:NSLayoutAttributeWidth
@@ -196,7 +197,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     UIImage *image = [UIImage imageNamed:@"delete_portrait"];
     UIImage *highlightedImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
-    self.deleteButton = [UIButton buttonWithKeyStyle:UIButtonKeyStyleDark image:image];
+    self.deleteButton = [Key keyWithStyle:KeyStyleDark image:image];
     [self.deleteButton setImage:highlightedImage forState:UIControlStateHighlighted];
     [self.deleteButton addTarget:self action:@selector(deleteButtonTapped:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.deleteButton];
@@ -231,32 +232,28 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)addShiftButton {
-    
-    UIImage *image = [UIImage imageNamed:@"shift_portrait"];
-    UIImage *highlightedImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
-    UIImage *imageLock = [UIImage imageNamed:@"shift_lock_portrait"];
-    UIImage *highlightedImageLock = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-
-    self.shiftButton = [UIButton buttonWithKeyStyle:UIButtonKeyStyleDark image:image];
-    [self.shiftButton setImage:highlightedImage forState:UIControlStateHighlighted];
+    self.shiftButton = [LockKey keyWithStyle:KeyStyleDark];
     
-    [self.shiftButton setImage:imageLock forState:UIControlStateSelected];
-    [self.shiftButton setImage:highlightedImageLock forState:UIControlStateSelected|UIControlStateHighlighted];
+    self.shiftButton.unlockImage = [UIImage imageNamed:@"shift_portrait"];
+    self.shiftButton.unlockSelectedImage = [self.shiftButton.unlockImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    
+    self.shiftButton.lockImage = [UIImage imageNamed:@"shift_lock_portrait"];
+    self.shiftButton.lockSelectedImage = [self.shiftButton.lockImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
     [self.shiftButton addTarget:self action:@selector(shiftButtonTapped:) forControlEvents:UIControlEventTouchDown];
     [self.shiftButton addTarget:self action:@selector(shiftButtonDoubleTapped:) forControlEvents:UIControlEventTouchDownRepeat];
     [self.view addSubview:self.shiftButton];
     
-    NSLayoutConstraint *deleteButtonRightSideConstraint = [NSLayoutConstraint constraintWithItem:self.deleteButton
-                                                                                       attribute:NSLayoutAttributeRight
+    NSLayoutConstraint *shiftButtonLeftSideConstraint = [NSLayoutConstraint constraintWithItem:self.shiftButton
+                                                                                       attribute:NSLayoutAttributeLeft
                                                                                        relatedBy:NSLayoutRelationEqual
                                                                                           toItem:self.view
-                                                                                       attribute:NSLayoutAttributeRight
+                                                                                       attribute:NSLayoutAttributeLeft
                                                                                       multiplier:1.0
-                                                                                        constant:-kKeysEdgeMargin];
+                                                                                        constant:kKeysEdgeMargin];
     
-    NSLayoutConstraint *deleteButtonWidthConstraint = [NSLayoutConstraint constraintWithItem:self.deleteButton
+    NSLayoutConstraint *shiftButtonWidthConstraint = [NSLayoutConstraint constraintWithItem:self.shiftButton
                                                                                    attribute:NSLayoutAttributeWidth
                                                                                    relatedBy:NSLayoutRelationEqual
                                                                                       toItem:nil
@@ -264,25 +261,18 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
                                                                                   multiplier:1.0
                                                                                     constant:37.0];
     
-    NSLayoutConstraint *deleteButtonBottomConstraint = [NSLayoutConstraint constraintWithItem:self.deleteButton
+    NSLayoutConstraint *shiftButtonBottomConstraint = [NSLayoutConstraint constraintWithItem:self.shiftButton
                                                                                     attribute:NSLayoutAttributeBottom
                                                                                     relatedBy:NSLayoutRelationEqual
-                                                                                       toItem:self.returnButton
+                                                                                       toItem:self.nextKeyboardButton
                                                                                     attribute:NSLayoutAttributeTop
                                                                                    multiplier:1.0
                                                                                      constant:-kKeysRowMargin];
-    [self.view addConstraints:@[deleteButtonRightSideConstraint,
-                                deleteButtonWidthConstraint,
-                                deleteButtonBottomConstraint,
+    [self.view addConstraints:@[shiftButtonLeftSideConstraint,
+                                shiftButtonWidthConstraint,
+                                shiftButtonBottomConstraint,
                                 ]];
 }
-
-
-
-
-
-
-
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -363,7 +353,16 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (IBAction)yoButtonTapped:(id)sender {
-    [self.textDocumentProxy insertText:@"yo"];
+    if (self.shiftButton.isLocked || self.shiftButton.selected) {
+        [self.textDocumentProxy insertText:@"YO"];
+    } else {
+        [self.textDocumentProxy insertText:@"yo"];
+    }
+    
+    if (!self.shiftButton.isLocked) {
+        self.shiftButton.selected = NO;
+    }
+
 }
 
 - (IBAction)deleteButtonTapped:(id)sender {
@@ -390,12 +389,16 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)shiftButtonTapped:(id)sender {
-    
+    if (self.shiftButton.isLocked) {
+        self.shiftButton.selected = NO;
+        self.shiftButton.locked = NO;
+    } else {
+        self.shiftButton.selected = ! self.shiftButton.selected;
+    }
 }
 
 - (void)shiftButtonDoubleTapped:(id)sender {
-    
+    self.shiftButton.locked = ! self.shiftButton.isLocked;
 }
-
 
 @end
