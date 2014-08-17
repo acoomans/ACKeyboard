@@ -15,7 +15,6 @@
 		6C72B93219A03D90007E6205 /* ApplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B93119A03D90007E6205 /* ApplicationTests.m */; };
 		6C72B94319A03DA2007E6205 /* KeyboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B94219A03DA2007E6205 /* KeyboardViewController.m */; };
 		6C72B94619A03DA2007E6205 /* Keyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C72B93D19A03DA2007E6205 /* Keyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		6C72B96119A05BBC007E6205 /* UIButton+Key.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B96019A05BBC007E6205 /* UIButton+Key.m */; };
 		6CE5ED4119A07C8E009EB1FB /* bold_delete_landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE5ED2319A07C8E009EB1FB /* bold_delete_landscape@2x.png */; };
 		6CE5ED4219A07C8E009EB1FB /* bold_delete_landscape_skinny@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE5ED2419A07C8E009EB1FB /* bold_delete_landscape_skinny@2x.png */; };
 		6CE5ED4319A07C8E009EB1FB /* bold_delete_portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE5ED2519A07C8E009EB1FB /* bold_delete_portrait@2x.png */; };
@@ -43,6 +42,9 @@
 		6CE5ED5919A07C8E009EB1FB /* key-dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE5ED3E19A07C8E009EB1FB /* key-dark@2x.png */; };
 		6CE5ED5A19A07C8E009EB1FB /* key-light.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE5ED3F19A07C8E009EB1FB /* key-light.png */; };
 		6CE5ED5B19A07C8E009EB1FB /* key-light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE5ED4019A07C8E009EB1FB /* key-light@2x.png */; };
+		6CE5ED5F19A08A53009EB1FB /* YODarkKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5ED5E19A08A53009EB1FB /* YODarkKey.m */; };
+		6CE5ED6219A08A5D009EB1FB /* YOLightKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5ED6119A08A5D009EB1FB /* YOLightKey.m */; };
+		6CE5ED6519A08B11009EB1FB /* YOKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5ED6419A08B11009EB1FB /* YOKey.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,8 +102,6 @@
 		6C72B94019A03DA2007E6205 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C72B94119A03DA2007E6205 /* KeyboardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyboardViewController.h; sourceTree = "<group>"; };
 		6C72B94219A03DA2007E6205 /* KeyboardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyboardViewController.m; sourceTree = "<group>"; };
-		6C72B95F19A05BBC007E6205 /* UIButton+Key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Key.h"; sourceTree = "<group>"; };
-		6C72B96019A05BBC007E6205 /* UIButton+Key.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Key.m"; sourceTree = "<group>"; };
 		6CE5ED2319A07C8E009EB1FB /* bold_delete_landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bold_delete_landscape@2x.png"; sourceTree = "<group>"; };
 		6CE5ED2419A07C8E009EB1FB /* bold_delete_landscape_skinny@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bold_delete_landscape_skinny@2x.png"; sourceTree = "<group>"; };
 		6CE5ED2519A07C8E009EB1FB /* bold_delete_portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bold_delete_portrait@2x.png"; sourceTree = "<group>"; };
@@ -129,6 +129,12 @@
 		6CE5ED3E19A07C8E009EB1FB /* key-dark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "key-dark@2x.png"; sourceTree = "<group>"; };
 		6CE5ED3F19A07C8E009EB1FB /* key-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "key-light.png"; sourceTree = "<group>"; };
 		6CE5ED4019A07C8E009EB1FB /* key-light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "key-light@2x.png"; sourceTree = "<group>"; };
+		6CE5ED5D19A08A53009EB1FB /* YODarkKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YODarkKey.h; sourceTree = "<group>"; };
+		6CE5ED5E19A08A53009EB1FB /* YODarkKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YODarkKey.m; sourceTree = "<group>"; };
+		6CE5ED6019A08A5D009EB1FB /* YOLightKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YOLightKey.h; sourceTree = "<group>"; };
+		6CE5ED6119A08A5D009EB1FB /* YOLightKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YOLightKey.m; sourceTree = "<group>"; };
+		6CE5ED6319A08B11009EB1FB /* YOKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YOKey.h; sourceTree = "<group>"; };
+		6CE5ED6419A08B11009EB1FB /* YOKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YOKey.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				6C72B95E19A05B68007E6205 /* Categories */,
+				6CE5ED5C19A08A25009EB1FB /* Classes */,
 				6C72B94119A03DA2007E6205 /* KeyboardViewController.h */,
 				6C72B94219A03DA2007E6205 /* KeyboardViewController.m */,
 				6C72B94D19A03E04007E6205 /* Resources */,
@@ -248,8 +255,6 @@
 		6C72B95E19A05B68007E6205 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				6C72B95F19A05BBC007E6205 /* UIButton+Key.h */,
-				6C72B96019A05BBC007E6205 /* UIButton+Key.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -317,6 +322,19 @@
 				6CE5ED4019A07C8E009EB1FB /* key-light@2x.png */,
 			);
 			path = keys;
+			sourceTree = "<group>";
+		};
+		6CE5ED5C19A08A25009EB1FB /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				6CE5ED6319A08B11009EB1FB /* YOKey.h */,
+				6CE5ED6419A08B11009EB1FB /* YOKey.m */,
+				6CE5ED5D19A08A53009EB1FB /* YODarkKey.h */,
+				6CE5ED5E19A08A53009EB1FB /* YODarkKey.m */,
+				6CE5ED6019A08A5D009EB1FB /* YOLightKey.h */,
+				6CE5ED6119A08A5D009EB1FB /* YOLightKey.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -493,8 +511,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CE5ED6219A08A5D009EB1FB /* YOLightKey.m in Sources */,
 				6C72B94319A03DA2007E6205 /* KeyboardViewController.m in Sources */,
-				6C72B96119A05BBC007E6205 /* UIButton+Key.m in Sources */,
+				6CE5ED6519A08B11009EB1FB /* YOKey.m in Sources */,
+				6CE5ED5F19A08A53009EB1FB /* YODarkKey.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
