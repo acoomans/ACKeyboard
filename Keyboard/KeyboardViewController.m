@@ -366,7 +366,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (IBAction)deleteButtonTapped:(id)sender {
-    [self.textDocumentProxy deleteBackward];
+    [self deleteBackward];
     
     __weak typeof(self)weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^(void){
@@ -381,11 +381,24 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 
 - (void)deleteTimerFireMethod:(NSTimer *)timer {
     if (self.deleteButton.highlighted) {
-        [self.textDocumentProxy deleteBackward];
+        [self deleteBackward];
     } else {
         [timer invalidate];
         self.deleteTimer = nil;
     }
+}
+
+- (void)deleteBackward {
+    
+    NSString *beforeInput = self.textDocumentProxy.documentContextBeforeInput;
+    
+    if (beforeInput.length > 1) {
+        NSString *coupleOfLastCharacters = [beforeInput substringWithRange:NSMakeRange(beforeInput.length-2, 2)];
+        if( [@"yo" caseInsensitiveCompare:coupleOfLastCharacters] == NSOrderedSame ) {
+            [self.textDocumentProxy deleteBackward];
+        }
+    }
+    [self.textDocumentProxy deleteBackward];
 }
 
 - (void)shiftButtonTapped:(id)sender {
