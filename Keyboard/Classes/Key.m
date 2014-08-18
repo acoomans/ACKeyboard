@@ -38,8 +38,8 @@ UIEdgeInsets kKeyEdgeInsets = {6, 6, 6, 6};
     if (self) {
         [self setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self setTintColor:[UIColor blackColor]];
-        [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.titleLabel setFont:[UIFont systemFontOfSize:16.0]];
+        [self setAdjustsImageWhenDisabled:NO];
         [self setKeyStyle:keyStyle];
     }
     return self;
@@ -55,6 +55,7 @@ UIEdgeInsets kKeyEdgeInsets = {6, 6, 6, 6};
             [self setBackgroundImage:[[UIImage imageNamed:@"key-dark"] resizableImageWithCapInsets:kKeyEdgeInsets
                                                                                         resizingMode:UIImageResizingModeTile]
                               forState:UIControlStateHighlighted];
+            [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             break;
         }
         case KeyStyleDark: {
@@ -64,12 +65,31 @@ UIEdgeInsets kKeyEdgeInsets = {6, 6, 6, 6};
             [self setBackgroundImage:[[UIImage imageNamed:@"key-light"] resizableImageWithCapInsets:kKeyEdgeInsets
                                                                                          resizingMode:UIImageResizingModeTile]
                               forState:UIControlStateHighlighted];
+            [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            break;
+        }
+        case KeyStyleBlue: {
+            [self setBackgroundImage:[[UIImage imageNamed:@"key-blue"] resizableImageWithCapInsets:kKeyEdgeInsets
+                                                                                      resizingMode:UIImageResizingModeTile]
+                            forState:UIControlStateNormal];
+            [self setBackgroundImage:[[UIImage imageNamed:@"key-light"] resizableImageWithCapInsets:kKeyEdgeInsets
+                                                                                       resizingMode:UIImageResizingModeTile]
+                            forState:UIControlStateHighlighted];
+            [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             break;
         }
         default:
             break;
     }
-
+    
+    [self setBackgroundImage:[[UIImage imageNamed:@"key-dark"] resizableImageWithCapInsets:kKeyEdgeInsets
+                                                                              resizingMode:UIImageResizingModeTile]
+                    forState:UIControlStateDisabled];
+    [self setTitleColor:[UIColor colorWithRed:124/255.0
+                                        green:129/255.0
+                                         blue:137/255.0
+                                        alpha:1.0]
+               forState:UIControlStateDisabled];
 }
 
 

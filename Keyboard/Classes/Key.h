@@ -11,6 +11,7 @@
 typedef NS_ENUM(NSInteger, KeyStyle) {
     KeyStyleLight,
     KeyStyleDark,
+    KeyStyleBlue,
 };
 
 extern UIEdgeInsets kKeyEdgeInsets;

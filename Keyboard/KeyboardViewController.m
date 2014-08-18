@@ -294,6 +294,9 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     [super didReceiveMemoryWarning];
 }
 
+
+#pragma mark - properties
+
 - (NSRegularExpression*)endOfSentenceRegularExpression {
     if (!_endOfSentenceRegularExpression) {
         NSError* error = nil;
@@ -316,13 +319,17 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)textDidChange:(id<UITextInput>)textInput {
-    UIColor *textColor = nil;
-    if (self.textDocumentProxy.keyboardAppearance == UIKeyboardAppearanceDark) {
-        textColor = [UIColor whiteColor];
-    } else {
-        textColor = [UIColor blackColor];
-    }
-    [self.nextKeyboardButton setTitleColor:textColor forState:UIControlStateNormal];
+
+    [self updateReturnButtonStyle];
+    [self updateReturnButtonEnabled];
+    
+//    UIColor *textColor = nil;
+//    if (self.textDocumentProxy.keyboardAppearance == UIKeyboardAppearanceDark) {
+//        textColor = [UIColor whiteColor];
+//    } else {
+//        textColor = [UIColor blackColor];
+//    }
+//    [self.nextKeyboardButton setTitleColor:textColor forState:UIControlStateNormal];
 }
 
 - (void)selectionWillChange:(id<UITextInput>)textInput {
@@ -330,13 +337,99 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)selectionDidChange:(id<UITextInput>)textInput {
+    
+}
+
+#pragma mark - Keys style
+
+- (void)updateReturnButtonStyle {
+    
+    switch (self.textDocumentProxy.returnKeyType) {
+        case UIReturnKeyDefault:
+            [self.returnButton setTitle:@"return" forState:UIControlStateNormal];
+            break;
+        case UIReturnKeyDone:
+            [self.returnButton setTitle:@"Done" forState:UIControlStateNormal];
+            break;
+        case UIReturnKeyEmergencyCall:
+            [self.returnButton setTitle:@"Emergency Call" forState:UIControlStateNormal];
+            break;
+        case UIReturnKeyGo:
+            [self.returnButton setTitle:@"Go" forState:UIControlStateNormal];
+            break;
+        case UIReturnKeyGoogle:
+            [self.returnButton setTitle:@"Search" forState:UIControlStateNormal];
+            break;
+        case UIReturnKeyJoin:
+            [self.returnButton setTitle:@"Join" forState:UIControlStateNormal];
+            break;
+        case UIReturnKeyNext:
+            [self.returnButton setTitle:@"Next" forState:UIControlStateNormal];
+            break;
+        case UIReturnKeyRoute:
+            [self.returnButton setTitle:@"Route" forState:UIControlStateNormal];
+            break;
+        case UIReturnKeySearch:
+            [self.returnButton setTitle:@"Search" forState:UIControlStateNormal];
+            break;
+        case UIReturnKeySend:
+            [self.returnButton setTitle:@"Send" forState:UIControlStateNormal];
+            break;
+        case UIReturnKeyYahoo:
+            [self.returnButton setTitle:@"Search" forState:UIControlStateNormal];
+            break;
+        default:;
+    }
+    
+    switch (self.textDocumentProxy.returnKeyType) {            
+        case UIReturnKeyDefault:
+        case UIReturnKeyNext:
+            [self.returnButton setKeyStyle:KeyStyleDark];
+            break;
+        default:
+            [self.returnButton setKeyStyle:KeyStyleBlue];
+            break;
+    }
+}
+
+- (void)updateReturnButtonEnabled {
+    if (self.textDocumentProxy.enablesReturnKeyAutomatically &&
+        self.textDocumentProxy.documentContextBeforeInput.length == 0 &&
+        self.textDocumentProxy.documentContextAfterInput.length == 0) {
+        
+        self.returnButton.enabled = NO;
+    } else {
+        self.returnButton.enabled = YES;
+    }
+}
+
+
+#pragma mark - Text actions
+
+- (void)deleteBackward {
+    
+    NSString *beforeInput = self.textDocumentProxy.documentContextBeforeInput;
+    
+    if (beforeInput.length > 1) {
+        NSString *coupleOfLastCharacters = [beforeInput substringWithRange:NSMakeRange(beforeInput.length-2, 2)];
+        if( [@"yo" caseInsensitiveCompare:coupleOfLastCharacters] == NSOrderedSame ) {
+            [self.textDocumentProxy deleteBackward];
+        }
+    }
+    [self.textDocumentProxy deleteBackward];
+    [self updateReturnButtonEnabled];
+}
+
+- (void)insertText:(NSString*)text {
+    [self.textDocumentProxy insertText:text];
+    [self updateReturnButtonEnabled];
 }
 
 
 #pragma mark - Keys actions
 
 - (IBAction)returnButtonTapped:(id)sender {
-    [self.textDocumentProxy insertText:@"\n"];
+    [self insertText:@"\n"];
 }
 
 - (IBAction)spaceButtonTapped:(id)sender {
@@ -348,17 +441,17 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
                                                                       range:NSMakeRange(0, beforeInput.length)];
     if ([matches count] > 0) {
         [self.textDocumentProxy deleteBackward];
-        [self.textDocumentProxy insertText:@"! "];
+        [self insertText:@"! "];
     } else {
-        [self.textDocumentProxy insertText:@" "];
+        [self insertText:@" "];
     }
 }
 
 - (IBAction)yoButtonTapped:(id)sender {
     if (self.shiftButton.isLocked || self.shiftButton.selected) {
-        [self.textDocumentProxy insertText:@"YO"];
+        [self insertText:@"YO"];
     } else {
-        [self.textDocumentProxy insertText:@"yo"];
+        [self insertText:@"yo"];
     }
     
     if (!self.shiftButton.isLocked) {
@@ -397,19 +490,6 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 - (IBAction)deleteButtonReleased:(id)sender {
     [self.deleteTimer invalidate];
     self.deleteTimer = nil;
-}
-
-- (void)deleteBackward {
-    
-    NSString *beforeInput = self.textDocumentProxy.documentContextBeforeInput;
-    
-    if (beforeInput.length > 1) {
-        NSString *coupleOfLastCharacters = [beforeInput substringWithRange:NSMakeRange(beforeInput.length-2, 2)];
-        if( [@"yo" caseInsensitiveCompare:coupleOfLastCharacters] == NSOrderedSame ) {
-            [self.textDocumentProxy deleteBackward];
-        }
-    }
-    [self.textDocumentProxy deleteBackward];
 }
 
 - (void)shiftButtonTapped:(id)sender {
