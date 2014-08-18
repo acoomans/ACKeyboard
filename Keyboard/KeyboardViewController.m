@@ -18,13 +18,18 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 
 
 @interface KeyboardViewController ()
+
 @property (nonatomic, strong) Key *nextKeyboardButton;
 @property (nonatomic, strong) Key *spaceButton;
 @property (nonatomic, strong) Key *returnButton;
 @property (nonatomic, strong) Key *yoButton;
 @property (nonatomic, strong) Key *deleteButton;
 @property (nonatomic, strong) LockKey *shiftButton;
+
 @property (nonatomic, strong) NSRegularExpression *endOfSentenceRegularExpression;
+@property (nonatomic, strong) NSRegularExpression *beginningOfSentenceRegularExpression;
+@property (nonatomic, strong) NSRegularExpression *beginningOfWordRegularExpression;
+
 @property (nonatomic, strong) NSTimer *deleteTimer;
 @end
 
@@ -300,7 +305,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 - (NSRegularExpression*)endOfSentenceRegularExpression {
     if (!_endOfSentenceRegularExpression) {
         NSError* error = nil;
-        _endOfSentenceRegularExpression = [NSRegularExpression regularExpressionWithPattern:@"[a-z] \\z"
+        _endOfSentenceRegularExpression = [NSRegularExpression regularExpressionWithPattern:@"[a-z0-9] \\z"
                                                                                     options:NSRegularExpressionCaseInsensitive
                                                                                       error:&error];
         
@@ -309,6 +314,34 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
         }
     }
     return _endOfSentenceRegularExpression;
+}
+
+- (NSRegularExpression*)beginningOfSentenceRegularExpression {
+    if (!_beginningOfSentenceRegularExpression) {
+        NSError* error = nil;
+        _beginningOfSentenceRegularExpression = [NSRegularExpression regularExpressionWithPattern:@"!\\s+\\z"
+                                                                                    options:0
+                                                                                      error:&error];
+        
+        if (!_beginningOfSentenceRegularExpression) {
+            NSLog(@"cannot create regular expression: %@", [error description]);
+        }
+    }
+    return _beginningOfSentenceRegularExpression;
+}
+
+- (NSRegularExpression*)beginningOfWordRegularExpression {
+    if (!_beginningOfWordRegularExpression) {
+        NSError* error = nil;
+        _beginningOfWordRegularExpression = [NSRegularExpression regularExpressionWithPattern:@"\\s+\\z"
+                                                                                    options:NSRegularExpressionCaseInsensitive
+                                                                                      error:&error];
+        
+        if (!_beginningOfWordRegularExpression) {
+            NSLog(@"cannot create regular expression: %@", [error description]);
+        }
+    }
+    return _beginningOfWordRegularExpression;
 }
 
 
@@ -322,6 +355,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 
     [self updateReturnButtonStyle];
     [self updateReturnButtonEnabled];
+    [self updateShiftButtonState];
     
 //    UIColor *textColor = nil;
 //    if (self.textDocumentProxy.keyboardAppearance == UIKeyboardAppearanceDark) {
@@ -403,6 +437,50 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     }
 }
 
+- (void)updateShiftButtonState {
+    if (self.shiftButton.isLocked) {
+        return;
+    }
+    
+    BOOL selected = NO;
+    
+    NSString *beforeInput = self.textDocumentProxy.documentContextBeforeInput;
+    
+    switch (self.textDocumentProxy.autocapitalizationType) {
+            
+        case UITextAutocapitalizationTypeAllCharacters: {
+            selected = YES;
+            break;
+        }
+            
+        case UITextAutocapitalizationTypeSentences: {
+            if (beforeInput.length == 0 ||
+                [[self.beginningOfSentenceRegularExpression matchesInString:beforeInput
+                                                                    options:0
+                                                                      range:NSMakeRange(0, beforeInput.length)] count]) {
+                selected = YES;
+            }
+            break;
+        }
+            
+        case UITextAutocapitalizationTypeWords: {
+            if (beforeInput.length == 0 ||
+                [[self.beginningOfWordRegularExpression matchesInString:beforeInput
+                                                                options:0
+                                                                  range:NSMakeRange(0, beforeInput.length)] count]) {
+                selected = YES;
+            }
+            break;
+        }
+            
+        case UITextAutocapitalizationTypeNone:
+        default:
+            break;
+    }
+
+    self.shiftButton.selected = selected;
+}
+
 
 #pragma mark - Text actions
 
@@ -418,11 +496,13 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     }
     [self.textDocumentProxy deleteBackward];
     [self updateReturnButtonEnabled];
+    [self updateShiftButtonState];
 }
 
 - (void)insertText:(NSString*)text {
     [self.textDocumentProxy insertText:text];
     [self updateReturnButtonEnabled];
+    [self updateShiftButtonState];
 }
 
 
@@ -453,11 +533,6 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     } else {
         [self insertText:@"yo"];
     }
-    
-    if (!self.shiftButton.isLocked) {
-        self.shiftButton.selected = NO;
-    }
-
 }
 
 - (IBAction)deleteButtonTapped:(id)sender {
@@ -502,6 +577,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)shiftButtonDoubleTapped:(id)sender {
+    self.shiftButton.selected = YES;
     self.shiftButton.locked = ! self.shiftButton.isLocked;
 }
 
