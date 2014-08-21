@@ -515,11 +515,11 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 - (IBAction)spaceButtonTapped:(id)sender {
     
     NSString *beforeInput = self.textDocumentProxy.documentContextBeforeInput;
-    
-    NSArray *matches = [self.endOfSentenceRegularExpression matchesInString:beforeInput
-                                                                    options:0
-                                                                      range:NSMakeRange(0, beforeInput.length)];
-    if ([matches count] > 0) {
+    if (beforeInput.length &&
+        ([[self.endOfSentenceRegularExpression matchesInString:beforeInput
+                                                       options:0
+                                                         range:NSMakeRange(0, beforeInput.length)] count] > 0)
+        ) {
         [self.textDocumentProxy deleteBackward];
         [self insertText:@"! "];
     } else {
