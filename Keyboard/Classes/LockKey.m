@@ -7,7 +7,7 @@
 //
 
 #import "LockKey.h"
-
+#import "UIColor+Key.h"
 
 @interface Key ()
 @property (nonatomic, strong) UIImageView *imageView;
@@ -64,22 +64,22 @@
     if (!self.isLocked) {
         switch (self.state) {
             case UIControlStateSelected: {
-                self.color = kKeyStyleLightKeyColor;
-                self.shadowColor = kKeyStyleLightShadowColor;
+                self.color = [UIColor lightKeyColor];
+                self.shadowColor = [UIColor lightKeyShadowColor];
                 self.tintColor = [UIColor blackColor];
                 break;
             }
             case UIControlStateNormal:
             default: {
-                self.color = kKeyStyleDarkKeyColor;
-                self.shadowColor = kKeyStyleDarkShadowColor;
+                self.color = [UIColor darkKeyColor];
+                self.shadowColor = [UIColor darkKeyShadowColor];
                 self.tintColor = [UIColor whiteColor];
             }
         }
         self.imageView.image = self.image;
     } else {
-        self.color = kKeyStyleLightKeyColor;
-        self.shadowColor = kKeyStyleLightShadowColor;
+        self.color = [UIColor lightKeyColor];
+        self.shadowColor = [UIColor lightKeyShadowColor];
         self.imageView.image = self.lockImage;
         self.tintColor = [UIColor blackColor];
     }
