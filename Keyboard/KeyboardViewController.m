@@ -10,9 +10,6 @@
 #import "Key.h"
 #import "LockKey.h"
 
-static CGFloat kKeysEdgeMargin = 3.0;
-static CGFloat kKeysBottomMargin = 3.0;
-
 static NSTimeInterval kDeleteTimerInterval = 0.1;
 
 
@@ -25,7 +22,8 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 @property (nonatomic, strong) Key *returnButton;
 @property (nonatomic, strong) Key *yoButton;
 @property (nonatomic, strong) Key *deleteButton;
-@property (nonatomic, strong) LockKey *shiftButton;
+@property (nonatomic, strong) LockKey *leftShiftButton;
+@property (nonatomic, strong) LockKey *rightShiftButton;
 
 @property (nonatomic, strong) NSRegularExpression *endOfSentenceRegularExpression;
 @property (nonatomic, strong) NSRegularExpression *beginningOfSentenceRegularExpression;
@@ -41,6 +39,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
+    [self updateFont];
     
     // animating somehow reduces some jerkiness
     [UIView animateWithDuration:0.0 delay:0.0 options:0 animations:^{
@@ -50,62 +49,147 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 
 - (void)layoutViewForSize:(CGSize)size {
     
-    CGFloat x, y, width, height, columnMargin, rowMargin, letterKeyWidth;
+    CGFloat x, y, width, height, edgeMargin, bottomMargin, columnMargin, rowMargin, letterKeyWidth;
     
-    // p 320 * x + y = 6
-    // l 568 * x + y = 7
-    columnMargin = size.width * 1.0/248.0 + 146.0/31.0;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        
+        // p 768 * x + y = 6
+        // l 1024 * x + y = 7
+        edgeMargin = size.width * 1.0/256.0 + 3.0;
+        
+        // p 264 * x + y = 7
+        // l 352 * x + y = 9
+        bottomMargin = size.height * 1.0/44.0 + 1.0;
+        
+        // p 768 * x + y = 12
+        // l 1024 * x + y = 14
+        columnMargin = size.width * 1.0/128.0 + 6.0;
+        
+        // p 264 * x + y = 8
+        // l 352 * x + y = 11
+        rowMargin = size.height * 3.0/88.0 - 1.0;
+        
+        // p 264 * x + y = 56
+        // l 352 * x + y = 75
+        height = size.height * 19.0/88.0 - 1.0;
+        
+        // p 768 * x + y = 57
+        // l 1024 * x + y = 78
+        letterKeyWidth = size.width * 21.0/256.0 - 6.0;
+        
+        // p 768 * x + y = 56
+        // l 1024 * x + y = 144
+        width = size.width * 5.0/64.0 - 4.0;
+        x = edgeMargin;
+        y = size.height - bottomMargin - height;
+        self.nextKeyboardButton.frame = CGRectMake(x, y, width, height);
+        
+        // p 768 * x + y = 106
+        // l 1024 * x + y = 144
+        width = size.width *  19.0/128.0 - 8.0;
+        x = size.width - edgeMargin - width;
+        y = size.height - bottomMargin - 2 * rowMargin - 3 * height;
+        self.returnButton.frame = CGRectMake(x, y, width, height);
+        
+        width = size.width - 2 * edgeMargin - columnMargin - self.nextKeyboardButton.frame.size.width;
+        x = self.nextKeyboardButton.frame.origin.x + self.nextKeyboardButton.frame.size.width + columnMargin;
+        y = size.height - bottomMargin - height;
+        self.spaceButton.frame = CGRectMake(x, y, width, height);
+        
+        // p 768 * x + y = 56
+        // l 1024 * x + y = 77
+        width = size.width * 21.0/256.0 - 7.0;
+        x = edgeMargin;
+        y = size.height - bottomMargin - rowMargin - 2 * height;
+        self.leftShiftButton.frame = CGRectMake(x, y, width, height);
+        
+        // p 768 * x + y = 76
+        // l 1024 * x + y = 105
+        width = size.width * 29.0/256.0 - 11.0;
+        x = size.width - edgeMargin - width;
+        y = size.height - bottomMargin - rowMargin - 2 * height;
+        self.rightShiftButton.frame = CGRectMake(x, y, width, height);
+        
+        width = letterKeyWidth;
+        x = (size.width - width)/2;
+        y = size.height - bottomMargin - 2 * rowMargin - 3 * height;
+        self.yoButton.frame = CGRectMake(x, y, width, height);
+        
+        // p 264 * x + y = 2
+        // l 352 * x + y = 0
+        CGFloat lastRowExtraMargin = size.height * -1.0/44.0 + 8.0;
+        
+        
+        // p 264 * x + y = 58
+        // l 352 * x + y = 75
+        CGFloat lastRowHeight = size.height * 17.0/88.0 + 7.0;
+        
+        // p 768 * x + y = 61
+        // l 1024 * x + y = 80
+        width = size.width * 19.0/256.0 + 4.0;
+        x = size.width - edgeMargin - width;
+        y = size.height - bottomMargin - 3 * rowMargin - 4 * height - lastRowExtraMargin;
+        self.deleteButton.frame = CGRectMake(x, y, width, lastRowHeight);
     
-    // p 216 * x + y = 15
-    // l 162 * x + y = 7
-    rowMargin = size.height * 4.0/27.0 - 17.0;
-    
-    // p 216 * x + y = 39
-    // l 162 * x + y = 33
-    height = size.height * 1.0/9.0 + 15.0;
-    
-    // p 320 * x + y = 26
-    // l 568 * x + y = 52
-    letterKeyWidth = size.width * 13.0/124.0 - 234.0/31.0;
-    
-    // p 320 * x + y = 34
-    // l 568 * x + y = 50
-    width = size.width * 2.0/31.0 + 414.0/31.0;
-    x = kKeysEdgeMargin;
-    y = size.height - kKeysBottomMargin - height;
-    self.nextKeyboardButton.frame = CGRectMake(x, y, width, height);
-    
-    // p 320 * x + y = 74
-    // l 568 * x + y = 107
-    width = size.width * 33.0/248.0 + 974.0/31.0;
-    x = size.width - kKeysEdgeMargin - width;
-    y = size.height - kKeysBottomMargin - height;
-    self.returnButton.frame = CGRectMake(x, y, width, height);
-    
-    width = size.width - 2 * kKeysEdgeMargin - 2 * columnMargin - self.nextKeyboardButton.frame.size.width - self.returnButton.frame.size.width;
-    x = self.nextKeyboardButton.frame.origin.x + self.nextKeyboardButton.frame.size.width + columnMargin;
-    y = size.height - kKeysBottomMargin - height;
-    self.spaceButton.frame = CGRectMake(x, y, width, height);
-    
-    // p 320 * x + y = 36
-    // l 568 * x + y = 69
-    width = size.width * 33.0/248.0 - 204.0/31.0;
-    x = size.width - kKeysEdgeMargin - width;
-    y = size.height - kKeysBottomMargin - rowMargin - 2 * height;
-    self.deleteButton.frame = CGRectMake(x, y, width, height);
-    
-    // p 320 * x + y = 36
-    // l 568 * x + y = 68
-    width = size.width * 4.0/31.0 - 164.0/31.0;
-    x = kKeysEdgeMargin;
-    y = size.height - kKeysBottomMargin - rowMargin - 2 * height;
-    self.shiftButton.frame = CGRectMake(x, y, width, height);
-    
-    width = letterKeyWidth;
-    x = (size.width - width)/2;
-    y = size.height - kKeysBottomMargin - 2 * rowMargin - 3 * height;
-    self.yoButton.frame = CGRectMake(x, y, width, height);
-    
+    } else { //UIUserInterfaceIdiomPhone
+        
+        edgeMargin = 3.0;
+        bottomMargin = 3.0;
+        
+        // p 320 * x + y = 6
+        // l 568 * x + y = 7
+        columnMargin = size.width * 1.0/248.0 + 146.0/31.0;
+        
+        // p 216 * x + y = 15
+        // l 162 * x + y = 7
+        rowMargin = size.height * 4.0/27.0 - 17.0;
+        
+        // p 216 * x + y = 39
+        // l 162 * x + y = 33
+        height = size.height * 1.0/9.0 + 15.0;
+        
+        // p 320 * x + y = 26
+        // l 568 * x + y = 52
+        letterKeyWidth = size.width * 13.0/124.0 - 234.0/31.0;
+        
+        // p 320 * x + y = 34
+        // l 568 * x + y = 50
+        width = size.width * 2.0/31.0 + 414.0/31.0;
+        x = edgeMargin;
+        y = size.height - bottomMargin - height;
+        self.nextKeyboardButton.frame = CGRectMake(x, y, width, height);
+        
+        // p 320 * x + y = 74
+        // l 568 * x + y = 107
+        width = size.width * 33.0/248.0 + 974.0/31.0;
+        x = size.width - edgeMargin - width;
+        y = size.height - bottomMargin - height;
+        self.returnButton.frame = CGRectMake(x, y, width, height);
+        
+        width = size.width - 2 * edgeMargin - 2 * columnMargin - self.nextKeyboardButton.frame.size.width - self.returnButton.frame.size.width;
+        x = self.nextKeyboardButton.frame.origin.x + self.nextKeyboardButton.frame.size.width + columnMargin;
+        y = size.height - bottomMargin - height;
+        self.spaceButton.frame = CGRectMake(x, y, width, height);
+        
+        // p 320 * x + y = 36
+        // l 568 * x + y = 69
+        width = size.width * 33.0/248.0 - 204.0/31.0;
+        x = size.width - edgeMargin - width;
+        y = size.height - bottomMargin - rowMargin - 2 * height;
+        self.deleteButton.frame = CGRectMake(x, y, width, height);
+        
+        // p 320 * x + y = 36
+        // l 568 * x + y = 68
+        width = size.width * 4.0/31.0 - 164.0/31.0;
+        x = edgeMargin;
+        y = size.height - bottomMargin - rowMargin - 2 * height;
+        self.leftShiftButton.frame = CGRectMake(x, y, width, height);
+        
+        width = letterKeyWidth;
+        x = (size.width - width)/2;
+        y = size.height - bottomMargin - 2 * rowMargin - 3 * height;
+        self.yoButton.frame = CGRectMake(x, y, width, height);
+    }
 }
 
 - (void)viewDidLoad {
@@ -140,7 +224,11 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 
 - (Key*)spaceButton {
     if (!_spaceButton) {
-        _spaceButton = [Key keyWithStyle:KeyStyleLight title:@"space"];
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            _spaceButton = [Key keyWithStyle:KeyStyleLight];
+        } else {
+            _spaceButton = [Key keyWithStyle:KeyStyleLight title:@"space"];
+        }
         [_spaceButton addTarget:self action:@selector(spaceButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_spaceButton];
     }
@@ -168,17 +256,28 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     return _deleteButton;
 }
 
-- (LockKey*)shiftButton {
-    if (!_shiftButton) {
-        
-        _shiftButton = [LockKey keyWithStyle:KeyStyleDark];
-        _shiftButton.image = [[UIImage imageNamed:@"shift_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        _shiftButton.lockImage = [[UIImage imageNamed:@"shift_lock_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        [_shiftButton addTarget:self action:@selector(shiftButtonTapped:) forControlEvents:UIControlEventTouchDown];
-        [_shiftButton addTarget:self action:@selector(shiftButtonDoubleTapped:) forControlEvents:UIControlEventTouchDownRepeat];
-        [self.view addSubview:_shiftButton];
+- (LockKey*)leftShiftButton {
+    if (!_leftShiftButton) {
+        _leftShiftButton = [LockKey keyWithStyle:KeyStyleDark];
+        _leftShiftButton.image = [[UIImage imageNamed:@"shift_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _leftShiftButton.lockImage = [[UIImage imageNamed:@"shift_lock_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [_leftShiftButton addTarget:self action:@selector(shiftButtonTapped:) forControlEvents:UIControlEventTouchDown];
+        [_leftShiftButton addTarget:self action:@selector(shiftButtonDoubleTapped:) forControlEvents:UIControlEventTouchDownRepeat];
+        [self.view addSubview:_leftShiftButton];
     }
-    return _shiftButton;
+    return _leftShiftButton;
+}
+
+- (LockKey*)rightShiftButton {
+    if (!_rightShiftButton) {
+        _rightShiftButton = [LockKey keyWithStyle:KeyStyleDark];
+        _rightShiftButton.image = [[UIImage imageNamed:@"shift_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _rightShiftButton.lockImage = [[UIImage imageNamed:@"shift_lock_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [_rightShiftButton addTarget:self action:@selector(shiftButtonTapped:) forControlEvents:UIControlEventTouchDown];
+        [_rightShiftButton addTarget:self action:@selector(shiftButtonDoubleTapped:) forControlEvents:UIControlEventTouchDownRepeat];
+        [self.view addSubview:_rightShiftButton];
+    }
+    return _rightShiftButton;
 }
 
 
@@ -238,6 +337,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     [self updateReturnButtonStyle];
     [self updateReturnButtonEnabled];
     [self updateShiftButtonState];
+    [self updateFont];
     
     //    UIColor *textColor = nil;
     //    if (self.textDocumentProxy.keyboardAppearance == UIKeyboardAppearanceDark) {
@@ -315,7 +415,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)updateShiftButtonState {
-    if (self.shiftButton.isLocked) {
+    if (self.leftShiftButton.isLocked) {
         return;
     }
     
@@ -355,9 +455,22 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
             break;
     }
     
-    self.shiftButton.selected = selected;
+    self.leftShiftButton.selected = _rightShiftButton.selected = selected;
 }
 
+- (void)updateFont {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        for (Key *key in @[self.returnButton, self.yoButton]) {
+            if ([key isKindOfClass:[Key class]]) {
+                if (self.view.frame.size.width >= 1024) {
+                    key.titleFont = [UIFont systemFontOfSize:kKeyPadLandscapeTitleFontSize];
+                } else {
+                    key.titleFont = [UIFont systemFontOfSize:kKeyPadPortraitTitleFontSize];
+                }
+            }
+        }
+    }
+}
 
 #pragma mark - Text actions
 
@@ -405,7 +518,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (IBAction)yoButtonTapped:(id)sender {
-    if (self.shiftButton.isLocked || self.shiftButton.selected) {
+    if (self.leftShiftButton.isLocked || self.leftShiftButton.selected) {
         [self insertText:@"YO"];
     } else {
         [self insertText:@"yo"];
@@ -445,17 +558,17 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)shiftButtonTapped:(id)sender {
-    if (self.shiftButton.isLocked) {
-        self.shiftButton.selected = NO;
-        self.shiftButton.locked = NO;
+    if (self.leftShiftButton.isLocked) {
+        self.leftShiftButton.selected = _rightShiftButton.selected = NO;
+        self.leftShiftButton.locked = _rightShiftButton.locked = NO;
     } else {
-        self.shiftButton.selected = ! self.shiftButton.selected;
+        self.leftShiftButton.selected = _rightShiftButton.selected = ! self.leftShiftButton.selected;
     }
 }
 
 - (void)shiftButtonDoubleTapped:(id)sender {
-    self.shiftButton.selected = YES;
-    self.shiftButton.locked = ! self.shiftButton.isLocked;
+    self.leftShiftButton.selected = _rightShiftButton.selected = YES;
+    self.leftShiftButton.locked = _rightShiftButton.locked = ! self.leftShiftButton.isLocked;
 }
 
 @end

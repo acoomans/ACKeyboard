@@ -14,6 +14,7 @@
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIColor *color;
 @property (nonatomic, strong) UIColor *shadowColor;
+@property (nonatomic, assign) CGFloat cornerRadius;
 @end
 
 
@@ -40,6 +41,11 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.keyStyle = keyStyle;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            self.cornerRadius = kKeyPadCornerRadius;
+        } else {
+            self.cornerRadius = kKeyPhoneCornerRadius;
+        }
     }
     return self;
 }
@@ -56,7 +62,13 @@
     if (!_label) {
         _label = [[UILabel alloc] init];
         _label.textAlignment = NSTextAlignmentCenter;
-        _label.font = [UIFont systemFontOfSize:kKeyTitleFontSize];
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            _label.font = [UIFont systemFontOfSize:kKeyPadLandscapeTitleFontSize];
+        } else {
+            _label.font = [UIFont systemFontOfSize:kKeyPhoneTitleFontSize];
+        }
+        
         _label.lineBreakMode = NSLineBreakByTruncatingMiddle;
         [self addSubview:_label];
     }
@@ -90,7 +102,6 @@
     return self.imageView.image;
 }
 
-
 - (void)setKeyStyle:(KeyStyle)keyStyle {
     _keyStyle = keyStyle;
     switch (keyStyle) {
@@ -109,6 +120,14 @@
             break;
     }
     [self updateState];
+}
+
+- (void)setTitleFont:(UIFont *)titleFont {
+    self.label.font = titleFont;
+}
+
+- (UIFont*)titleFont {
+    return self.label.font;
 }
 
 
@@ -243,19 +262,19 @@
 }
 
 - (void)drawKeyRect:(CGRect)rect color:(UIColor*)color {
-    UIBezierPath* roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:kKeyCornerRadius];
+    UIBezierPath* roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:self.cornerRadius];
     [color setFill];
     [roundedRectanglePath fill];
 }
 
 - (void)drawKeyRect:(CGRect)rect color:(UIColor*)color withShadow:(UIColor*)shadowColor {
     CGRect shadowRect = CGRectOffset(CGRectInset(rect, 0, kKeyShadowYOffset), 0, kKeyShadowYOffset);
-    UIBezierPath* shadowPath = [UIBezierPath bezierPathWithRoundedRect:shadowRect cornerRadius:kKeyCornerRadius];
+    UIBezierPath* shadowPath = [UIBezierPath bezierPathWithRoundedRect:shadowRect cornerRadius:self.cornerRadius];
     [shadowColor setFill];
     [shadowPath fill];
     
     CGRect keyRect = CGRectOffset(CGRectInset(rect, 0, kKeyShadowYOffset), 0, -kKeyShadowYOffset);
-    UIBezierPath* keyPath = [UIBezierPath bezierPathWithRoundedRect:keyRect cornerRadius:kKeyCornerRadius];
+    UIBezierPath* keyPath = [UIBezierPath bezierPathWithRoundedRect:keyRect cornerRadius:self.cornerRadius];
     [color setFill];
     [keyPath fill];
 }
