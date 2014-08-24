@@ -11,10 +11,24 @@
 #import "LockKey.h"
 
 
+// iPhone 5
+
+// p 216 * x + y = 39
+// l 162 * x + y = 33
+#define kKeyboardViewHeightToButtonHeightMultiplier 1.0/9.0
+#define kKeyboardViewHeightToButtonHeightConstant 15.0
+
+// iPhone 4
+
+// iPad
+
+
+
 static CGFloat kKeysEdgeMargin = 3.0;
-static CGFloat kKeysColumnMargin = 6.0;
+//static CGFloat kKeysPortraitColumnMargin = 6.0;
+//static CGFloat kKeysLandscapeColumnMargin = 8.0;
 static CGFloat kKeysBottomMargin = 3.0;
-static CGFloat kKeysRowMargin = 15.0;
+//static CGFloat kKeysRowMargin = 15.0;
 
 static NSTimeInterval kDeleteTimerInterval = 0.1;
 
@@ -42,62 +56,209 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 
 #pragma mark - View
 
-- (void)updateViewConstraints {
-    [super updateViewConstraints];
-    
-    [self.view removeConstraints:self.constraints];
-    
-    NSDictionary *metrics = @{
-                              @"edge": @(kKeysEdgeMargin),
-                              @"cmargin": @(kKeysColumnMargin),
-                              @"rmargin": @(kKeysRowMargin),
-                              @"bottom": @(kKeysBottomMargin),
-                              };
-    NSDictionary *views = @{
-                            @"next": self.nextKeyboardButton,
-                            @"space": self.spaceButton,
-                            @"return": self.returnButton,
-                            @"delete": self.deleteButton,
-                            @"yo": self.yoButton,
-                            @"shift": self.shiftButton,
-                            };
-    
-    self.constraints = [[NSMutableArray alloc] init];
+//- (void)updateViewConstraints {
+//    [super updateViewConstraints];
+//    
+//    [self.view removeConstraints:self.constraints];
+//    self.constraints = [[NSMutableArray alloc] init];
+//    
+//    NSDictionary *metrics;
+//    NSDictionary *views;
+//    
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+//        
+//    } else {
+//        // landscpae (0 0; 568 216)
+//        // portrait (0 0; 320 162)
+//        
+//        // Portrait:
+//        // all keys height: 39.0
+//        // a * 162 + b = 39 (portrait x=)
+//        // a * 216 + b = 33 (landscape x=)
+//        
+//        // a*162 = 39 -b
+//        // a = (39-b)/162
+//        // (39-b)/162*216 + b = 33
+//        // (39-b)*216 + b*162 = 33*162
+//        // 39*216 + b*(162-216) = 33*162
+//        // b = (33*162 - 39*216) / (162-216)
+//        
+//        // a = (39 - (33*162 - 39*216) / (162-216)) / 162
+//        
+//        
+////        metrics = @{
+////                    @"edge": @(kKeysEdgeMargin),
+////                    @"cmargin": @(kKeysPortraitColumnMargin),
+////                    @"rmargin": @(kKeysRowMargin),
+////                    @"bottom": @(kKeysBottomMargin),
+////                    };
+////        views = @{
+////                  @"next": self.nextKeyboardButton,
+////                  @"space": self.spaceButton,
+////                  @"return": self.returnButton,
+////                  @"delete": self.deleteButton,
+////                  @"yo": self.yoButton,
+////                  @"shift": self.shiftButton,
+////                  };
+////        
+////        [self.constraints addObjectsFromArray:[NSLayoutConstraint
+////                                               constraintsWithVisualFormat:@"H:[yo(>=58.0)]-115.0-|"
+////                                               options:NSLayoutFormatAlignAllTop|NSLayoutFormatAlignAllBottom
+////                                               metrics:metrics
+////                                               views:views]];
+////        [self.constraints addObjectsFromArray:[NSLayoutConstraint
+////                                               constraintsWithVisualFormat:@"H:|-edge-[shift(>=36.0)]-(>=0.0)-[delete(>=36.0)]-edge-|"
+////                                               options:NSLayoutFormatAlignAllTop|NSLayoutFormatAlignAllBottom
+////                                               metrics:metrics
+////                                               views:views]];
+////        [self.constraints addObjectsFromArray:[NSLayoutConstraint
+////                                               constraintsWithVisualFormat:@"H:|-edge-[next(>=34.0,<=41.0)]-cmargin-[space]-cmargin-[return(>=74.0,<=89.0)]-edge-|"
+////                                               options:NSLayoutFormatAlignAllTop|NSLayoutFormatAlignAllBottom
+////                                               metrics:metrics
+////                                               views:views]];
+////        [self.constraints addObjectsFromArray:[NSLayoutConstraint
+////                                               constraintsWithVisualFormat:@"V:[yo]-rmargin-[delete]-rmargin-[next]-bottom-|"
+////                                               options:0
+////                                               metrics:metrics
+////                                               views:views]];
+////        
+////        for (Key *key in views.allValues) {
+////            NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:key
+////                                                                          attribute:NSLayoutAttributeHeight
+////                                                                          relatedBy:NSLayoutRelationEqual
+////                                                                             toItem:self.inputView
+////                                                                          attribute:NSLayoutAttributeHeight
+////                                                                         multiplier:kKeyboardViewHeightToButtonHeightMultiplier
+////                                                                           constant:kKeyboardViewHeightToButtonHeightConstant];
+////            constraint.priority = 99;
+////            [self.constraints addObject:constraint];
+////        }
+//        
+//        
+//        
+//        [self layoutViews];
+//        
+//    }
+//    
+//    [self.view addConstraints:self.constraints];
+//}
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     
-    [self.constraints addObjectsFromArray:[NSLayoutConstraint
-                                           constraintsWithVisualFormat:@"H:[yo(==58.0)]-115.0-|"
-                                           options:NSLayoutFormatAlignAllTop|NSLayoutFormatAlignAllBottom
-                                           metrics:metrics
-                                           views:views]];
-    [self.constraints addObjectsFromArray:[NSLayoutConstraint
-                                           constraintsWithVisualFormat:@"H:|-edge-[shift(==36.0)]-(>=0.0)-[delete(==36.0)]-edge-|"
-                                           options:NSLayoutFormatAlignAllTop|NSLayoutFormatAlignAllBottom
-                                           metrics:metrics
-                                           views:views]];
-    [self.constraints addObjectsFromArray:[NSLayoutConstraint
-                                           constraintsWithVisualFormat:@"H:|-edge-[next(<=34.0)]-cmargin-[space]-cmargin-[return(<=74.0)]-edge-|"
-                                           options:NSLayoutFormatAlignAllTop|NSLayoutFormatAlignAllBottom
-                                           metrics:metrics
-                                           views:views]];
-    [self.constraints addObjectsFromArray:[NSLayoutConstraint
-                                           constraintsWithVisualFormat:@"V:[yo(==39.0)]-rmargin-[delete(==39.0)]-rmargin-[next(==39.0)]-bottom-|"
-                                           options:0
-                                           metrics:metrics
-                                           views:views]];
-    
-    [self.view addConstraints:self.constraints];
+    // animating somehow reduces some jerkiness
+    [UIView animateWithDuration:0.0 delay:0.0 options:0 animations:^{
+        [self layoutViewForSize:self.view.frame.size];
+    } completion:^(BOOL finished) {}];
 }
+
+- (void)layoutViewForSize:(CGSize)size {
+    
+    CGFloat x, y, width, height, columnMargin, rowMargin, letterKeyWidth;
+    
+    // p 320 * x + y = 6
+    // l 568 * x + y = 7
+//    columnMargin = self.view.frame.size.width * 1.0/248.0 + 146.0/31.0;
+    columnMargin = size.width * 1.0/248.0 + 146.0/31.0;
+    
+    // p 216 * x + y = 15
+    // l 162 * x + y = 7
+//    rowMargin = self.view.frame.size.height * 4.0/27.0 - 17.0;
+    rowMargin = size.height * 4.0/27.0 - 17.0;
+    
+    // p 216 * x + y = 39
+    // l 162 * x + y = 33
+//    height = self.view.frame.size.height * 1.0/9.0 + 15.0;
+    height = size.height * 1.0/9.0 + 15.0;
+    
+    // p 320 * x + y = 26
+    // l 568 * x + y = 52
+//    letterKeyWidth = self.view.frame.size.width * 13.0/124.0 - 234.0/31.0;
+    letterKeyWidth = size.width * 13.0/124.0 - 234.0/31.0;
+    
+    // p 320 * x + y = 34
+    // l 568 * x + y = 50
+//    width = self.view.frame.size.width * 2.0/31.0 + 414.0/31.0;
+    width = size.width * 2.0/31.0 + 414.0/31.0;
+    x = kKeysEdgeMargin;
+//    y = self.view.frame.size.height - kKeysBottomMargin - height;
+    y = size.height - kKeysBottomMargin - height;
+    self.nextKeyboardButton.frame = CGRectMake(x, y, width, height);
+    
+    // p 320 * x + y = 74
+    // l 568 * x + y = 107
+//    width = self.view.frame.size.width * 33.0/248.0 + 974.0/31.0;
+    width = size.width * 33.0/248.0 + 974.0/31.0;
+//    x = self.view.frame.size.width - kKeysEdgeMargin - width;
+    x = size.width - kKeysEdgeMargin - width;
+//    y = self.view.frame.size.height - kKeysBottomMargin - height;
+    y = size.height - kKeysBottomMargin - height;
+    self.returnButton.frame = CGRectMake(x, y, width, height);
+    
+//    width = self.view.frame.size.width - 2 * kKeysEdgeMargin - 2 * columnMargin - self.nextKeyboardButton.frame.size.width - self.returnButton.frame.size.width;
+    width = size.width - 2 * kKeysEdgeMargin - 2 * columnMargin - self.nextKeyboardButton.frame.size.width - self.returnButton.frame.size.width;
+    x = self.nextKeyboardButton.frame.origin.x + self.nextKeyboardButton.frame.size.width + columnMargin;
+//    y = self.view.frame.size.height - kKeysBottomMargin - height;
+    y = size.height - kKeysBottomMargin - height;
+    self.spaceButton.frame = CGRectMake(x, y, width, height);
+    
+    // p 320 * x + y = 36
+    // l 568 * x + y = 69
+//    width = self.view.frame.size.width * 33.0/248.0 - 204.0/31.0;
+    width = size.width * 33.0/248.0 - 204.0/31.0;
+//    x = self.view.frame.size.width - kKeysEdgeMargin - width;
+    x = size.width - kKeysEdgeMargin - width;
+//    y = self.view.frame.size.height - kKeysBottomMargin - rowMargin - 2 * height;
+    y = size.height - kKeysBottomMargin - rowMargin - 2 * height;
+    self.deleteButton.frame = CGRectMake(x, y, width, height);
+    
+    // p 320 * x + y = 36
+    // l 568 * x + y = 68
+//    width = self.view.frame.size.width * 4.0/31.0 - 164.0/31.0;
+    width = size.width * 4.0/31.0 - 164.0/31.0;
+    x = kKeysEdgeMargin;
+//    y = self.view.frame.size.height - kKeysBottomMargin - rowMargin - 2 * height;
+    y = size.height - kKeysBottomMargin - rowMargin - 2 * height;
+    self.shiftButton.frame = CGRectMake(x, y, width, height);
+    
+    width = letterKeyWidth;
+//    x = (self.view.frame.size.width - width)/2;
+    x = (size.width - width)/2;
+//    y = self.view.frame.size.height - kKeysBottomMargin - 2 * rowMargin - 3 * height;
+    y = size.height - kKeysBottomMargin - 2 * rowMargin - 3 * height;
+    self.yoButton.frame = CGRectMake(x, y, width, height);
+    
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.view setNeedsUpdateConstraints];
-}
+//- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+//    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+//
+//    CGAffineTransform transform = [coordinator targetTransform];
+//    CGAffineTransform invertedRotation = CGAffineTransformInvert(transform);
+//    CGRect currentBounds = self.view.bounds;
+//    __block CGAffineTransform _counterRotation;
+//    
+//    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+//        self.view.transform = CGAffineTransformConcat(self.view.transform, invertedRotation);
+//        _counterRotation = CGAffineTransformConcat(_counterRotation, transform);
+//        self.view.bounds = currentBounds;
+//    }
+//                                 completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+//                                     
+//                                     [UIView animateWithDuration:.5 animations:^{
+//                                         for (UIView *subview in self.view.subviews) {
+//                                             subview.transform = _counterRotation;
+//                                         }
+//                                     }];
+//                                 }
+//     ];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -109,7 +270,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 - (Key*)nextKeyboardButton {
     if (!_nextKeyboardButton) {
         _nextKeyboardButton = [Key keyWithStyle:KeyStyleDark image:[UIImage imageNamed:@"global_portrait"]];
-        _nextKeyboardButton.translatesAutoresizingMaskIntoConstraints = NO;
+//        _nextKeyboardButton.translatesAutoresizingMaskIntoConstraints = NO;
         [_nextKeyboardButton addTarget:self action:@selector(advanceToNextInputMode) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_nextKeyboardButton];
     }
@@ -119,7 +280,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 - (Key*)returnButton {
     if (!_returnButton) {
         _returnButton = [Key keyWithStyle:KeyStyleDark title:@"return"];
-        _returnButton.translatesAutoresizingMaskIntoConstraints = NO;
+//        _returnButton.translatesAutoresizingMaskIntoConstraints = NO;
         [_returnButton addTarget:self action:@selector(returnButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_returnButton];
     }
@@ -129,7 +290,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 - (Key*)spaceButton {
     if (!_spaceButton) {
         _spaceButton = [Key keyWithStyle:KeyStyleLight title:@"space"];
-        _spaceButton.translatesAutoresizingMaskIntoConstraints = NO;
+//        _spaceButton.translatesAutoresizingMaskIntoConstraints = NO;
         [_spaceButton addTarget:self action:@selector(spaceButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_spaceButton];
     }
@@ -139,7 +300,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 - (Key*)yoButton {
     if (!_yoButton) {
         _yoButton = [Key keyWithStyle:KeyStyleLight title:@"YO"];
-        _yoButton.translatesAutoresizingMaskIntoConstraints = NO;
+//        _yoButton.translatesAutoresizingMaskIntoConstraints = NO;
         [_yoButton addTarget:self action:@selector(yoButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_yoButton];
     }
@@ -150,7 +311,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     if (!_deleteButton) {
         UIImage *image = [[UIImage imageNamed:@"delete_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         _deleteButton = [Key keyWithStyle:KeyStyleDark image:image];
-        _deleteButton.translatesAutoresizingMaskIntoConstraints = NO;
+//        _deleteButton.translatesAutoresizingMaskIntoConstraints = NO;
         [_deleteButton addTarget:self action:@selector(deleteButtonTapped:) forControlEvents:UIControlEventTouchDown];
         [_deleteButton addTarget:self action:@selector(deleteButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
         [_deleteButton addTarget:self action:@selector(deleteButtonReleased:) forControlEvents:UIControlEventTouchUpOutside];
@@ -163,7 +324,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     if (!_shiftButton) {
         
         _shiftButton = [LockKey keyWithStyle:KeyStyleDark];
-        _shiftButton.translatesAutoresizingMaskIntoConstraints = NO;
+//        _shiftButton.translatesAutoresizingMaskIntoConstraints = NO;
         
         _shiftButton.image = [[UIImage imageNamed:@"shift_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         _shiftButton.lockImage = [[UIImage imageNamed:@"shift_lock_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
