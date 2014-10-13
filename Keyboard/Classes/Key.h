@@ -17,6 +17,9 @@ static CGFloat kKeyPhoneTitleFontSize = 16.0;
 static CGFloat kKeyPadPortraitTitleFontSize = 18.0;
 static CGFloat kKeyPadLandscapeTitleFontSize = 22.0;
 
+static CGFloat kKeyLabelOffsetY = -1.5;
+static CGFloat kKeyImageOffsetY = -0.5;
+
 
 typedef NS_ENUM(NSInteger, KeyStyle) {
     KeyStyleLight,

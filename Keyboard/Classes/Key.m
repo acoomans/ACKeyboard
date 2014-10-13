@@ -289,8 +289,8 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.label.frame = CGRectOffset(self.bounds, 0, -1.5);
-    self.imageView.frame = CGRectOffset(self.bounds, 0, -1.0);
+    self.label.frame = CGRectOffset(self.bounds, 0, kKeyLabelOffsetY);
+    self.imageView.frame = CGRectOffset(self.bounds, 0, kKeyImageOffsetY);
     [self setNeedsDisplay];
 }
 
