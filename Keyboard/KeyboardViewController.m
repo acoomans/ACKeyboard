@@ -7,28 +7,10 @@
 //
 
 #import "KeyboardViewController.h"
+
+#import "Metrics.h"
 #import "Key.h"
 #import "LockKey.h"
-
-#define MATRIX_DET(a, b, c, d) ((a * d) - (b * c))
-#define MATRIX_SOLVE_X(a1, a2, b1, b2, c1, c2) MATRIX_DET(c1, c2, b1, b2) / MATRIX_DET(a1, a2, b1, b2)
-#define MATRIX_SOLVE_Y(a1, a2, b1, b2, c1, c2) MATRIX_DET(a1, a2, c1, c2) / MATRIX_DET(a1, a2, b1, b2)
-#define LINEAR_EQ(p, arg1, res1, arg2, res2) p * MATRIX_SOLVE_X(arg1, arg2, 1.0, 1.0, res1, res2) + MATRIX_SOLVE_Y(arg1, arg2, 1.0, 1.0, res1, res2)
-
-
-#define kPadKeyboardPortraitWidth   768.0
-#define kPadKeyboardLandscapeWidth  1024.0
-
-#define kPadKeyboardPortraitHeight   352.0
-#define kPadKeyboardLandscapeHeight  264.0
-
-
-#define kPhoneKeyboardPortraitWidth   320.0
-#define kPhoneKeyboardLandscapeWidth  568.0
-
-#define kPhoneKeyboardPortraitHeight   216.0
-#define kPhoneKeyboardLandscapeHeight  162.0
-
 
 
 static NSTimeInterval kDeleteTimerInterval = 0.1;
@@ -69,145 +51,33 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 
 - (void)layoutViewForSize:(CGSize)size {
     
-    CGFloat x, y, width, height, edgeMargin, bottomMargin, columnMargin, rowMargin, letterKeyWidth;
-    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
-        edgeMargin = LINEAR_EQ(size.width,
-                               kPadKeyboardPortraitWidth, 6.0,
-                               kPadKeyboardLandscapeWidth, 7.0);
+        PadKeyboardMetrics padKeyboardMetrics = getPadLinearKeyboardMetrics(size.width, size.height);
 
-        bottomMargin = LINEAR_EQ(size.height,
-                                 kPadKeyboardPortraitHeight, 9.0,
-                                 kPadKeyboardLandscapeHeight, 7.0);
-
-        columnMargin = LINEAR_EQ(size.width,
-                                 kPadKeyboardPortraitWidth, 12.0,
-                                 kPadKeyboardLandscapeWidth, 14.0);
+        self.deleteButton.frame = padKeyboardMetrics.deleteButtonFrame;
         
-        rowMargin = LINEAR_EQ(size.height,
-                              kPadKeyboardPortraitHeight, 11.0,
-                              kPadKeyboardLandscapeHeight, 8.0);
-
-        height = LINEAR_EQ(size.height,
-                           kPadKeyboardPortraitHeight, 75.0,
-                           kPadKeyboardLandscapeHeight, 56.0);
+        self.yoButton.frame = padKeyboardMetrics.yoButton;
+        self.returnButton.frame = padKeyboardMetrics.returnButtonFrame;
         
-        letterKeyWidth = LINEAR_EQ(size.width,
-                                   kPadKeyboardPortraitWidth, 57.0,
-                                   kPadKeyboardLandscapeWidth, 78.0);
-
-        width = LINEAR_EQ(size.width,
-                          kPadKeyboardPortraitWidth, 56.0,
-                          kPadKeyboardLandscapeWidth, 144.0);
-        x = edgeMargin;
-        y = size.height - bottomMargin - height;
-        self.nextKeyboardButton.frame = CGRectMake(x, y, width, height);
+        self.leftShiftButton.frame = padKeyboardMetrics.leftShiftButtonFrame;
+        self.rightShiftButton.frame = padKeyboardMetrics.rightShiftButtonFrame;
         
-        width = LINEAR_EQ(size.width,
-                          kPadKeyboardPortraitWidth, 106.0,
-                          kPadKeyboardLandscapeWidth, 144.0);
-        x = size.width - edgeMargin - width;
-        y = size.height - bottomMargin - 2 * rowMargin - 3 * height;
-        self.returnButton.frame = CGRectMake(x, y, width, height);
-        
-        width = size.width - 2 * edgeMargin - columnMargin - self.nextKeyboardButton.frame.size.width;
-        x = self.nextKeyboardButton.frame.origin.x + self.nextKeyboardButton.frame.size.width + columnMargin;
-        y = size.height - bottomMargin - height;
-        self.spaceButton.frame = CGRectMake(x, y, width, height);
-        
-        width = LINEAR_EQ(size.width,
-                          kPadKeyboardPortraitWidth, 56.0,
-                          kPadKeyboardLandscapeWidth, 77.0);
-        x = edgeMargin;
-        y = size.height - bottomMargin - rowMargin - 2 * height;
-        self.leftShiftButton.frame = CGRectMake(x, y, width, height);
-        
-        width = LINEAR_EQ(size.width,
-                          kPadKeyboardPortraitWidth, 76.0,
-                          kPadKeyboardLandscapeWidth, 105.0);
-        x = size.width - edgeMargin - width;
-        y = size.height - bottomMargin - rowMargin - 2 * height;
-        self.rightShiftButton.frame = CGRectMake(x, y, width, height);
-        
-        width = letterKeyWidth;
-        x = (size.width - width)/2;
-        y = size.height - bottomMargin - 2 * rowMargin - 3 * height;
-        self.yoButton.frame = CGRectMake(x, y, width, height);
-        
-        CGFloat lastRowExtraMargin = LINEAR_EQ(size.height,
-                                               kPadKeyboardPortraitHeight, 0.0,
-                                               kPadKeyboardLandscapeHeight, 2.0);
-        
-        CGFloat lastRowHeight = LINEAR_EQ(size.height,
-                                          kPadKeyboardPortraitHeight, 75.0,
-                                          kPadKeyboardLandscapeHeight, 58.0);
-        
-        width = LINEAR_EQ(size.width,
-                          kPadKeyboardPortraitWidth, 61.0,
-                          kPadKeyboardLandscapeWidth, 80.0);
-        x = size.width - edgeMargin - width;
-        y = size.height - bottomMargin - 3 * rowMargin - 4 * height - lastRowExtraMargin;
-        self.deleteButton.frame = CGRectMake(x, y, width, lastRowHeight);
+        self.nextKeyboardButton.frame = padKeyboardMetrics.nextKeyboardButtonFrame;
+        self.spaceButton.frame = padKeyboardMetrics.spaceButtonFrame;
     
-    } else { //UIUserInterfaceIdiomPhone
+    } else { // UIUserInterfaceIdiomPhone
         
-        edgeMargin = 3.0;
-        bottomMargin = 3.0;
+        PhoneKeyboardMetrics phoneKeyboardMetrics = getPhoneLinearKeyboardMetrics(size.width, size.height);
+
+        self.yoButton.frame = phoneKeyboardMetrics.yoButton;
         
-        columnMargin = LINEAR_EQ(size.width,
-                                 kPhoneKeyboardPortraitWidth, 6.0,
-                                 kPhoneKeyboardLandscapeWidth, 7.0);
+        self.leftShiftButton.frame = phoneKeyboardMetrics.leftShiftButtonFrame;
+        self.deleteButton.frame = phoneKeyboardMetrics.deleteButtonFrame;
         
-        rowMargin = LINEAR_EQ(size.height,
-                              kPhoneKeyboardPortraitHeight, 15.0,
-                              kPhoneKeyboardLandscapeHeight, 7.0);
-        
-        height = LINEAR_EQ(size.height,
-                           kPhoneKeyboardPortraitHeight, 39.0,
-                           kPhoneKeyboardLandscapeHeight, 33.0);
-        
-        letterKeyWidth = LINEAR_EQ(size.width,
-                                   kPhoneKeyboardPortraitWidth, 26.0,
-                                   kPhoneKeyboardLandscapeWidth, 52.0);
-        
-        width = LINEAR_EQ(size.width,
-                          kPhoneKeyboardPortraitWidth, 34.0,
-                          kPhoneKeyboardLandscapeWidth, 50.0);
-        x = edgeMargin;
-        y = size.height - bottomMargin - height;
-        self.nextKeyboardButton.frame = CGRectMake(x, y, width, height);
-        
-        width = LINEAR_EQ(size.width,
-                          kPhoneKeyboardPortraitWidth, 74.0,
-                          kPhoneKeyboardLandscapeWidth, 107.0);
-        x = size.width - edgeMargin - width;
-        y = size.height - bottomMargin - height;
-        self.returnButton.frame = CGRectMake(x, y, width, height);
-        
-        width = size.width - 2 * edgeMargin - 2 * columnMargin - self.nextKeyboardButton.frame.size.width - self.returnButton.frame.size.width;
-        x = self.nextKeyboardButton.frame.origin.x + self.nextKeyboardButton.frame.size.width + columnMargin;
-        y = size.height - bottomMargin - height;
-        self.spaceButton.frame = CGRectMake(x, y, width, height);
-        
-        width = LINEAR_EQ(size.width,
-                          kPhoneKeyboardPortraitWidth, 36.0,
-                          kPhoneKeyboardLandscapeWidth, 69.0);
-        x = size.width - edgeMargin - width;
-        y = size.height - bottomMargin - rowMargin - 2 * height;
-        self.deleteButton.frame = CGRectMake(x, y, width, height);
-        
-        width = LINEAR_EQ(size.width,
-                          kPhoneKeyboardPortraitWidth, 36.0,
-                          kPhoneKeyboardLandscapeWidth, 68.0);
-        x = edgeMargin;
-        y = size.height - bottomMargin - rowMargin - 2 * height;
-        self.leftShiftButton.frame = CGRectMake(x, y, width, height);
-        
-        width = letterKeyWidth;
-        x = (size.width - width)/2;
-        y = size.height - bottomMargin - 2 * rowMargin - 3 * height;
-        self.yoButton.frame = CGRectMake(x, y, width, height);
+        self.nextKeyboardButton.frame = phoneKeyboardMetrics.nextKeyboardButtonFrame;
+        self.spaceButton.frame = phoneKeyboardMetrics.spaceButtonFrame;
+        self.returnButton.frame = phoneKeyboardMetrics.returnButtonFrame;
     }
 }
 
