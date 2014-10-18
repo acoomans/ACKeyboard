@@ -7,7 +7,9 @@
 //
 
 #import "Key.h"
-#import "UIColor+Key.h"
+#import "LightAppearance.h"
+#import "DarkAppearance.h"
+
 
 @interface Key ()
 @property (nonatomic, strong) UILabel *label;
@@ -20,27 +22,28 @@
 
 @implementation Key
 
-+ (instancetype)keyWithStyle:(KeyStyle)keyStyle {
-    return [[self alloc] initWithKeyStyle:keyStyle];
++ (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance {
+    return [[self alloc] initWithKeyStyle:style appearance:appearance];
 }
 
-+ (instancetype)keyWithStyle:(KeyStyle)keyStyle image:(UIImage*)image {
-    Key *key = [self keyWithStyle:keyStyle];
++ (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance image:(UIImage*)image {
+    Key *key = [self keyWithStyle:style appearance:(KeyAppearance)appearance];
     key.image = image;
     return key;
 }
 
-+ (instancetype)keyWithStyle:(KeyStyle)keyStyle title:(NSString*)title {
-    Key *key = [self keyWithStyle:keyStyle];
++ (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance title:(NSString*)title {
+    Key *key = [self keyWithStyle:style appearance:(KeyAppearance)appearance];
     key.title = title;
     return key;
 }
 
-- (instancetype)initWithKeyStyle:(KeyStyle)keyStyle {
+- (instancetype)initWithKeyStyle:(KeyStyle)style appearance:(KeyAppearance)appearance {
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        self.keyStyle = keyStyle;
+        self.style = style;
+        self.appearance = appearance;
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             self.cornerRadius = kKeyPadCornerRadius;
         } else {
@@ -51,7 +54,7 @@
 }
 
 - (instancetype)init {
-    return [self initWithKeyStyle:KeyStyleDark];
+    return [self initWithKeyStyle:KeyStyleDark appearance:KeyAppearanceLight];
 }
 
 
@@ -102,23 +105,19 @@
     return self.imageView.image;
 }
 
-- (void)setKeyStyle:(KeyStyle)keyStyle {
-    _keyStyle = keyStyle;
-    switch (keyStyle) {
-        case KeyStyleLight: {
-            self.label.textColor = [UIColor blackColor];
-            break;
-        }
-        case KeyStyleDark: {
-            self.label.textColor = [UIColor blackColor];
-            break;
-        }
-        case KeyStyleBlue: {
-            break;
-        }
-        default:
-            break;
+- (void)setKeyStyle:(KeyStyle)style {
+    if (_style == style) {
+        return;
     }
+    _style = style;
+    [self updateState];
+}
+
+- (void)setAppearance:(KeyAppearance)appearance {
+    if (_appearance == appearance) {
+        return;
+    }
+    _appearance = appearance;
     [self updateState];
 }
 
@@ -189,63 +188,138 @@
 }
 
 - (void)updateState {
-    switch (self.keyStyle) {
-        case KeyStyleLight: {
-            switch (self.state) {
-                case UIControlStateHighlighted:
-                    self.color = [UIColor darkKeyColor];
-                    self.shadowColor = [UIColor darkKeyShadowColor];
-                    break;
-                    
-                case UIControlStateNormal:
-                default:
-                    self.color = [UIColor lightKeyColor];
-                    self.shadowColor = [UIColor lightKeyShadowColor];
-                    break;
-            }
-            break;
-        }
-        case KeyStyleDark: {
-            switch (self.state) {
-                case UIControlStateHighlighted:
-                    self.color = [UIColor lightKeyColor];
-                    self.shadowColor = [UIColor lightKeyShadowColor];
-                    _imageView.tintColor = [UIColor blackColor];
-                    break;
-                    
-                case UIControlStateNormal:
-                default:
-                    self.color = [UIColor darkKeyColor];
-                    self.shadowColor = [UIColor darkKeyShadowColor];
-                    _imageView.tintColor = [UIColor whiteColor];
-                    break;
-            }
-            break;
-        }
-        case KeyStyleBlue: {
-            switch (self.state) {
-                case UIControlStateHighlighted:
-                    self.color = [UIColor lightKeyColor];
-                    self.shadowColor = [UIColor lightKeyShadowColor];
-                    self.label.textColor = [UIColor blackColor];
-                    break;
-                    
-                case UIControlStateDisabled:
-                    self.color = [UIColor darkKeyColor];
-                    self.shadowColor = [UIColor darkKeyShadowColor];
-                    self.label.textColor = [UIColor blueKeyDisabledTitleColor];
-                    break;
-                    
-                case UIControlStateNormal:
-                default:
-                    self.color = [UIColor blueKeyColor];
-                    self.shadowColor = [UIColor blueKeyShadowColor];
+    
+    switch (self.appearance) {
+            
+        case KeyAppearanceDark: {
+            switch (self.style) {
+                case KeyStyleLight: {
                     self.label.textColor = [UIColor whiteColor];
+                    switch (self.state) {
+                        case UIControlStateHighlighted:
+                            self.color = [DarkAppearance darkKeyColor];
+                            self.shadowColor = [DarkAppearance darkKeyShadowColor];
+                            break;
+                            
+                        case UIControlStateNormal:
+                        default:
+                            self.color = [DarkAppearance lightKeyColor];
+                            self.shadowColor = [DarkAppearance lightKeyShadowColor];
+                            break;
+                    }
                     break;
+                }
+                case KeyStyleDark: {
+                    self.label.textColor = [UIColor whiteColor];
+//                    _imageView.image = [_imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//                    _imageView.tintColor = [DarkAppearance whiteColor];
+                    switch (self.state) {
+                        case UIControlStateHighlighted:
+                            self.color = [DarkAppearance lightKeyColor];
+                            self.shadowColor = [DarkAppearance lightKeyShadowColor];
+                            break;
+                            
+                        case UIControlStateNormal:
+                        default:
+                            self.color = [DarkAppearance darkKeyColor];
+                            self.shadowColor = [DarkAppearance darkKeyShadowColor];
+                            break;
+                    }
+                    break;
+                }
+                case KeyStyleBlue: {
+                    switch (self.state) {
+                        case UIControlStateHighlighted:
+                            self.color = [DarkAppearance lightKeyColor];
+                            self.shadowColor = [DarkAppearance lightKeyShadowColor];
+                            self.label.textColor = [DarkAppearance blackColor];
+                            break;
+                            
+                        case UIControlStateDisabled:
+                            self.color = [DarkAppearance darkKeyColor];
+                            self.shadowColor = [DarkAppearance darkKeyShadowColor];
+                            self.label.textColor = [DarkAppearance blueKeyDisabledTitleColor];
+                            break;
+                            
+                        case UIControlStateNormal:
+                        default:
+                            self.color = [DarkAppearance blueKeyColor];
+                            self.shadowColor = [DarkAppearance blueKeyShadowColor];
+                            self.label.textColor = [UIColor whiteColor];
+                            break;
+                    }
+                    break;
+                }
+            }
+            break;
+        }
+            
+        case KeyAppearanceLight:
+        default: {
+            
+            switch (self.style) {
+                case KeyStyleLight: {
+                    self.label.textColor = [UIColor blackColor];
+                    switch (self.state) {
+                        case UIControlStateHighlighted:
+                            self.color = [LightAppearance darkKeyColor];
+                            self.shadowColor = [LightAppearance darkKeyShadowColor];
+                            break;
+                            
+                        case UIControlStateNormal:
+                        default:
+                            self.color = [LightAppearance lightKeyColor];
+                            self.shadowColor = [LightAppearance lightKeyShadowColor];
+                            break;
+                    }
+                    break;
+                }
+                case KeyStyleDark: {
+                    self.label.textColor = [UIColor blackColor];
+                    switch (self.state) {
+                        case UIControlStateHighlighted:
+                            self.color = [LightAppearance lightKeyColor];
+                            self.shadowColor = [LightAppearance lightKeyShadowColor];
+                            _imageView.tintColor = [LightAppearance blackColor];
+                            break;
+                            
+                        case UIControlStateNormal:
+                        default:
+                            self.color = [LightAppearance darkKeyColor];
+                            self.shadowColor = [LightAppearance darkKeyShadowColor];
+                            _imageView.tintColor = [LightAppearance whiteColor];
+                            break;
+                    }
+                    break;
+                }
+                case KeyStyleBlue: {
+                    switch (self.state) {
+                        case UIControlStateHighlighted:
+                            self.color = [LightAppearance lightKeyColor];
+                            self.shadowColor = [LightAppearance lightKeyShadowColor];
+                            self.label.textColor = [LightAppearance blackColor];
+                            break;
+                            
+                        case UIControlStateDisabled:
+                            self.color = [LightAppearance darkKeyColor];
+                            self.shadowColor = [LightAppearance darkKeyShadowColor];
+                            self.label.textColor = [LightAppearance blueKeyDisabledTitleColor];
+                            break;
+                            
+                        case UIControlStateNormal:
+                        default:
+                            self.color = [LightAppearance blueKeyColor];
+                            self.shadowColor = [LightAppearance blueKeyShadowColor];
+                            self.label.textColor = [LightAppearance whiteColor];
+                            break;
+                    }
+                    break;
+                }
             }
             break;
         }
     }
+    
     [self setNeedsDisplay];
 }
 
@@ -268,12 +342,53 @@
 }
 
 - (void)drawKeyRect:(CGRect)rect color:(UIColor*)color withShadow:(UIColor*)shadowColor {
+    
     CGRect shadowRect = CGRectOffset(CGRectInset(rect, 0, kKeyShadowYOffset), 0, kKeyShadowYOffset);
-    UIBezierPath* shadowPath = [UIBezierPath bezierPathWithRoundedRect:shadowRect cornerRadius:self.cornerRadius];
+    
+    // counter-clockwise
+    UIBezierPath* shadowPath = [UIBezierPath bezierPath];
+    
+    // bottom left 1
+    [shadowPath moveToPoint:CGPointMake(0.0, shadowRect.size.height - self.cornerRadius)];
+    
+    // bottom left 2
+    [shadowPath addCurveToPoint:CGPointMake(self.cornerRadius, shadowRect.size.height)
+                            controlPoint1:CGPointMake(0.0, shadowRect.size.height - self.cornerRadius/2)
+                            controlPoint2:CGPointMake(self.cornerRadius/2, shadowRect.size.height)];
+    
+    // bottom right 1
+    [shadowPath addLineToPoint:CGPointMake(shadowRect.size.width - self.cornerRadius, shadowRect.size.height)];
+    
+    // bottom right 2
+    [shadowPath addCurveToPoint:CGPointMake(shadowRect.size.width, shadowRect.size.height - self.cornerRadius)
+                            controlPoint1:CGPointMake(shadowRect.size.width - self.cornerRadius/2, shadowRect.size.height)
+                            controlPoint2:CGPointMake(shadowRect.size.width, shadowRect.size.height - self.cornerRadius/2)];
+    
+    // top right 1
+    [shadowPath addLineToPoint:CGPointMake(shadowRect.size.width, shadowRect.size.height - self.cornerRadius - kKeyShadowYOffset)];
+    
+    // top right 2
+    [shadowPath addCurveToPoint:CGPointMake(shadowRect.size.width - self.cornerRadius, shadowRect.size.height - kKeyShadowYOffset)
+                            controlPoint1:CGPointMake(shadowRect.size.width, shadowRect.size.height - kKeyShadowYOffset - self.cornerRadius)
+                            controlPoint2:CGPointMake(shadowRect.size.width - self.cornerRadius/2, shadowRect.size.height - kKeyShadowYOffset)];
+    
+    // top left 1
+    [shadowPath addLineToPoint:CGPointMake(self.cornerRadius, shadowRect.size.height - kKeyShadowYOffset)];
+    
+    // top left 2
+    [shadowPath addCurveToPoint:CGPointMake(0.0, shadowRect.size.height - self.cornerRadius - kKeyShadowYOffset)
+                            controlPoint1:CGPointMake(self.cornerRadius/2, shadowRect.size.height - kKeyShadowYOffset)
+                            controlPoint2:CGPointMake(0.0, shadowRect.size.height - self.cornerRadius)];
+
+    // bottom left 1
+    [shadowPath addLineToPoint:CGPointMake(0.0, shadowRect.size.height - self.cornerRadius)];
+    
+    [shadowPath closePath];
+    [shadowPath applyTransform:CGAffineTransformMakeTranslation(0, kKeyShadowYOffset*2)];
     [shadowColor setFill];
     [shadowPath fill];
     
-    CGRect keyRect = CGRectOffset(CGRectInset(rect, 0, kKeyShadowYOffset), 0, -kKeyShadowYOffset);
+    CGRect keyRect = CGRectOffset(CGRectInset(rect, 0, kKeyShadowYOffset/2), 0, -kKeyShadowYOffset/2);
     UIBezierPath* keyPath = [UIBezierPath bezierPathWithRoundedRect:keyRect cornerRadius:self.cornerRadius];
     [color setFill];
     [keyPath fill];

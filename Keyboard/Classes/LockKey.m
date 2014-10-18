@@ -7,7 +7,8 @@
 //
 
 #import "LockKey.h"
-#import "UIColor+Key.h"
+#import "LightAppearance.h"
+#import "DarkAppearance.h"
 
 @interface Key ()
 @property (nonatomic, strong) UIImageView *imageView;
@@ -22,10 +23,10 @@
 @implementation LockKey
 
 @synthesize image = _image;
-@synthesize keyStyle = _keyStyle;
+@synthesize style = _style;
 
 - (instancetype)init {
-    self = [super initWithKeyStyle:KeyStyleDark];
+    self = [super initWithKeyStyle:KeyStyleDark appearance:KeyAppearanceLight];
     if (self) {
         self.locked = NO;
         self.selected = NO;
@@ -33,14 +34,14 @@
     return self;
 }
 
-- (instancetype)initWithKeyStyle:(KeyStyle)keyStyle {
+- (instancetype)initWithKeyStyle:(KeyStyle)style appearance:(KeyAppearance)appearance {
     return [self init];
 }
 
 
 #pragma mark - Properties
 
-- (void)setKeyStyle:(KeyStyle)keyStyle {
+- (void)setKeyStyle:(KeyStyle)style {
     // disable key style
 }
 
@@ -61,28 +62,62 @@
 }
 
 - (void)updateState {
-    if (!self.isLocked) {
-        switch (self.state) {
-            case UIControlStateSelected: {
-                self.color = [UIColor lightKeyColor];
-                self.shadowColor = [UIColor lightKeyShadowColor];
+    
+    switch (self.appearance) {
+        case KeyAppearanceDark: {
+            if (!self.isLocked) {
+                switch (self.state) {
+                    case UIControlStateSelected: {
+                        self.color = [DarkAppearance ultraLightKeyColor];
+                        self.shadowColor = [DarkAppearance ultraLightKeyShadowColor];
+                        self.tintColor = [DarkAppearance blackColor];
+                        break;
+                    }
+                    case UIControlStateNormal:
+                    default: {
+                        self.color = [DarkAppearance darkKeyColor];
+                        self.shadowColor = [DarkAppearance darkKeyShadowColor];
+                        self.tintColor = [DarkAppearance whiteColor];
+                    }
+                }
+                self.imageView.image = self.image;
+            } else {
+                self.color = [DarkAppearance ultraLightKeyColor];
+                self.shadowColor = [DarkAppearance ultraLightKeyShadowColor];
+                self.imageView.image = self.lockImage;
                 self.tintColor = [UIColor blackColor];
-                break;
             }
-            case UIControlStateNormal:
-            default: {
-                self.color = [UIColor darkKeyColor];
-                self.shadowColor = [UIColor darkKeyShadowColor];
-                self.tintColor = [UIColor whiteColor];
-            }
+            break;
         }
-        self.imageView.image = self.image;
-    } else {
-        self.color = [UIColor lightKeyColor];
-        self.shadowColor = [UIColor lightKeyShadowColor];
-        self.imageView.image = self.lockImage;
-        self.tintColor = [UIColor blackColor];
+         
+        case KeyAppearanceLight:
+        default: {
+            if (!self.isLocked) {
+                switch (self.state) {
+                    case UIControlStateSelected: {
+                        self.color = [LightAppearance lightKeyColor];
+                        self.shadowColor = [LightAppearance lightKeyShadowColor];
+                        self.tintColor = [LightAppearance blackColor];
+                        break;
+                    }
+                    case UIControlStateNormal:
+                    default: {
+                        self.color = [LightAppearance darkKeyColor];
+                        self.shadowColor = [LightAppearance darkKeyShadowColor];
+                        self.tintColor = [LightAppearance whiteColor];
+                    }
+                }
+                self.imageView.image = self.image;
+            } else {
+                self.color = [LightAppearance lightKeyColor];
+                self.shadowColor = [LightAppearance lightKeyShadowColor];
+                self.imageView.image = self.lockImage;
+                self.tintColor = [UIColor blackColor];
+            }
+            break;
+        }
     }
+
     [super setNeedsDisplay];
 }
 

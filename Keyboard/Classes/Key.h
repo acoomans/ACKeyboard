@@ -20,6 +20,10 @@ static CGFloat kKeyPadLandscapeTitleFontSize = 22.0;
 static CGFloat kKeyLabelOffsetY = -1.5;
 static CGFloat kKeyImageOffsetY = -0.5;
 
+typedef NS_ENUM(NSInteger, KeyAppearance) {
+    KeyAppearanceLight,
+    KeyAppearanceDark,
+};
 
 typedef NS_ENUM(NSInteger, KeyStyle) {
     KeyStyleLight,
@@ -30,15 +34,18 @@ typedef NS_ENUM(NSInteger, KeyStyle) {
 
 @interface Key : UIControl
 
-@property (nonatomic, assign) KeyStyle keyStyle;
+@property (nonatomic, assign) KeyStyle style;
+@property (nonatomic, assign) KeyAppearance appearance;
+
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) UIFont *titleFont;
+
 @property (nonatomic, strong) UIImage *image;
 
-+ (instancetype)keyWithStyle:(KeyStyle)keyStyle;
-+ (instancetype)keyWithStyle:(KeyStyle)keyStyle image:(UIImage*)image;
-+ (instancetype)keyWithStyle:(KeyStyle)keyStyle title:(NSString*)title;
++ (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance;
++ (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance image:(UIImage*)image;
++ (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance title:(NSString*)title;
 
-- (instancetype)initWithKeyStyle:(KeyStyle)keyStyle;
+- (instancetype)initWithKeyStyle:(KeyStyle)style appearance:(KeyAppearance)appearance;
 
 @end

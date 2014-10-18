@@ -1,15 +1,15 @@
 //
-//  UIColor+Key.m
+//  LightAppearance.m
 //  Yoboard
 //
-//  Created by Arnaud Coomans on 8/23/14.
+//  Created by Arnaud Coomans on 10/13/14.
 //
 //
 
-#import "UIColor+Key.h"
+#import "LightAppearance.h"
 #import "UIDevice+Hardware.h"
 
-@implementation UIColor (Key)
+@implementation LightAppearance
 
 + (UIColor*)lightKeyColor {
     static UIColor* _lightKeyColor;
@@ -99,7 +99,7 @@
     dispatch_once(&onceToken, ^{
         if ([[[UIDevice currentDevice] machine] hasPrefix:@"iPhone4,1"]) {
             _blueKeyShadowColor = [UIColor colorWithRed:107/255.0 green:109/255.0 blue:112/255.0 alpha:1.0];
-
+            
         } else if ([[[UIDevice currentDevice] machine] hasPrefix:@"iPhone5,"]) {
             _blueKeyShadowColor = [UIColor colorWithRed:105/255.0 green:106/255.0 blue:109/255.0 alpha:1.0];
             
