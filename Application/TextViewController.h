@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SettingsTableViewController.h"
 
-@interface ViewController : UIViewController
+@interface TextViewController : UIViewController <SettingsTableViewControllerDelegate>
 @property (nonatomic, weak) IBOutlet UITextView *textView;
 @end
 

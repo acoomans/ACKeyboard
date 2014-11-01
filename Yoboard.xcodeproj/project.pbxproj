@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C3BD05C19EBA33400348CDE /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3BD05B19EBA33400348CDE /* SettingsTableViewController.m */; };
 		6C72B91B19A03D90007E6205 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B91A19A03D90007E6205 /* main.m */; };
 		6C72B91E19A03D90007E6205 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B91D19A03D90007E6205 /* AppDelegate.m */; };
-		6C72B92119A03D90007E6205 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B92019A03D90007E6205 /* ViewController.m */; };
+		6C72B92119A03D90007E6205 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B92019A03D90007E6205 /* TextViewController.m */; };
 		6C72B92419A03D90007E6205 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C72B92219A03D90007E6205 /* Main.storyboard */; };
 		6C72B92619A03D90007E6205 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C72B92519A03D90007E6205 /* Images.xcassets */; };
 		6C72B93219A03D90007E6205 /* ApplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B93119A03D90007E6205 /* ApplicationTests.m */; };
@@ -17,6 +18,8 @@
 		6C72B94619A03DA2007E6205 /* Keyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C72B93D19A03DA2007E6205 /* Keyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6C9A86AC19EB8E7800EF1310 /* PhoneKeyboardMetrics.c in Sources */ = {isa = PBXBuildFile; fileRef = 6C9A86AA19EB8E7800EF1310 /* PhoneKeyboardMetrics.c */; };
 		6C9A86AF19EB947B00EF1310 /* PadKeyboardMetrics.c in Sources */ = {isa = PBXBuildFile; fileRef = 6C9A86AD19EB947B00EF1310 /* PadKeyboardMetrics.c */; };
+		6CB1A8051A058D78007F3474 /* SettingsValuesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB1A8041A058D78007F3474 /* SettingsValuesTableViewController.m */; };
+		6CB1A8081A05A450007F3474 /* UIView+Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB1A8071A05A450007F3474 /* UIView+Search.m */; };
 		6CC38D1819A30C34005549E7 /* LockKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF153A719A090E8004FE0E3 /* LockKey.m */; };
 		6CDBC9D519A97E71004F3566 /* UIColor+Key.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CDBC9D419A97E71004F3566 /* UIColor+Key.m */; };
 		6CDBC9D819A98307004F3566 /* UIDevice+Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CDBC9D719A98307004F3566 /* UIDevice+Hardware.m */; };
@@ -85,13 +88,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6C3BD05A19EBA33400348CDE /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		6C3BD05B19EBA33400348CDE /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		6C72B91519A03D90007E6205 /* Application.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Application.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C72B91919A03D90007E6205 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C72B91A19A03D90007E6205 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6C72B91C19A03D90007E6205 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6C72B91D19A03D90007E6205 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		6C72B91F19A03D90007E6205 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		6C72B92019A03D90007E6205 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		6C72B91F19A03D90007E6205 /* TextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
+		6C72B92019A03D90007E6205 /* TextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
 		6C72B92319A03D90007E6205 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6C72B92519A03D90007E6205 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6C72B92B19A03D90007E6205 /* ApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +110,10 @@
 		6C9A86AB19EB8E7800EF1310 /* PhoneKeyboardMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneKeyboardMetrics.h; sourceTree = "<group>"; };
 		6C9A86AD19EB947B00EF1310 /* PadKeyboardMetrics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PadKeyboardMetrics.c; sourceTree = "<group>"; };
 		6C9A86AE19EB947B00EF1310 /* PadKeyboardMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PadKeyboardMetrics.h; sourceTree = "<group>"; };
+		6CB1A8031A058D78007F3474 /* SettingsValuesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsValuesTableViewController.h; sourceTree = "<group>"; };
+		6CB1A8041A058D78007F3474 /* SettingsValuesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsValuesTableViewController.m; sourceTree = "<group>"; };
+		6CB1A8061A05A450007F3474 /* UIView+Search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Search.h"; sourceTree = "<group>"; };
+		6CB1A8071A05A450007F3474 /* UIView+Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Search.m"; sourceTree = "<group>"; };
 		6CD2261119EB5E8500B87061 /* Metrics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Metrics.h; sourceTree = "<group>"; };
 		6CDBC9D319A97E71004F3566 /* UIColor+Key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Key.h"; sourceTree = "<group>"; };
 		6CDBC9D419A97E71004F3566 /* UIColor+Key.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Key.m"; sourceTree = "<group>"; };
@@ -189,8 +198,14 @@
 			children = (
 				6C72B91C19A03D90007E6205 /* AppDelegate.h */,
 				6C72B91D19A03D90007E6205 /* AppDelegate.m */,
-				6C72B91F19A03D90007E6205 /* ViewController.h */,
-				6C72B92019A03D90007E6205 /* ViewController.m */,
+				6C72B91F19A03D90007E6205 /* TextViewController.h */,
+				6C72B92019A03D90007E6205 /* TextViewController.m */,
+				6C3BD05A19EBA33400348CDE /* SettingsTableViewController.h */,
+				6C3BD05B19EBA33400348CDE /* SettingsTableViewController.m */,
+				6CB1A8031A058D78007F3474 /* SettingsValuesTableViewController.h */,
+				6CB1A8041A058D78007F3474 /* SettingsValuesTableViewController.m */,
+				6CB1A8061A05A450007F3474 /* UIView+Search.h */,
+				6CB1A8071A05A450007F3474 /* UIView+Search.m */,
 				6C72B92219A03D90007E6205 /* Main.storyboard */,
 				6C72B92519A03D90007E6205 /* Images.xcassets */,
 				6C72B91819A03D90007E6205 /* Supporting Files */,
@@ -494,9 +509,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C72B92119A03D90007E6205 /* ViewController.m in Sources */,
+				6C3BD05C19EBA33400348CDE /* SettingsTableViewController.m in Sources */,
+				6C72B92119A03D90007E6205 /* TextViewController.m in Sources */,
 				6C72B91E19A03D90007E6205 /* AppDelegate.m in Sources */,
 				6C72B91B19A03D90007E6205 /* main.m in Sources */,
+				6CB1A8081A05A450007F3474 /* UIView+Search.m in Sources */,
+				6CB1A8051A058D78007F3474 /* SettingsValuesTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
