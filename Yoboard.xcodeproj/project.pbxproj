@@ -110,6 +110,7 @@
 		6C9A86AB19EB8E7800EF1310 /* PhoneKeyboardMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneKeyboardMetrics.h; sourceTree = "<group>"; };
 		6C9A86AD19EB947B00EF1310 /* PadKeyboardMetrics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PadKeyboardMetrics.c; sourceTree = "<group>"; };
 		6C9A86AE19EB947B00EF1310 /* PadKeyboardMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PadKeyboardMetrics.h; sourceTree = "<group>"; };
+		6CB1A8091A05A8B5007F3474 /* Linear.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Linear.h; sourceTree = "<group>"; };
 		6CD2261119EB5E8500B87061 /* Metrics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Metrics.h; sourceTree = "<group>"; };
 		6CDBC9D619A98307004F3566 /* UIDevice+Hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Hardware.h"; sourceTree = "<group>"; };
 		6CDBC9D719A98307004F3566 /* UIDevice+Hardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Hardware.m"; sourceTree = "<group>"; };
@@ -241,6 +242,7 @@
 		6C72B93E19A03DA2007E6205 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
+				6CB1A8091A05A8B5007F3474 /* Linear.h */,
 				6C3BD06419EBB3AD00348CDE /* Appearance */,
 				6CD2261019EB5DE500B87061 /* Metrics */,
 				6CDBC9D219A97E71004F3566 /* Categories */,
