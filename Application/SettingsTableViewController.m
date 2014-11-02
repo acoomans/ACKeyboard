@@ -18,6 +18,7 @@ static NSString *kSettingsTableViewControllerSwitchCellIdentifier = @"kSettingsT
 @property (nonatomic, strong) NSDictionary *returnKeyDefaultValues;
 @property (nonatomic, strong) NSDictionary *keyboardAppearanceValues;
 @property (nonatomic, strong) NSDictionary *autoEnableReturnKeyValues;
+@property (nonatomic, strong) NSDictionary *backgroundColorValues;
 @end
 
 
@@ -42,6 +43,13 @@ static NSString *kSettingsTableViewControllerSwitchCellIdentifier = @"kSettingsT
                                       @(UIKeyboardAppearanceLight): @"Light",
                                       @(UIKeyboardAppearanceDark): @"Dark",
                                       };
+    self.backgroundColorValues = @{
+                                   [UIColor blackColor]: @"Black",
+                                   [UIColor whiteColor]: @"White",
+                                   [UIColor redColor]: @"Red",
+                                   [UIColor greenColor]: @"Green",
+                                   [UIColor blueColor]: @"Blue",
+                                   };
 }
 
 
@@ -52,7 +60,7 @@ static NSString *kSettingsTableViewControllerSwitchCellIdentifier = @"kSettingsT
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4; // number of SettingsTableViewControllerType
+    return 5; // number of SettingsTableViewControllerType
 }
 
 
@@ -62,7 +70,9 @@ static NSString *kSettingsTableViewControllerSwitchCellIdentifier = @"kSettingsT
     switch (indexPath.row) {
         case SettingsTableViewControllerTypeCapitalization:
         case SettingsTableViewControllerTypeReturnKey:
-        case SettingsTableViewControllerTypeAppearance: {
+        case SettingsTableViewControllerTypeAppearance:
+        case SettingsTableViewControllerTypeBackgroundColor:
+        {
             cell = [tableView dequeueReusableCellWithIdentifier:kSettingsTableViewControllerTextCellIdentifier
                                                    forIndexPath:indexPath];
             break;
@@ -95,6 +105,10 @@ static NSString *kSettingsTableViewControllerSwitchCellIdentifier = @"kSettingsT
         }
         case SettingsTableViewControllerTypeAppearance: {
             title = [NSString stringWithFormat:@"Appearance: %@", self.keyboardAppearanceValues[value]];
+            break;
+        }
+        case SettingsTableViewControllerTypeBackgroundColor: {
+            title = [NSString stringWithFormat:@"Background: %@", self.backgroundColorValues[value]];
             break;
         }
         case SettingsTableViewControllerTypeAutoEnableReturnKey: {
@@ -137,6 +151,10 @@ static NSString *kSettingsTableViewControllerSwitchCellIdentifier = @"kSettingsT
             values = self.keyboardAppearanceValues;
             break;
         }
+        case SettingsTableViewControllerTypeBackgroundColor: {
+            values = self.backgroundColorValues;
+            break;
+        }
         case SettingsTableViewControllerTypeAutoEnableReturnKey:
         default:
             break;
@@ -161,7 +179,9 @@ static NSString *kSettingsTableViewControllerSwitchCellIdentifier = @"kSettingsT
     switch ([self.tableView indexPathForSelectedRow].row) {
         case SettingsTableViewControllerTypeCapitalization:
         case SettingsTableViewControllerTypeReturnKey:
-        case SettingsTableViewControllerTypeAppearance: {
+        case SettingsTableViewControllerTypeAppearance:
+        case SettingsTableViewControllerTypeBackgroundColor:
+        {
             if ([self.delegate respondsToSelector:@selector(settingsTableViewController:didSelectValue:forType:)]) {
                 [self.delegate settingsTableViewController:self
                                             didSelectValue:value

@@ -15,6 +15,7 @@ typedef NS_ENUM(NSInteger, SettingsTableViewControllerType) {
     SettingsTableViewControllerTypeReturnKey,
     SettingsTableViewControllerTypeAppearance,
     SettingsTableViewControllerTypeAutoEnableReturnKey,
+    SettingsTableViewControllerTypeBackgroundColor,
 };
 
 

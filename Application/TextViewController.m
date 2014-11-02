@@ -18,6 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.textView becomeFirstResponder];
+    self.textView.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,6 +46,8 @@
             return @(self.textView.keyboardAppearance);
         case SettingsTableViewControllerTypeAutoEnableReturnKey:
             return @(self.textView.enablesReturnKeyAutomatically);
+        case SettingsTableViewControllerTypeBackgroundColor:
+            return self.textView.backgroundColor;
         default:
             return nil;
     }
@@ -66,6 +69,8 @@
         case SettingsTableViewControllerTypeAutoEnableReturnKey:
             self.textView.enablesReturnKeyAutomatically = [value boolValue];
             break;
+        case SettingsTableViewControllerTypeBackgroundColor:
+            self.textView.backgroundColor = self.view.backgroundColor = value;
         default:
             break;
     }
