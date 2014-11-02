@@ -8,6 +8,7 @@
 
 #include "PadKeyboardMetrics.h"
 #import "Linear.h"
+#import "UIScreen+Orientation.h"
 
 
 #define kPadKeyboardPortraitWidth   768.0
@@ -127,7 +128,7 @@ PadKeyboardMetrics getPadLinearKeyboardMetrics(CGFloat keyboardWidth, CGFloat ke
             keyHeight
         },
         
-        .cornerRadius = 4.0,
+        .cornerRadius = ACInterfaceOrientationIsPortrait() ? 5.0 : 7.0,
         
     };
     return metrics;
