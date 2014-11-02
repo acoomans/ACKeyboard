@@ -7,7 +7,7 @@
 //
 
 #include "PadKeyboardMetrics.h"
-#import "Metrics.h"
+#import "Linear.h"
 
 
 #define kPadKeyboardPortraitWidth   768.0

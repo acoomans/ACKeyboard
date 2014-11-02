@@ -7,7 +7,7 @@
 //
 
 #import "PhoneKeyboardMetrics.h"
-#import "Metrics.h"
+#import "Linear.h"
 
 
 #define kPhoneKeyboardPortraitWidth     320.0
@@ -15,7 +15,6 @@
 
 #define kPhoneKeyboardPortraitHeight    216.0
 #define kPhoneKeyboardLandscapeHeight   162.0
-
 
 #define edgeMargin      3.0
 #define bottomMargin    3.0
