@@ -142,27 +142,6 @@ static CGFloat kKeyPadDefaultCornerRadius = 5.0;
 }
 
 
-//#pragma mark - Touch tracking
-//
-//
-//- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-//    BOOL result = [super beginTrackingWithTouch:touch withEvent:event];
-//    [self updateState];
-//    return result;
-//}
-//
-//- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-//    BOOL result = [super continueTrackingWithTouch:touch withEvent:event];
-//    [self updateState];
-//    return result;
-//}
-//
-//- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-//    [super endTrackingWithTouch:touch withEvent:event];
-//    [self updateState];
-//}
-
-
 #pragma mark - Touch handling
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
