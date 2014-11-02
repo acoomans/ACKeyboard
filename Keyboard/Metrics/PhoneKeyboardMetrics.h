@@ -19,6 +19,8 @@ typedef struct {
     CGRect spaceButtonFrame;
     CGRect returnButtonFrame;
     
+    CGFloat cornerRadius;
+    
 } PhoneKeyboardMetrics;
 
 PhoneKeyboardMetrics getPhoneLinearKeyboardMetrics(CGFloat keyboardWidth, CGFloat keyboardHeight);

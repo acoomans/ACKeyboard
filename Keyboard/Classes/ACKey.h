@@ -8,9 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-static CGFloat kKeyPhoneCornerRadius = 4.0;
-static CGFloat kKeyPadCornerRadius = 5.0;
-
 static CGFloat kKeyShadowYOffset = 0.5;
 
 static CGFloat kKeyPhoneTitleFontSize = 16.0;
@@ -36,6 +33,7 @@ typedef NS_ENUM(NSInteger, KeyStyle) {
 
 @property (nonatomic, assign) KeyStyle style;
 @property (nonatomic, assign) KeyAppearance appearance;
+@property (nonatomic, assign) CGFloat cornerRadius;
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) UIFont *titleFont;

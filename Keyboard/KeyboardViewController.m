@@ -56,28 +56,41 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
         PadKeyboardMetrics padKeyboardMetrics = getPadLinearKeyboardMetrics(size.width, size.height);
 
         self.deleteButton.frame = padKeyboardMetrics.deleteButtonFrame;
+        self.deleteButton.cornerRadius = padKeyboardMetrics.cornerRadius;
         
         self.yoButton.frame = padKeyboardMetrics.yoButton;
+        self.yoButton.cornerRadius = padKeyboardMetrics.cornerRadius;
         self.returnButton.frame = padKeyboardMetrics.returnButtonFrame;
+        self.returnButton.cornerRadius = padKeyboardMetrics.cornerRadius;
         
         self.leftShiftButton.frame = padKeyboardMetrics.leftShiftButtonFrame;
+        self.leftShiftButton.cornerRadius = padKeyboardMetrics.cornerRadius;
         self.rightShiftButton.frame = padKeyboardMetrics.rightShiftButtonFrame;
+        self.rightShiftButton.cornerRadius = padKeyboardMetrics.cornerRadius;
         
         self.nextKeyboardButton.frame = padKeyboardMetrics.nextKeyboardButtonFrame;
+        self.nextKeyboardButton.cornerRadius = padKeyboardMetrics.cornerRadius;
         self.spaceButton.frame = padKeyboardMetrics.spaceButtonFrame;
+        self.spaceButton.cornerRadius = padKeyboardMetrics.cornerRadius;
     
     } else { // UIUserInterfaceIdiomPhone
         
         PhoneKeyboardMetrics phoneKeyboardMetrics = getPhoneLinearKeyboardMetrics(size.width, size.height);
 
         self.yoButton.frame = phoneKeyboardMetrics.yoButton;
+        self.yoButton.cornerRadius = phoneKeyboardMetrics.cornerRadius;
         
         self.leftShiftButton.frame = phoneKeyboardMetrics.leftShiftButtonFrame;
+        self.leftShiftButton.cornerRadius = phoneKeyboardMetrics.cornerRadius;
         self.deleteButton.frame = phoneKeyboardMetrics.deleteButtonFrame;
+        self.deleteButton.cornerRadius = phoneKeyboardMetrics.cornerRadius;
         
         self.nextKeyboardButton.frame = phoneKeyboardMetrics.nextKeyboardButtonFrame;
+        self.nextKeyboardButton.cornerRadius = phoneKeyboardMetrics.cornerRadius;
         self.spaceButton.frame = phoneKeyboardMetrics.spaceButtonFrame;
+        self.spaceButton.cornerRadius = phoneKeyboardMetrics.cornerRadius;
         self.returnButton.frame = phoneKeyboardMetrics.returnButtonFrame;
+        self.returnButton.cornerRadius = phoneKeyboardMetrics.cornerRadius;
     }
 }
 

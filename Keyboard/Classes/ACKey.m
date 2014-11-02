@@ -10,13 +10,15 @@
 #import "ACLightAppearance.h"
 #import "ACDarkAppearance.h"
 
+static CGFloat kKeyPhoneDefaultCornerRadius = 4.0;
+static CGFloat kKeyPadDefaultCornerRadius = 5.0;
+
 
 @interface ACKey ()
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIColor *color;
 @property (nonatomic, strong) UIColor *shadowColor;
-@property (nonatomic, assign) CGFloat cornerRadius;
 @end
 
 
@@ -45,9 +47,9 @@
         self.style = style;
         self.appearance = appearance;
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            self.cornerRadius = kKeyPadCornerRadius;
+            self.cornerRadius = kKeyPadDefaultCornerRadius;
         } else {
-            self.cornerRadius = kKeyPhoneCornerRadius;
+            self.cornerRadius = kKeyPhoneDefaultCornerRadius;
         }
     }
     return self;
@@ -127,6 +129,14 @@
 
 - (UIFont*)titleFont {
     return self.label.font;
+}
+
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+    if (cornerRadius == _cornerRadius) {
+        return;
+    }
+    _cornerRadius = cornerRadius;
+    [self setNeedsDisplay];
 }
 
 

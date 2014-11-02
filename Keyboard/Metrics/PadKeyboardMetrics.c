@@ -125,7 +125,9 @@ PadKeyboardMetrics getPadLinearKeyboardMetrics(CGFloat keyboardWidth, CGFloat ke
             keyboardHeight - (bottomMargin + keyHeight + rowMargin + keyHeight + rowMargin + keyHeight),
             letterKeyWidth,
             keyHeight
-        }
+        },
+        
+        .cornerRadius = 4.0,
         
     };
     return metrics;

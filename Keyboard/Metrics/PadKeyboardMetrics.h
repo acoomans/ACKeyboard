@@ -21,6 +21,8 @@ typedef struct {
     CGRect spaceButtonFrame;
     CGRect returnButtonFrame;
     
+    CGFloat cornerRadius;
+    
 } PadKeyboardMetrics;
 
 PadKeyboardMetrics getPadLinearKeyboardMetrics(CGFloat keyboardWidth, CGFloat keyboardHeight);

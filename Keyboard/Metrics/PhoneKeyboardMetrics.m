@@ -8,6 +8,7 @@
 
 #import "PhoneKeyboardMetrics.h"
 #import "Linear.h"
+#import "UIDevice+Hardware.h"
 
 
 #define kPhoneKeyboardPortraitWidth     320.0
@@ -95,7 +96,9 @@ PhoneKeyboardMetrics getPhoneLinearKeyboardMetrics(CGFloat keyboardWidth, CGFloa
             keyboardHeight - (bottomMargin + keyHeight + rowMargin + keyHeight + rowMargin + keyHeight),
             letterKeyWidth,
             keyHeight
-        }
+        },
+        
+        .cornerRadius = ([[[UIDevice currentDevice] machine] hasPrefix:@"iPhone7,1"] ? 5.0 : 4.0),
         
     };
     return metrics;
