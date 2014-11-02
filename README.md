@@ -39,6 +39,10 @@ The keys have the following features:
 
 Run the demo application in the iOS simulator to try it out.
 
+To enable the keyboard, open the Settings app and go to:
+
+General > Keyboard > Keyboards > Add New Keyboard... > ACKeyboard
+
 ## Extending and making your own keyboard
 
 ### Keys
