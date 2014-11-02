@@ -1,6 +1,6 @@
 //
 //  Linear.h
-//  Yoboard
+//  ACKeyboard
 //
 //  Created by Arnaud Coomans on 11/1/14.
 //

@@ -1,6 +1,6 @@
 //
 //  PadKeyboardMetrics.c
-//  Yoboard
+//  ACKeyboard
 //
 //  Created by Arnaud Coomans on 10/12/14.
 //

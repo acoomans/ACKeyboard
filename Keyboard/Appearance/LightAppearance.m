@@ -1,6 +1,6 @@
 //
 //  LightAppearance.m
-//  Yoboard
+//  ACKeyboard
 //
 //  Created by Arnaud Coomans on 10/13/14.
 //

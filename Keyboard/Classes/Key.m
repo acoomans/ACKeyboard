@@ -1,6 +1,6 @@
 //
 //  Key.m
-//  Yoboard
+//  ACKeyboard
 //
 //  Created by Arnaud Coomans on 8/17/14.
 //
