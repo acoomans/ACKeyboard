@@ -25,7 +25,9 @@ static CGFloat kKeyPadDefaultCornerRadius = 5.0;
 @implementation ACKey
 
 + (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance {
-    return [[self alloc] initWithKeyStyle:style appearance:appearance];
+    ACKey *key = [[self alloc] initWithKeyStyle:style appearance:appearance];
+    [key updateState];
+    return key;
 }
 
 + (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance image:(UIImage*)image {
