@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-static CGFloat kKeyShadowYOffset = 0.5;
+static CGFloat kKeyShadowYOffset = 1.0;
 
 static CGFloat kKeyPhoneTitleFontSize = 16.0;
 static CGFloat kKeyPadPortraitTitleFontSize = 18.0;
