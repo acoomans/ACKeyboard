@@ -1,5 +1,5 @@
 //
-//  DarkAppearance.h
+//  ACLightAppearance.h
 //  ACKeyboard
 //
 //  Created by Arnaud Coomans on 10/13/14.
@@ -8,10 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DarkAppearance : UIColor
-
-+ (UIColor*)ultraLightKeyColor;
-+ (UIColor*)ultraLightKeyShadowColor;
+@interface ACLightAppearance : UIColor
 
 + (UIColor*)lightKeyColor;
 + (UIColor*)lightKeyShadowColor;

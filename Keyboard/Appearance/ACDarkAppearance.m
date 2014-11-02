@@ -1,12 +1,12 @@
 //
-//  DarkAppearance.m
+//  ACDarkAppearance.m
 //  ACKeyboard
 //
 //  Created by Arnaud Coomans on 10/13/14.
 //
 //
 
-#import "DarkAppearance.h"
+#import "ACDarkAppearance.h"
 #import "UIDevice+Hardware.h"
 
 #import "Metrics.h"
@@ -23,7 +23,7 @@
     [UIColor colorWithWhite:DarkAppearanceWhite(onBlack, onWhite) alpha:DarkAppearanceAlpha(onBlack, onWhite)];
 
 
-@implementation DarkAppearance
+@implementation ACDarkAppearance
 
 
 + (UIColor*)ultraLightKeyColor {

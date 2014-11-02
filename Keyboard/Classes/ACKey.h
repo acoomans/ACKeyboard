@@ -1,5 +1,5 @@
 //
-//  Key.h
+//  ACKey.h
 //  ACKeyboard
 //
 //  Created by Arnaud Coomans on 8/17/14.
@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger, KeyStyle) {
 };
 
 
-@interface Key : UIControl
+@interface ACKey : UIControl
 
 @property (nonatomic, assign) KeyStyle style;
 @property (nonatomic, assign) KeyAppearance appearance;

@@ -1,17 +1,17 @@
 //
-//  Key.m
+//  ACKey.m
 //  ACKeyboard
 //
 //  Created by Arnaud Coomans on 8/17/14.
 //
 //
 
-#import "Key.h"
-#import "LightAppearance.h"
-#import "DarkAppearance.h"
+#import "ACKey.h"
+#import "ACLightAppearance.h"
+#import "ACDarkAppearance.h"
 
 
-@interface Key ()
+@interface ACKey ()
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIColor *color;
@@ -20,20 +20,20 @@
 @end
 
 
-@implementation Key
+@implementation ACKey
 
 + (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance {
     return [[self alloc] initWithKeyStyle:style appearance:appearance];
 }
 
 + (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance image:(UIImage*)image {
-    Key *key = [self keyWithStyle:style appearance:(KeyAppearance)appearance];
+    ACKey *key = [self keyWithStyle:style appearance:(KeyAppearance)appearance];
     key.image = image;
     return key;
 }
 
 + (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance title:(NSString*)title {
-    Key *key = [self keyWithStyle:style appearance:(KeyAppearance)appearance];
+    ACKey *key = [self keyWithStyle:style appearance:(KeyAppearance)appearance];
     key.title = title;
     return key;
 }
@@ -197,14 +197,14 @@
                     self.label.textColor = [UIColor whiteColor];
                     switch (self.state) {
                         case UIControlStateHighlighted:
-                            self.color = [DarkAppearance darkKeyColor];
-                            self.shadowColor = [DarkAppearance darkKeyShadowColor];
+                            self.color = [ACDarkAppearance darkKeyColor];
+                            self.shadowColor = [ACDarkAppearance darkKeyShadowColor];
                             break;
                             
                         case UIControlStateNormal:
                         default:
-                            self.color = [DarkAppearance lightKeyColor];
-                            self.shadowColor = [DarkAppearance lightKeyShadowColor];
+                            self.color = [ACDarkAppearance lightKeyColor];
+                            self.shadowColor = [ACDarkAppearance lightKeyShadowColor];
                             break;
                     }
                     break;
@@ -215,14 +215,14 @@
 //                    _imageView.tintColor = [DarkAppearance whiteColor];
                     switch (self.state) {
                         case UIControlStateHighlighted:
-                            self.color = [DarkAppearance lightKeyColor];
-                            self.shadowColor = [DarkAppearance lightKeyShadowColor];
+                            self.color = [ACDarkAppearance lightKeyColor];
+                            self.shadowColor = [ACDarkAppearance lightKeyShadowColor];
                             break;
                             
                         case UIControlStateNormal:
                         default:
-                            self.color = [DarkAppearance darkKeyColor];
-                            self.shadowColor = [DarkAppearance darkKeyShadowColor];
+                            self.color = [ACDarkAppearance darkKeyColor];
+                            self.shadowColor = [ACDarkAppearance darkKeyShadowColor];
                             break;
                     }
                     break;
@@ -230,21 +230,21 @@
                 case KeyStyleBlue: {
                     switch (self.state) {
                         case UIControlStateHighlighted:
-                            self.color = [DarkAppearance lightKeyColor];
-                            self.shadowColor = [DarkAppearance lightKeyShadowColor];
-                            self.label.textColor = [DarkAppearance blackColor];
+                            self.color = [ACDarkAppearance lightKeyColor];
+                            self.shadowColor = [ACDarkAppearance lightKeyShadowColor];
+                            self.label.textColor = [ACDarkAppearance blackColor];
                             break;
                             
                         case UIControlStateDisabled:
-                            self.color = [DarkAppearance darkKeyColor];
-                            self.shadowColor = [DarkAppearance darkKeyShadowColor];
-                            self.label.textColor = [DarkAppearance blueKeyDisabledTitleColor];
+                            self.color = [ACDarkAppearance darkKeyColor];
+                            self.shadowColor = [ACDarkAppearance darkKeyShadowColor];
+                            self.label.textColor = [ACDarkAppearance blueKeyDisabledTitleColor];
                             break;
                             
                         case UIControlStateNormal:
                         default:
-                            self.color = [DarkAppearance blueKeyColor];
-                            self.shadowColor = [DarkAppearance blueKeyShadowColor];
+                            self.color = [ACDarkAppearance blueKeyColor];
+                            self.shadowColor = [ACDarkAppearance blueKeyShadowColor];
                             self.label.textColor = [UIColor whiteColor];
                             break;
                     }
@@ -262,14 +262,14 @@
                     self.label.textColor = [UIColor blackColor];
                     switch (self.state) {
                         case UIControlStateHighlighted:
-                            self.color = [LightAppearance darkKeyColor];
-                            self.shadowColor = [LightAppearance darkKeyShadowColor];
+                            self.color = [ACLightAppearance darkKeyColor];
+                            self.shadowColor = [ACLightAppearance darkKeyShadowColor];
                             break;
                             
                         case UIControlStateNormal:
                         default:
-                            self.color = [LightAppearance lightKeyColor];
-                            self.shadowColor = [LightAppearance lightKeyShadowColor];
+                            self.color = [ACLightAppearance lightKeyColor];
+                            self.shadowColor = [ACLightAppearance lightKeyShadowColor];
                             break;
                     }
                     break;
@@ -278,16 +278,16 @@
                     self.label.textColor = [UIColor blackColor];
                     switch (self.state) {
                         case UIControlStateHighlighted:
-                            self.color = [LightAppearance lightKeyColor];
-                            self.shadowColor = [LightAppearance lightKeyShadowColor];
-                            _imageView.tintColor = [LightAppearance blackColor];
+                            self.color = [ACLightAppearance lightKeyColor];
+                            self.shadowColor = [ACLightAppearance lightKeyShadowColor];
+                            _imageView.tintColor = [ACLightAppearance blackColor];
                             break;
                             
                         case UIControlStateNormal:
                         default:
-                            self.color = [LightAppearance darkKeyColor];
-                            self.shadowColor = [LightAppearance darkKeyShadowColor];
-                            _imageView.tintColor = [LightAppearance whiteColor];
+                            self.color = [ACLightAppearance darkKeyColor];
+                            self.shadowColor = [ACLightAppearance darkKeyShadowColor];
+                            _imageView.tintColor = [ACLightAppearance whiteColor];
                             break;
                     }
                     break;
@@ -295,22 +295,22 @@
                 case KeyStyleBlue: {
                     switch (self.state) {
                         case UIControlStateHighlighted:
-                            self.color = [LightAppearance lightKeyColor];
-                            self.shadowColor = [LightAppearance lightKeyShadowColor];
-                            self.label.textColor = [LightAppearance blackColor];
+                            self.color = [ACLightAppearance lightKeyColor];
+                            self.shadowColor = [ACLightAppearance lightKeyShadowColor];
+                            self.label.textColor = [ACLightAppearance blackColor];
                             break;
                             
                         case UIControlStateDisabled:
-                            self.color = [LightAppearance darkKeyColor];
-                            self.shadowColor = [LightAppearance darkKeyShadowColor];
-                            self.label.textColor = [LightAppearance blueKeyDisabledTitleColor];
+                            self.color = [ACLightAppearance darkKeyColor];
+                            self.shadowColor = [ACLightAppearance darkKeyShadowColor];
+                            self.label.textColor = [ACLightAppearance blueKeyDisabledTitleColor];
                             break;
                             
                         case UIControlStateNormal:
                         default:
-                            self.color = [LightAppearance blueKeyColor];
-                            self.shadowColor = [LightAppearance blueKeyShadowColor];
-                            self.label.textColor = [LightAppearance whiteColor];
+                            self.color = [ACLightAppearance blueKeyColor];
+                            self.shadowColor = [ACLightAppearance blueKeyShadowColor];
+                            self.label.textColor = [ACLightAppearance whiteColor];
                             break;
                     }
                     break;

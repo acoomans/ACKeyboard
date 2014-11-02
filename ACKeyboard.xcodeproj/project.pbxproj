@@ -8,21 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		6C3BD05C19EBA33400348CDE /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3BD05B19EBA33400348CDE /* SettingsTableViewController.m */; };
-		6C3BD06919EBB3AD00348CDE /* DarkAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3BD06619EBB3AD00348CDE /* DarkAppearance.m */; };
-		6C3BD06A19EBB3AD00348CDE /* LightAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3BD06819EBB3AD00348CDE /* LightAppearance.m */; };
+		6C3BD06919EBB3AD00348CDE /* ACDarkAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3BD06619EBB3AD00348CDE /* ACDarkAppearance.m */; };
+		6C3BD06A19EBB3AD00348CDE /* ACLightAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3BD06819EBB3AD00348CDE /* ACLightAppearance.m */; };
 		6C72B91B19A03D90007E6205 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B91A19A03D90007E6205 /* main.m */; };
 		6C72B91E19A03D90007E6205 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B91D19A03D90007E6205 /* AppDelegate.m */; };
 		6C72B92119A03D90007E6205 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B92019A03D90007E6205 /* TextViewController.m */; };
 		6C72B92419A03D90007E6205 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C72B92219A03D90007E6205 /* Main.storyboard */; };
 		6C72B92619A03D90007E6205 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C72B92519A03D90007E6205 /* Images.xcassets */; };
 		6C72B93219A03D90007E6205 /* ApplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B93119A03D90007E6205 /* ApplicationTests.m */; };
-		6C72B94319A03DA2007E6205 /* KeyboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B94219A03DA2007E6205 /* KeyboardViewController.m */; };
+		6C72B94319A03DA2007E6205 /* ACKeyboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C72B94219A03DA2007E6205 /* ACKeyboardViewController.m */; };
 		6C72B94619A03DA2007E6205 /* Keyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C72B93D19A03DA2007E6205 /* Keyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6C9A86AC19EB8E7800EF1310 /* PhoneKeyboardMetrics.c in Sources */ = {isa = PBXBuildFile; fileRef = 6C9A86AA19EB8E7800EF1310 /* PhoneKeyboardMetrics.c */; };
 		6C9A86AF19EB947B00EF1310 /* PadKeyboardMetrics.c in Sources */ = {isa = PBXBuildFile; fileRef = 6C9A86AD19EB947B00EF1310 /* PadKeyboardMetrics.c */; };
 		6CB1A8051A058D78007F3474 /* SettingsValuesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB1A8041A058D78007F3474 /* SettingsValuesTableViewController.m */; };
 		6CB1A8081A05A450007F3474 /* UIView+Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB1A8071A05A450007F3474 /* UIView+Search.m */; };
-		6CC38D1819A30C34005549E7 /* LockKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF153A719A090E8004FE0E3 /* LockKey.m */; };
+		6CC38D1819A30C34005549E7 /* ACLockKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF153A719A090E8004FE0E3 /* ACLockKey.m */; };
 		6CDBC9D819A98307004F3566 /* UIDevice+Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CDBC9D719A98307004F3566 /* UIDevice+Hardware.m */; };
 		6CE5ED4119A07C8E009EB1FB /* bold_delete_landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE5ED2319A07C8E009EB1FB /* bold_delete_landscape@2x.png */; };
 		6CE5ED4219A07C8E009EB1FB /* bold_delete_landscape_skinny@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE5ED2419A07C8E009EB1FB /* bold_delete_landscape_skinny@2x.png */; };
@@ -47,7 +47,7 @@
 		6CE5ED5519A07C8E009EB1FB /* shift_portrait_skinny@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE5ED3919A07C8E009EB1FB /* shift_portrait_skinny@2x.png */; };
 		6CE5ED5619A07C8E009EB1FB /* shift_split_10key-163r@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE5ED3A19A07C8E009EB1FB /* shift_split_10key-163r@2x.png */; };
 		6CE5ED5719A07C8E009EB1FB /* shift_split_10key@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE5ED3B19A07C8E009EB1FB /* shift_split_10key@2x.png */; };
-		6CF153AB19A09198004FE0E3 /* Key.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF153AA19A09198004FE0E3 /* Key.m */; };
+		6CF153AB19A09198004FE0E3 /* ACKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CF153AA19A09198004FE0E3 /* ACKey.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,10 +91,10 @@
 /* Begin PBXFileReference section */
 		6C3BD05A19EBA33400348CDE /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		6C3BD05B19EBA33400348CDE /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
-		6C3BD06519EBB3AD00348CDE /* DarkAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DarkAppearance.h; sourceTree = "<group>"; };
-		6C3BD06619EBB3AD00348CDE /* DarkAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DarkAppearance.m; sourceTree = "<group>"; };
-		6C3BD06719EBB3AD00348CDE /* LightAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightAppearance.h; sourceTree = "<group>"; };
-		6C3BD06819EBB3AD00348CDE /* LightAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LightAppearance.m; sourceTree = "<group>"; };
+		6C3BD06519EBB3AD00348CDE /* ACDarkAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACDarkAppearance.h; sourceTree = "<group>"; };
+		6C3BD06619EBB3AD00348CDE /* ACDarkAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACDarkAppearance.m; sourceTree = "<group>"; };
+		6C3BD06719EBB3AD00348CDE /* ACLightAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACLightAppearance.h; sourceTree = "<group>"; };
+		6C3BD06819EBB3AD00348CDE /* ACLightAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACLightAppearance.m; sourceTree = "<group>"; };
 		6C72B91519A03D90007E6205 /* Application.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Application.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C72B91919A03D90007E6205 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C72B91A19A03D90007E6205 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -109,8 +109,8 @@
 		6C72B93119A03D90007E6205 /* ApplicationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplicationTests.m; sourceTree = "<group>"; };
 		6C72B93D19A03DA2007E6205 /* Keyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Keyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C72B94019A03DA2007E6205 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6C72B94119A03DA2007E6205 /* KeyboardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyboardViewController.h; sourceTree = "<group>"; };
-		6C72B94219A03DA2007E6205 /* KeyboardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyboardViewController.m; sourceTree = "<group>"; };
+		6C72B94119A03DA2007E6205 /* ACKeyboardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACKeyboardViewController.h; sourceTree = "<group>"; };
+		6C72B94219A03DA2007E6205 /* ACKeyboardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACKeyboardViewController.m; sourceTree = "<group>"; };
 		6C9A86AA19EB8E7800EF1310 /* PhoneKeyboardMetrics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PhoneKeyboardMetrics.c; sourceTree = "<group>"; };
 		6C9A86AB19EB8E7800EF1310 /* PhoneKeyboardMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneKeyboardMetrics.h; sourceTree = "<group>"; };
 		6C9A86AD19EB947B00EF1310 /* PadKeyboardMetrics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PadKeyboardMetrics.c; sourceTree = "<group>"; };
@@ -146,10 +146,10 @@
 		6CE5ED3919A07C8E009EB1FB /* shift_portrait_skinny@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shift_portrait_skinny@2x.png"; sourceTree = "<group>"; };
 		6CE5ED3A19A07C8E009EB1FB /* shift_split_10key-163r@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shift_split_10key-163r@2x.png"; sourceTree = "<group>"; };
 		6CE5ED3B19A07C8E009EB1FB /* shift_split_10key@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shift_split_10key@2x.png"; sourceTree = "<group>"; };
-		6CF153A619A090E8004FE0E3 /* LockKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LockKey.h; sourceTree = "<group>"; };
-		6CF153A719A090E8004FE0E3 /* LockKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LockKey.m; sourceTree = "<group>"; };
-		6CF153A919A09198004FE0E3 /* Key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Key.h; sourceTree = "<group>"; };
-		6CF153AA19A09198004FE0E3 /* Key.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Key.m; sourceTree = "<group>"; };
+		6CF153A619A090E8004FE0E3 /* ACLockKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACLockKey.h; sourceTree = "<group>"; };
+		6CF153A719A090E8004FE0E3 /* ACLockKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACLockKey.m; sourceTree = "<group>"; };
+		6CF153A919A09198004FE0E3 /* ACKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACKey.h; sourceTree = "<group>"; };
+		6CF153AA19A09198004FE0E3 /* ACKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACKey.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,10 +180,10 @@
 		6C3BD06419EBB3AD00348CDE /* Appearance */ = {
 			isa = PBXGroup;
 			children = (
-				6C3BD06719EBB3AD00348CDE /* LightAppearance.h */,
-				6C3BD06819EBB3AD00348CDE /* LightAppearance.m */,
-				6C3BD06519EBB3AD00348CDE /* DarkAppearance.h */,
-				6C3BD06619EBB3AD00348CDE /* DarkAppearance.m */,
+				6C3BD06719EBB3AD00348CDE /* ACLightAppearance.h */,
+				6C3BD06819EBB3AD00348CDE /* ACLightAppearance.m */,
+				6C3BD06519EBB3AD00348CDE /* ACDarkAppearance.h */,
+				6C3BD06619EBB3AD00348CDE /* ACDarkAppearance.m */,
 			);
 			path = Appearance;
 			sourceTree = "<group>";
@@ -262,8 +262,8 @@
 				6CD2261019EB5DE500B87061 /* Metrics */,
 				6CDBC9D219A97E71004F3566 /* Categories */,
 				6CF153A519A090CF004FE0E3 /* Classes */,
-				6C72B94119A03DA2007E6205 /* KeyboardViewController.h */,
-				6C72B94219A03DA2007E6205 /* KeyboardViewController.m */,
+				6C72B94119A03DA2007E6205 /* ACKeyboardViewController.h */,
+				6C72B94219A03DA2007E6205 /* ACKeyboardViewController.m */,
 				6C72B94D19A03E04007E6205 /* Resources */,
 				6C72B93F19A03DA2007E6205 /* Supporting Files */,
 			);
@@ -364,10 +364,10 @@
 		6CF153A519A090CF004FE0E3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				6CF153A919A09198004FE0E3 /* Key.h */,
-				6CF153AA19A09198004FE0E3 /* Key.m */,
-				6CF153A619A090E8004FE0E3 /* LockKey.h */,
-				6CF153A719A090E8004FE0E3 /* LockKey.m */,
+				6CF153A919A09198004FE0E3 /* ACKey.h */,
+				6CF153AA19A09198004FE0E3 /* ACKey.m */,
+				6CF153A619A090E8004FE0E3 /* ACLockKey.h */,
+				6CF153A719A090E8004FE0E3 /* ACLockKey.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -547,12 +547,12 @@
 			files = (
 				6CDBC9D819A98307004F3566 /* UIDevice+Hardware.m in Sources */,
 				6C9A86AF19EB947B00EF1310 /* PadKeyboardMetrics.c in Sources */,
-				6C3BD06919EBB3AD00348CDE /* DarkAppearance.m in Sources */,
-				6CF153AB19A09198004FE0E3 /* Key.m in Sources */,
-				6C3BD06A19EBB3AD00348CDE /* LightAppearance.m in Sources */,
+				6C3BD06919EBB3AD00348CDE /* ACDarkAppearance.m in Sources */,
+				6CF153AB19A09198004FE0E3 /* ACKey.m in Sources */,
+				6C3BD06A19EBB3AD00348CDE /* ACLightAppearance.m in Sources */,
 				6C9A86AC19EB8E7800EF1310 /* PhoneKeyboardMetrics.c in Sources */,
-				6C72B94319A03DA2007E6205 /* KeyboardViewController.m in Sources */,
-				6CC38D1819A30C34005549E7 /* LockKey.m in Sources */,
+				6C72B94319A03DA2007E6205 /* ACKeyboardViewController.m in Sources */,
+				6CC38D1819A30C34005549E7 /* ACLockKey.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,15 +1,15 @@
 //
-//  LightAppearance.m
+//  ACLightAppearance.m
 //  ACKeyboard
 //
 //  Created by Arnaud Coomans on 10/13/14.
 //
 //
 
-#import "LightAppearance.h"
+#import "ACLightAppearance.h"
 #import "UIDevice+Hardware.h"
 
-@implementation LightAppearance
+@implementation ACLightAppearance
 
 + (UIColor*)lightKeyColor {
     static UIColor* _lightKeyColor;

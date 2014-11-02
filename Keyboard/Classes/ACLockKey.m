@@ -1,16 +1,16 @@
 //
-//  LockKey.m
+//  ACLockKey.m
 //  ACKeyboard
 //
 //  Created by Arnaud Coomans on 8/17/14.
 //
 //
 
-#import "LockKey.h"
-#import "LightAppearance.h"
-#import "DarkAppearance.h"
+#import "ACLockKey.h"
+#import "ACLightAppearance.h"
+#import "ACDarkAppearance.h"
 
-@interface Key ()
+@interface ACKey ()
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIColor *color;
 @property (nonatomic, strong) UIColor *shadowColor;
@@ -20,7 +20,7 @@
 
 
 
-@implementation LockKey
+@implementation ACLockKey
 
 @synthesize image = _image;
 @synthesize style = _style;
@@ -68,22 +68,22 @@
             if (!self.isLocked) {
                 switch (self.state) {
                     case UIControlStateSelected: {
-                        self.color = [DarkAppearance ultraLightKeyColor];
-                        self.shadowColor = [DarkAppearance ultraLightKeyShadowColor];
-                        self.tintColor = [DarkAppearance blackColor];
+                        self.color = [ACDarkAppearance ultraLightKeyColor];
+                        self.shadowColor = [ACDarkAppearance ultraLightKeyShadowColor];
+                        self.tintColor = [ACDarkAppearance blackColor];
                         break;
                     }
                     case UIControlStateNormal:
                     default: {
-                        self.color = [DarkAppearance darkKeyColor];
-                        self.shadowColor = [DarkAppearance darkKeyShadowColor];
-                        self.tintColor = [DarkAppearance whiteColor];
+                        self.color = [ACDarkAppearance darkKeyColor];
+                        self.shadowColor = [ACDarkAppearance darkKeyShadowColor];
+                        self.tintColor = [ACDarkAppearance whiteColor];
                     }
                 }
                 self.imageView.image = self.image;
             } else {
-                self.color = [DarkAppearance ultraLightKeyColor];
-                self.shadowColor = [DarkAppearance ultraLightKeyShadowColor];
+                self.color = [ACDarkAppearance ultraLightKeyColor];
+                self.shadowColor = [ACDarkAppearance ultraLightKeyShadowColor];
                 self.imageView.image = self.lockImage;
                 self.tintColor = [UIColor blackColor];
             }
@@ -95,22 +95,22 @@
             if (!self.isLocked) {
                 switch (self.state) {
                     case UIControlStateSelected: {
-                        self.color = [LightAppearance lightKeyColor];
-                        self.shadowColor = [LightAppearance lightKeyShadowColor];
-                        self.tintColor = [LightAppearance blackColor];
+                        self.color = [ACLightAppearance lightKeyColor];
+                        self.shadowColor = [ACLightAppearance lightKeyShadowColor];
+                        self.tintColor = [ACLightAppearance blackColor];
                         break;
                     }
                     case UIControlStateNormal:
                     default: {
-                        self.color = [LightAppearance darkKeyColor];
-                        self.shadowColor = [LightAppearance darkKeyShadowColor];
-                        self.tintColor = [LightAppearance whiteColor];
+                        self.color = [ACLightAppearance darkKeyColor];
+                        self.shadowColor = [ACLightAppearance darkKeyShadowColor];
+                        self.tintColor = [ACLightAppearance whiteColor];
                     }
                 }
                 self.imageView.image = self.image;
             } else {
-                self.color = [LightAppearance lightKeyColor];
-                self.shadowColor = [LightAppearance lightKeyShadowColor];
+                self.color = [ACLightAppearance lightKeyColor];
+                self.shadowColor = [ACLightAppearance lightKeyShadowColor];
                 self.imageView.image = self.lockImage;
                 self.tintColor = [UIColor blackColor];
             }

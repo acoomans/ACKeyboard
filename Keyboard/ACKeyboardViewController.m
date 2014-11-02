@@ -1,31 +1,31 @@
 //
-//  KeyboardViewController.m
-//  Keyboard
+//  ACKeyboardViewController.m
+//  ACKeyboard
 //
 //  Created by Arnaud Coomans on 8/16/14.
 //  Copyright (c) 2014 Arnaud Coomans. All rights reserved.
 //
 
-#import "KeyboardViewController.h"
+#import "ACKeyboardViewController.h"
 
 #import "Metrics.h"
-#import "Key.h"
-#import "LockKey.h"
+#import "ACKey.h"
+#import "ACLockKey.h"
 
 
 static NSTimeInterval kDeleteTimerInterval = 0.1;
 
-@interface KeyboardViewController ()
+@interface ACKeyboardViewController ()
 
 @property (nonatomic, strong) NSMutableArray *constraints;
 
-@property (nonatomic, strong) Key *nextKeyboardButton;
-@property (nonatomic, strong) Key *spaceButton;
-@property (nonatomic, strong) Key *returnButton;
-@property (nonatomic, strong) Key *yoButton;
-@property (nonatomic, strong) Key *deleteButton;
-@property (nonatomic, strong) LockKey *leftShiftButton;
-@property (nonatomic, strong) LockKey *rightShiftButton;
+@property (nonatomic, strong) ACKey *nextKeyboardButton;
+@property (nonatomic, strong) ACKey *spaceButton;
+@property (nonatomic, strong) ACKey *returnButton;
+@property (nonatomic, strong) ACKey *yoButton;
+@property (nonatomic, strong) ACKey *deleteButton;
+@property (nonatomic, strong) ACLockKey *leftShiftButton;
+@property (nonatomic, strong) ACLockKey *rightShiftButton;
 
 @property (nonatomic, strong) NSRegularExpression *endOfSentenceRegularExpression;
 @property (nonatomic, strong) NSRegularExpression *beginningOfSentenceRegularExpression;
@@ -35,7 +35,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 @end
 
 
-@implementation KeyboardViewController
+@implementation ACKeyboardViewController
 
 #pragma mark - View
 
@@ -93,30 +93,30 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 
 #pragma mark - Keys
 
-- (Key*)nextKeyboardButton {
+- (ACKey*)nextKeyboardButton {
     if (!_nextKeyboardButton) {
-        _nextKeyboardButton = [Key keyWithStyle:KeyStyleDark appearance:self.keyAppearance image:[UIImage imageNamed:@"global_portrait"]];
+        _nextKeyboardButton = [ACKey keyWithStyle:KeyStyleDark appearance:self.keyAppearance image:[UIImage imageNamed:@"global_portrait"]];
         [_nextKeyboardButton addTarget:self action:@selector(advanceToNextInputMode) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_nextKeyboardButton];
     }
     return _nextKeyboardButton;
 }
 
-- (Key*)returnButton {
+- (ACKey*)returnButton {
     if (!_returnButton) {
-        _returnButton = [Key keyWithStyle:KeyStyleDark appearance:self.keyAppearance title:@"return"];
+        _returnButton = [ACKey keyWithStyle:KeyStyleDark appearance:self.keyAppearance title:@"return"];
         [_returnButton addTarget:self action:@selector(returnButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_returnButton];
     }
     return _returnButton;
 }
 
-- (Key*)spaceButton {
+- (ACKey*)spaceButton {
     if (!_spaceButton) {
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            _spaceButton = [Key keyWithStyle:KeyStyleLight appearance:self.keyAppearance];
+            _spaceButton = [ACKey keyWithStyle:KeyStyleLight appearance:self.keyAppearance];
         } else {
-            _spaceButton = [Key keyWithStyle:KeyStyleLight appearance:self.keyAppearance title:@"space"];
+            _spaceButton = [ACKey keyWithStyle:KeyStyleLight appearance:self.keyAppearance title:@"space"];
         }
         [_spaceButton addTarget:self action:@selector(spaceButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_spaceButton];
@@ -124,19 +124,19 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     return _spaceButton;
 }
 
-- (Key*)yoButton {
+- (ACKey*)yoButton {
     if (!_yoButton) {
-        _yoButton = [Key keyWithStyle:KeyStyleLight appearance:self.keyAppearance title:@"YO"];
+        _yoButton = [ACKey keyWithStyle:KeyStyleLight appearance:self.keyAppearance title:@"YO"];
         [_yoButton addTarget:self action:@selector(yoButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_yoButton];
     }
     return _yoButton;
 }
 
-- (Key*)deleteButton {
+- (ACKey*)deleteButton {
     if (!_deleteButton) {
         UIImage *image = [[UIImage imageNamed:@"delete_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        _deleteButton = [Key keyWithStyle:KeyStyleDark appearance:self.keyAppearance image:image];
+        _deleteButton = [ACKey keyWithStyle:KeyStyleDark appearance:self.keyAppearance image:image];
         [_deleteButton addTarget:self action:@selector(deleteButtonTapped:) forControlEvents:UIControlEventTouchDown];
         [_deleteButton addTarget:self action:@selector(deleteButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
         [_deleteButton addTarget:self action:@selector(deleteButtonReleased:) forControlEvents:UIControlEventTouchUpOutside];
@@ -145,9 +145,9 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     return _deleteButton;
 }
 
-- (LockKey*)leftShiftButton {
+- (ACLockKey*)leftShiftButton {
     if (!_leftShiftButton) {
-        _leftShiftButton = [LockKey keyWithStyle:KeyStyleDark appearance:self.keyAppearance];
+        _leftShiftButton = [ACLockKey keyWithStyle:KeyStyleDark appearance:self.keyAppearance];
         _leftShiftButton.image = [[UIImage imageNamed:@"shift_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         _leftShiftButton.lockImage = [[UIImage imageNamed:@"shift_lock_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [_leftShiftButton addTarget:self action:@selector(shiftButtonTapped:) forControlEvents:UIControlEventTouchDown];
@@ -157,9 +157,9 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     return _leftShiftButton;
 }
 
-- (LockKey*)rightShiftButton {
+- (ACLockKey*)rightShiftButton {
     if (!_rightShiftButton) {
-        _rightShiftButton = [LockKey keyWithStyle:KeyStyleDark appearance:self.keyAppearance];
+        _rightShiftButton = [ACLockKey keyWithStyle:KeyStyleDark appearance:self.keyAppearance];
         _rightShiftButton.image = [[UIImage imageNamed:@"shift_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         _rightShiftButton.lockImage = [[UIImage imageNamed:@"shift_lock_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [_rightShiftButton addTarget:self action:@selector(shiftButtonTapped:) forControlEvents:UIControlEventTouchDown];
@@ -352,8 +352,8 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 
 - (void)updateFont {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        for (Key *key in @[self.returnButton, self.yoButton]) {
-            if ([key isKindOfClass:[Key class]]) {
+        for (ACKey *key in @[self.returnButton, self.yoButton]) {
+            if ([key isKindOfClass:[ACKey class]]) {
                 if (self.view.frame.size.width >= 1024) {
                     key.titleFont = [UIFont systemFontOfSize:kKeyPadLandscapeTitleFontSize];
                 } else {
@@ -365,8 +365,8 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)updateAppearance {
-    for (Key *key in self.view.subviews) {
-        if ([key isKindOfClass:[Key class]]) {
+    for (ACKey *key in self.view.subviews) {
+        if ([key isKindOfClass:[ACKey class]]) {
             key.appearance = self.keyAppearance;
         }
     }

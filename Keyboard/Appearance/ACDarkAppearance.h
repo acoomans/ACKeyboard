@@ -1,5 +1,5 @@
 //
-//  LightAppearance.h
+//  ACDarkAppearance.h
 //  ACKeyboard
 //
 //  Created by Arnaud Coomans on 10/13/14.
@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LightAppearance : UIColor
+@interface ACDarkAppearance : UIColor
+
++ (UIColor*)ultraLightKeyColor;
++ (UIColor*)ultraLightKeyShadowColor;
 
 + (UIColor*)lightKeyColor;
 + (UIColor*)lightKeyShadowColor;

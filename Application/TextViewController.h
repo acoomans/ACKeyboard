@@ -1,6 +1,6 @@
 //
 //  ViewController.h
-//  Application
+//  ACKeyboard
 //
 //  Created by Arnaud Coomans on 8/16/14.
 //

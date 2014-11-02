@@ -1,14 +1,14 @@
 //
-//  LockKey.h
+//  ACLockKey.h
 //  ACKeyboard
 //
 //  Created by Arnaud Coomans on 8/17/14.
 //
 //
 
-#import "Key.h"
+#import "ACKey.h"
 
-@interface LockKey : Key
+@interface ACLockKey : ACKey
 
 @property (nonatomic, assign, getter=isLocked) BOOL locked;
 
