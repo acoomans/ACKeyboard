@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Arnaud Coomans. All rights reserved.
 //
 
-#import "ACKeyboardViewController.h"
+#import "KeyboardViewController.h"
 
 #import "Metrics.h"
 #import "ACKey.h"
@@ -15,7 +15,7 @@
 
 static NSTimeInterval kDeleteTimerInterval = 0.1;
 
-@interface ACKeyboardViewController ()
+@interface KeyboardViewController ()
 
 @property (nonatomic, strong) NSMutableArray *constraints;
 
@@ -35,7 +35,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 @end
 
 
-@implementation ACKeyboardViewController
+@implementation KeyboardViewController
 
 #pragma mark - View
 

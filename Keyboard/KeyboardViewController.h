@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ACKeyboardViewController : UIInputViewController
+@interface KeyboardViewController : UIInputViewController
 
 @end
