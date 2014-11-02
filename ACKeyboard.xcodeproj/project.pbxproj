@@ -95,6 +95,7 @@
 		6C3BD06619EBB3AD00348CDE /* ACDarkAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACDarkAppearance.m; sourceTree = "<group>"; };
 		6C3BD06719EBB3AD00348CDE /* ACLightAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACLightAppearance.h; sourceTree = "<group>"; };
 		6C3BD06819EBB3AD00348CDE /* ACLightAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACLightAppearance.m; sourceTree = "<group>"; };
+		6C547B5C1A05B33900526FE3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6C72B91519A03D90007E6205 /* Application.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Application.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C72B91919A03D90007E6205 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C72B91A19A03D90007E6205 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -191,6 +192,7 @@
 		6C72B90A19A03D84007E6205 = {
 			isa = PBXGroup;
 			children = (
+				6C547B5C1A05B33900526FE3 /* README.md */,
 				6C72B91719A03D90007E6205 /* Application */,
 				6C72B92E19A03D90007E6205 /* ApplicationTests */,
 				6C72B93E19A03DA2007E6205 /* Keyboard */,
