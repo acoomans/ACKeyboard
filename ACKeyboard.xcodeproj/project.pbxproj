@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C1E48481A06026100C343F9 /* LinearTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C1E48471A06026100C343F9 /* LinearTests.m */; };
 		6C3BD05C19EBA33400348CDE /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3BD05B19EBA33400348CDE /* SettingsTableViewController.m */; };
 		6C3BD06919EBB3AD00348CDE /* ACDarkAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3BD06619EBB3AD00348CDE /* ACDarkAppearance.m */; };
 		6C3BD06A19EBB3AD00348CDE /* ACLightAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3BD06819EBB3AD00348CDE /* ACLightAppearance.m */; };
@@ -89,6 +90,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6C1E48471A06026100C343F9 /* LinearTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinearTests.m; sourceTree = "<group>"; };
 		6C3BD05A19EBA33400348CDE /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		6C3BD05B19EBA33400348CDE /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		6C3BD06519EBB3AD00348CDE /* ACDarkAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACDarkAppearance.h; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 		6C72B92E19A03D90007E6205 /* ApplicationTests */ = {
 			isa = PBXGroup;
 			children = (
+				6C1E48471A06026100C343F9 /* LinearTests.m */,
 				6C72B93119A03D90007E6205 /* ApplicationTests.m */,
 				6C72B92F19A03D90007E6205 /* Supporting Files */,
 			);
@@ -539,6 +542,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C1E48481A06026100C343F9 /* LinearTests.m in Sources */,
 				6C72B93219A03D90007E6205 /* ApplicationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
