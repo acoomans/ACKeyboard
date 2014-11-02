@@ -353,33 +353,33 @@
     
     // bottom left 2
     [shadowPath addCurveToPoint:CGPointMake(self.cornerRadius, shadowRect.size.height)
-                            controlPoint1:CGPointMake(0.0, shadowRect.size.height - self.cornerRadius/2)
-                            controlPoint2:CGPointMake(self.cornerRadius/2, shadowRect.size.height)];
+                  controlPoint1:CGPointMake(0.0, shadowRect.size.height - self.cornerRadius/2)
+                  controlPoint2:CGPointMake(self.cornerRadius/2, shadowRect.size.height)];
     
     // bottom right 1
     [shadowPath addLineToPoint:CGPointMake(shadowRect.size.width - self.cornerRadius, shadowRect.size.height)];
     
     // bottom right 2
     [shadowPath addCurveToPoint:CGPointMake(shadowRect.size.width, shadowRect.size.height - self.cornerRadius)
-                            controlPoint1:CGPointMake(shadowRect.size.width - self.cornerRadius/2, shadowRect.size.height)
-                            controlPoint2:CGPointMake(shadowRect.size.width, shadowRect.size.height - self.cornerRadius/2)];
+                  controlPoint1:CGPointMake(shadowRect.size.width - self.cornerRadius/2, shadowRect.size.height)
+                  controlPoint2:CGPointMake(shadowRect.size.width, shadowRect.size.height - self.cornerRadius/2)];
     
     // top right 1
     [shadowPath addLineToPoint:CGPointMake(shadowRect.size.width, shadowRect.size.height - self.cornerRadius - kKeyShadowYOffset)];
     
     // top right 2
     [shadowPath addCurveToPoint:CGPointMake(shadowRect.size.width - self.cornerRadius, shadowRect.size.height - kKeyShadowYOffset)
-                            controlPoint1:CGPointMake(shadowRect.size.width, shadowRect.size.height - kKeyShadowYOffset - self.cornerRadius)
-                            controlPoint2:CGPointMake(shadowRect.size.width - self.cornerRadius/2, shadowRect.size.height - kKeyShadowYOffset)];
+                  controlPoint1:CGPointMake(shadowRect.size.width, shadowRect.size.height - kKeyShadowYOffset - self.cornerRadius/2)
+                  controlPoint2:CGPointMake(shadowRect.size.width - self.cornerRadius/2, shadowRect.size.height - kKeyShadowYOffset)];
     
     // top left 1
     [shadowPath addLineToPoint:CGPointMake(self.cornerRadius, shadowRect.size.height - kKeyShadowYOffset)];
     
     // top left 2
     [shadowPath addCurveToPoint:CGPointMake(0.0, shadowRect.size.height - self.cornerRadius - kKeyShadowYOffset)
-                            controlPoint1:CGPointMake(self.cornerRadius/2, shadowRect.size.height - kKeyShadowYOffset)
-                            controlPoint2:CGPointMake(0.0, shadowRect.size.height - self.cornerRadius)];
-
+                  controlPoint1:CGPointMake(self.cornerRadius/2, shadowRect.size.height - kKeyShadowYOffset)
+                  controlPoint2:CGPointMake(0.0, shadowRect.size.height - self.cornerRadius/2 - kKeyShadowYOffset)];
+    
     // bottom left 1
     [shadowPath addLineToPoint:CGPointMake(0.0, shadowRect.size.height - self.cornerRadius)];
     
