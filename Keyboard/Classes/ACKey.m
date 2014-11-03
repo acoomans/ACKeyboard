@@ -202,8 +202,8 @@ static CGFloat kKeyPadDefaultCornerRadius = 5.0;
                 }
                 case KeyStyleDark: {
                     self.label.textColor = [UIColor whiteColor];
-//                    _imageView.image = [_imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-//                    _imageView.tintColor = [DarkAppearance whiteColor];
+                    _imageView.image = [_imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    _imageView.tintColor = [ACDarkAppearance whiteColor];
                     switch (self.state) {
                         case UIControlStateHighlighted:
                             self.color = [ACDarkAppearance lightKeyColor];
