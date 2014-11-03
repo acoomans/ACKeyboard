@@ -9,8 +9,6 @@
 #import "ACLightAppearance.h"
 #import "UIDevice+Hardware.h"
 
-#import "Linear.h"
-
 
 @implementation ACLightAppearance
 
