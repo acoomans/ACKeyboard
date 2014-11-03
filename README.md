@@ -59,14 +59,14 @@ General > Keyboard > Keyboards > Add New Keyboard... > ACKeyboard
 
 To make a key with a title:
 
-    ACKey *key = [ACKey keyWithStyle:KeyStyleLight
-                          appearance:KeyAppearanceLight
+    ACKey *key = [ACKey keyWithStyle:ACKeyStyleLight
+                          appearance:ACKeyAppearanceLight
                                title:@"A"];
                                
 or to make a key with a picture:
 
-	ACKey *key = [ACKey keyWithStyle:KeyStyleLight
-                          appearance:KeyAppearanceLight
+	ACKey *key = [ACKey keyWithStyle:ACKeyStyleLight
+                          appearance:ACKeyAppearanceLight
                                image:[UIImage imageNamed:@"global_portrait"]];
 
 being a UIControl subclass, a target-action can be associated to the key for an event:

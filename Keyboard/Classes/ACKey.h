@@ -17,70 +17,83 @@ static CGFloat kKeyPadLandscapeTitleFontSize = 22.0;
 static CGFloat kKeyLabelOffsetY = -1.5;
 static CGFloat kKeyImageOffsetY = -0.5;
 
-typedef NS_ENUM(NSInteger, KeyAppearance) {
-    KeyAppearanceLight,
-    KeyAppearanceDark,
+/** The appearance of a key; either light or dark
+ */
+typedef NS_ENUM(NSInteger, ACKeyAppearance) {
+    ACKeyAppearanceLight,
+    ACKeyAppearanceDark,
 };
 
-typedef NS_ENUM(NSInteger, KeyStyle) {
-    KeyStyleLight,
-    KeyStyleDark,
-    KeyStyleBlue,
+/** The style of a key
+ */
+typedef NS_ENUM(NSInteger, ACKeyStyle) {
+    ACKeyStyleLight,
+    ACKeyStyleDark,
+    ACKeyStyleBlue,
 };
 
 
 /**
- * ACKey represents a key of a keyboard
+ * ACKey represents a key of a keyboard.
  */
 @interface ACKey : UIControl
 
 
 /** @name Displaying the key */
 
-/** The style of key
+/** The style of key.
  */
-@property (nonatomic, assign) KeyStyle style;
+@property (nonatomic, assign) ACKeyStyle style;
 
-/** The appearance of the key
+/** The appearance of the key.
  */
-@property (nonatomic, assign) KeyAppearance appearance;
+@property (nonatomic, assign) ACKeyAppearance appearance;
 
-/** The corner radius of a key
+/** The corner radius of a key.
  */
 @property (nonatomic, assign) CGFloat cornerRadius;
 
 
 /** @name Title and Image */
 
-/** The title in the key
+/** The title in the key.
  */
 @property (nonatomic, copy) NSString *title;
 
-/** The font of the title in the key
+/** The font of the title in the key.
+ * @see title
  */
 @property (nonatomic, copy) UIFont *titleFont;
 
-/** The image in the key
+/** The image in the key.
  */
 @property (nonatomic, strong) UIImage *image;
 
 
 /** @name Initializers */
 
-/** Initialize the key with a style and appearance
+/** Initialize the key with a style and appearance.
+ * @param style The style of the key.
+ * @param appearance The appearance of the key.
  */
-+ (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance;
++ (instancetype)keyWithStyle:(ACKeyStyle)style appearance:(ACKeyAppearance)appearance;
 
-/** Initialize the key with a style, appearance and image
+/** Initialize the key with a style, appearance and image.
+ * @param style The style of the key.
+ * @param appearance The appearance of the key.
  */
-+ (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance image:(UIImage*)image;
++ (instancetype)keyWithStyle:(ACKeyStyle)style appearance:(ACKeyAppearance)appearance image:(UIImage*)image;
 
-/** Initialize the key with a style, appearance and title
+/** Initialize the key with a style, appearance and title.
+ * @param style The style of the key.
+ * @param appearance The appearance of the key.
  */
-+ (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance title:(NSString*)title;
++ (instancetype)keyWithStyle:(ACKeyStyle)style appearance:(ACKeyAppearance)appearance title:(NSString*)title;
 
-/** Initialize the key with a style and appearance
+/** Initialize the key with a style and appearance.
+ * @param style The style of the key.
+ * @param appearance The appearance of the key.
  */
-- (instancetype)initWithKeyStyle:(KeyStyle)style appearance:(KeyAppearance)appearance;
+- (instancetype)initWithKeyStyle:(ACKeyStyle)style appearance:(ACKeyAppearance)appearance;
 
 @end

@@ -24,25 +24,25 @@ static CGFloat kKeyPadDefaultCornerRadius = 5.0;
 
 @implementation ACKey
 
-+ (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance {
++ (instancetype)keyWithStyle:(ACKeyStyle)style appearance:(ACKeyAppearance)appearance {
     ACKey *key = [[self alloc] initWithKeyStyle:style appearance:appearance];
     [key updateState];
     return key;
 }
 
-+ (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance image:(UIImage*)image {
-    ACKey *key = [self keyWithStyle:style appearance:(KeyAppearance)appearance];
++ (instancetype)keyWithStyle:(ACKeyStyle)style appearance:(ACKeyAppearance)appearance image:(UIImage*)image {
+    ACKey *key = [self keyWithStyle:style appearance:(ACKeyAppearance)appearance];
     key.image = image;
     return key;
 }
 
-+ (instancetype)keyWithStyle:(KeyStyle)style appearance:(KeyAppearance)appearance title:(NSString*)title {
-    ACKey *key = [self keyWithStyle:style appearance:(KeyAppearance)appearance];
++ (instancetype)keyWithStyle:(ACKeyStyle)style appearance:(ACKeyAppearance)appearance title:(NSString*)title {
+    ACKey *key = [self keyWithStyle:style appearance:(ACKeyAppearance)appearance];
     key.title = title;
     return key;
 }
 
-- (instancetype)initWithKeyStyle:(KeyStyle)style appearance:(KeyAppearance)appearance {
+- (instancetype)initWithKeyStyle:(ACKeyStyle)style appearance:(ACKeyAppearance)appearance {
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
@@ -58,7 +58,7 @@ static CGFloat kKeyPadDefaultCornerRadius = 5.0;
 }
 
 - (instancetype)init {
-    return [self initWithKeyStyle:KeyStyleDark appearance:KeyAppearanceLight];
+    return [self initWithKeyStyle:ACKeyStyleDark appearance:ACKeyAppearanceLight];
 }
 
 
@@ -109,7 +109,7 @@ static CGFloat kKeyPadDefaultCornerRadius = 5.0;
     return self.imageView.image;
 }
 
-- (void)setKeyStyle:(KeyStyle)style {
+- (void)setKeyStyle:(ACKeyStyle)style {
     if (_style == style) {
         return;
     }
@@ -117,7 +117,7 @@ static CGFloat kKeyPadDefaultCornerRadius = 5.0;
     [self updateState];
 }
 
-- (void)setAppearance:(KeyAppearance)appearance {
+- (void)setAppearance:(ACKeyAppearance)appearance {
     if (_appearance == appearance) {
         return;
     }
@@ -182,9 +182,9 @@ static CGFloat kKeyPadDefaultCornerRadius = 5.0;
     
     switch (self.appearance) {
             
-        case KeyAppearanceDark: {
+        case ACKeyAppearanceDark: {
             switch (self.style) {
-                case KeyStyleLight: {
+                case ACKeyStyleLight: {
                     self.label.textColor = [UIColor whiteColor];
                     switch (self.state) {
                         case UIControlStateHighlighted:
@@ -200,7 +200,7 @@ static CGFloat kKeyPadDefaultCornerRadius = 5.0;
                     }
                     break;
                 }
-                case KeyStyleDark: {
+                case ACKeyStyleDark: {
                     self.label.textColor = [UIColor whiteColor];
                     _imageView.image = [_imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
                     _imageView.tintColor = [ACDarkAppearance whiteColor];
@@ -218,7 +218,7 @@ static CGFloat kKeyPadDefaultCornerRadius = 5.0;
                     }
                     break;
                 }
-                case KeyStyleBlue: {
+                case ACKeyStyleBlue: {
                     switch (self.state) {
                         case UIControlStateHighlighted:
                             self.color = [ACDarkAppearance lightKeyColor];
@@ -245,11 +245,11 @@ static CGFloat kKeyPadDefaultCornerRadius = 5.0;
             break;
         }
             
-        case KeyAppearanceLight:
+        case ACKeyAppearanceLight:
         default: {
             
             switch (self.style) {
-                case KeyStyleLight: {
+                case ACKeyStyleLight: {
                     self.label.textColor = [UIColor blackColor];
                     switch (self.state) {
                         case UIControlStateHighlighted:
@@ -265,7 +265,7 @@ static CGFloat kKeyPadDefaultCornerRadius = 5.0;
                     }
                     break;
                 }
-                case KeyStyleDark: {
+                case ACKeyStyleDark: {
                     self.label.textColor = [UIColor blackColor];
                     switch (self.state) {
                         case UIControlStateHighlighted:
@@ -283,7 +283,7 @@ static CGFloat kKeyPadDefaultCornerRadius = 5.0;
                     }
                     break;
                 }
-                case KeyStyleBlue: {
+                case ACKeyStyleBlue: {
                     switch (self.state) {
                         case UIControlStateHighlighted:
                             self.color = [ACLightAppearance lightKeyColor];

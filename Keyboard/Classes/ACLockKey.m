@@ -26,7 +26,7 @@
 @synthesize style = _style;
 
 - (instancetype)init {
-    self = [super initWithKeyStyle:KeyStyleDark appearance:KeyAppearanceLight];
+    self = [super initWithKeyStyle:ACKeyStyleDark appearance:ACKeyAppearanceLight];
     if (self) {
         self.locked = NO;
         self.selected = NO;
@@ -34,14 +34,14 @@
     return self;
 }
 
-- (instancetype)initWithKeyStyle:(KeyStyle)style appearance:(KeyAppearance)appearance {
+- (instancetype)initWithKeyStyle:(ACKeyStyle)style appearance:(ACKeyAppearance)appearance {
     return [self init];
 }
 
 
 #pragma mark - Properties
 
-- (void)setKeyStyle:(KeyStyle)style {
+- (void)setKeyStyle:(ACKeyStyle)style {
     // disable key style
 }
 
@@ -64,7 +64,7 @@
 - (void)updateState {
     
     switch (self.appearance) {
-        case KeyAppearanceDark: {
+        case ACKeyAppearanceDark: {
             if (!self.isLocked) {
                 switch (self.state) {
                     case UIControlStateSelected: {
@@ -90,7 +90,7 @@
             break;
         }
          
-        case KeyAppearanceLight:
+        case ACKeyAppearanceLight:
         default: {
             if (!self.isLocked) {
                 switch (self.state) {

@@ -26,7 +26,8 @@ typedef NS_ENUM(NSInteger, ACInterfaceOrientation) {
 
 @interface UIScreen (Orientation)
 
-/** The interface orientation
+/** 
+ * @return The interface orientation.
  */
 - (ACInterfaceOrientation)interfaceOrientation;
 

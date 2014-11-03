@@ -6,6 +6,8 @@
 //
 //
 
+/** Matrix determinants */
+
 #define MATRIX_2X2_DET( \
     a, b, \
     c, d) \
@@ -30,6 +32,8 @@
     - d * MATRIX_3X3_DET(e,f,g,i,j,k,m,n,o))
 
 
+/** Matrix solvers */
+
 #define LINEAR_2X2_SOLVE_X( \
     a1, a2, \
     b1, b2, \
@@ -41,6 +45,8 @@
     b1, b2, \
     c1, c2) \
     MATRIX_2X2_DET(a1, a2, c1, c2) / MATRIX_2X2_DET(a1, a2, b1, b2)
+
+/** Linear equation solver */
 
 #define LINEAR_EQ(p, arg1, res1, arg2, res2) \
     p * LINEAR_2X2_SOLVE_X(arg1, arg2, 1.0, 1.0, res1, res2) + LINEAR_2X2_SOLVE_Y(arg1, arg2, 1.0, 1.0, res1, res2)
