@@ -30,6 +30,8 @@ The keys have the following features:
 - regular and lock (shift) keys
 - different per-device color sets
 
+See [my post about ACKeyboard](http://mobilecraft.tumblr.com/post/101641170812/ackeyboard) for more details.
+
 
 ## Screenshots
 
