@@ -1,30 +1,31 @@
 //
-//  KeyboardViewController.m
-//  Keyboard
+//  ACKeyboardViewController.m
+//  ACKeyboard
 //
 //  Created by Arnaud Coomans on 8/16/14.
 //  Copyright (c) 2014 Arnaud Coomans. All rights reserved.
 //
 
 #import "KeyboardViewController.h"
-#import "Key.h"
-#import "LockKey.h"
+
+#import "Metrics.h"
+#import "ACKey.h"
+#import "ACLockKey.h"
 
 
-static CGFloat kKeysEdgeMargin = 2.5;
-static CGFloat kKeysBottomMargin = 3.0;
-static CGFloat kKeysRowMargin = 15.0;
 static NSTimeInterval kDeleteTimerInterval = 0.1;
-
 
 @interface KeyboardViewController ()
 
-@property (nonatomic, strong) Key *nextKeyboardButton;
-@property (nonatomic, strong) Key *spaceButton;
-@property (nonatomic, strong) Key *returnButton;
-@property (nonatomic, strong) Key *yoButton;
-@property (nonatomic, strong) Key *deleteButton;
-@property (nonatomic, strong) LockKey *shiftButton;
+@property (nonatomic, strong) NSMutableArray *constraints;
+
+@property (nonatomic, strong) ACKey *nextKeyboardButton;
+@property (nonatomic, strong) ACKey *spaceButton;
+@property (nonatomic, strong) ACKey *returnButton;
+@property (nonatomic, strong) ACKey *yoButton;
+@property (nonatomic, strong) ACKey *deleteButton;
+@property (nonatomic, strong) ACLockKey *leftShiftButton;
+@property (nonatomic, strong) ACLockKey *rightShiftButton;
 
 @property (nonatomic, strong) NSRegularExpression *endOfSentenceRegularExpression;
 @property (nonatomic, strong) NSRegularExpression *beginningOfSentenceRegularExpression;
@@ -36,263 +37,66 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 
 @implementation KeyboardViewController
 
-- (void)updateViewConstraints {
-    [super updateViewConstraints];
+#pragma mark - View
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self updateFont];
     
-    // Add custom view sizing constraints here
-    //    NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:self.view
-    //                                                                        attribute:NSLayoutAttributeHeight
-    //                                                                        relatedBy:NSLayoutRelationEqual
-    //                                                                           toItem:nil
-    //                                                                        attribute:NSLayoutAttributeNotAnAttribute
-    //                                                                       multiplier:0.0
-    //                                                                         constant:100.0]; //DEBUG not working as of xcode6-beta5
-    //    [self.view addConstraints:@[heightConstraint]];
+    // animating somehow reduces some jerkiness
+    [UIView animateWithDuration:0.0 delay:0.0 options:0 animations:^{
+        [self layoutViewForSize:self.view.frame.size];
+    } completion:^(BOOL finished) {}];
+}
+
+- (void)layoutViewForSize:(CGSize)size {
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        
+        PadKeyboardMetrics padKeyboardMetrics = getPadLinearKeyboardMetrics(size.width, size.height);
+
+        self.deleteButton.frame = padKeyboardMetrics.deleteButtonFrame;
+        self.deleteButton.cornerRadius = padKeyboardMetrics.cornerRadius;
+        
+        self.yoButton.frame = padKeyboardMetrics.yoButton;
+        self.yoButton.cornerRadius = padKeyboardMetrics.cornerRadius;
+        self.returnButton.frame = padKeyboardMetrics.returnButtonFrame;
+        self.returnButton.cornerRadius = padKeyboardMetrics.cornerRadius;
+        
+        self.leftShiftButton.frame = padKeyboardMetrics.leftShiftButtonFrame;
+        self.leftShiftButton.cornerRadius = padKeyboardMetrics.cornerRadius;
+        self.rightShiftButton.frame = padKeyboardMetrics.rightShiftButtonFrame;
+        self.rightShiftButton.cornerRadius = padKeyboardMetrics.cornerRadius;
+        
+        self.nextKeyboardButton.frame = padKeyboardMetrics.nextKeyboardButtonFrame;
+        self.nextKeyboardButton.cornerRadius = padKeyboardMetrics.cornerRadius;
+        self.spaceButton.frame = padKeyboardMetrics.spaceButtonFrame;
+        self.spaceButton.cornerRadius = padKeyboardMetrics.cornerRadius;
+    
+    } else { // UIUserInterfaceIdiomPhone
+        
+        PhoneKeyboardMetrics phoneKeyboardMetrics = getPhoneLinearKeyboardMetrics(size.width, size.height);
+
+        self.yoButton.frame = phoneKeyboardMetrics.yoButton;
+        self.yoButton.cornerRadius = phoneKeyboardMetrics.cornerRadius;
+        
+        self.leftShiftButton.frame = phoneKeyboardMetrics.leftShiftButtonFrame;
+        self.leftShiftButton.cornerRadius = phoneKeyboardMetrics.cornerRadius;
+        self.deleteButton.frame = phoneKeyboardMetrics.deleteButtonFrame;
+        self.deleteButton.cornerRadius = phoneKeyboardMetrics.cornerRadius;
+        
+        self.nextKeyboardButton.frame = phoneKeyboardMetrics.nextKeyboardButtonFrame;
+        self.nextKeyboardButton.cornerRadius = phoneKeyboardMetrics.cornerRadius;
+        self.spaceButton.frame = phoneKeyboardMetrics.spaceButtonFrame;
+        self.spaceButton.cornerRadius = phoneKeyboardMetrics.cornerRadius;
+        self.returnButton.frame = phoneKeyboardMetrics.returnButtonFrame;
+        self.returnButton.cornerRadius = phoneKeyboardMetrics.cornerRadius;
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self addNextKeyboardButton];
-    [self addReturnButton];
-    [self addSpaceButton];
-    [self addYoButton];
-    [self addDeleteButton];
-    [self addShiftButton];
-}
 
-
-- (void)addNextKeyboardButton {
-    self.nextKeyboardButton = [Key keyWithStyle:KeyStyleDark image:[UIImage imageNamed:@"global_portrait"]];
-    [self.nextKeyboardButton addTarget:self action:@selector(advanceToNextInputMode) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.nextKeyboardButton];
-    NSLayoutConstraint *nextKeyboardButtonLeftSideConstraint = [NSLayoutConstraint constraintWithItem:self.nextKeyboardButton
-                                                                                            attribute:NSLayoutAttributeLeft
-                                                                                            relatedBy:NSLayoutRelationEqual
-                                                                                               toItem:self.view
-                                                                                            attribute:NSLayoutAttributeLeft
-                                                                                           multiplier:1.0
-                                                                                             constant:kKeysEdgeMargin];
-    
-    NSLayoutConstraint *nextKeyboardButtonWidthConstraint = [NSLayoutConstraint constraintWithItem:self.nextKeyboardButton
-                                                                                         attribute:NSLayoutAttributeWidth
-                                                                                         relatedBy:NSLayoutRelationEqual
-                                                                                            toItem:nil
-                                                                                         attribute:NSLayoutAttributeNotAnAttribute
-                                                                                        multiplier:1.0
-                                                                                          constant:35.0];
-    
-    NSLayoutConstraint *nextKeyboardButtonBottomConstraint = [NSLayoutConstraint constraintWithItem:self.nextKeyboardButton
-                                                                                          attribute:NSLayoutAttributeBottom
-                                                                                          relatedBy:NSLayoutRelationEqual
-                                                                                             toItem:self.view
-                                                                                          attribute:NSLayoutAttributeBottom
-                                                                                         multiplier:1.0
-                                                                                           constant:-kKeysBottomMargin];
-    [self.view addConstraints:@[nextKeyboardButtonLeftSideConstraint,
-                                nextKeyboardButtonWidthConstraint,
-                                nextKeyboardButtonBottomConstraint,
-                                ]];
-}
-
-- (void)addReturnButton {
-    self.returnButton = [Key keyWithStyle:KeyStyleDark title:@"return"];
-    [self.returnButton addTarget:self action:@selector(returnButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.returnButton];
-    
-    NSLayoutConstraint *returnButtonRightSideConstraint = [NSLayoutConstraint constraintWithItem:self.returnButton
-                                                                                       attribute:NSLayoutAttributeRight
-                                                                                       relatedBy:NSLayoutRelationEqual
-                                                                                          toItem:self.view
-                                                                                       attribute:NSLayoutAttributeRight
-                                                                                      multiplier:1.0
-                                                                                        constant:-kKeysEdgeMargin];
-    
-    NSLayoutConstraint *returnButtonWidthConstraint = [NSLayoutConstraint constraintWithItem:self.returnButton
-                                                                                   attribute:NSLayoutAttributeWidth
-                                                                                   relatedBy:NSLayoutRelationEqual
-                                                                                      toItem:nil
-                                                                                   attribute:NSLayoutAttributeNotAnAttribute
-                                                                                  multiplier:1.0
-                                                                                    constant:75.0];
-    
-    NSLayoutConstraint *returnButtonBottomConstraint = [NSLayoutConstraint constraintWithItem:self.returnButton
-                                                                                    attribute:NSLayoutAttributeBottom
-                                                                                    relatedBy:NSLayoutRelationEqual
-                                                                                       toItem:self.view
-                                                                                    attribute:NSLayoutAttributeBottom
-                                                                                   multiplier:1.0
-                                                                                     constant:-kKeysBottomMargin];
-    [self.view addConstraints:@[returnButtonWidthConstraint,
-                                returnButtonRightSideConstraint,
-                                returnButtonBottomConstraint,
-                                ]];
-}
-
-- (void)addSpaceButton {
-    self.spaceButton = [Key keyWithStyle:KeyStyleLight title:@"space"];
-    [self.spaceButton addTarget:self action:@selector(spaceButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.spaceButton];
-    
-    NSLayoutConstraint *spaceButtonLeftSideConstraint = [NSLayoutConstraint constraintWithItem:self.nextKeyboardButton
-                                                                                     attribute:NSLayoutAttributeRight
-                                                                                     relatedBy:NSLayoutRelationEqual
-                                                                                        toItem:self.spaceButton
-                                                                                     attribute:NSLayoutAttributeLeft
-                                                                                    multiplier:1.0
-                                                                                      constant:2*-kKeysEdgeMargin];
-    
-    NSLayoutConstraint *spaceButtonRightSideConstraint = [NSLayoutConstraint constraintWithItem:self.spaceButton
-                                                                                      attribute:NSLayoutAttributeRight
-                                                                                      relatedBy:NSLayoutRelationEqual
-                                                                                         toItem:self.returnButton
-                                                                                      attribute:NSLayoutAttributeLeft
-                                                                                     multiplier:1.0
-                                                                                       constant:2*-kKeysEdgeMargin];
-    
-    NSLayoutConstraint *spaceButtonBottomConstraint = [NSLayoutConstraint constraintWithItem:self.spaceButton
-                                                                                   attribute:NSLayoutAttributeBottom
-                                                                                   relatedBy:NSLayoutRelationEqual
-                                                                                      toItem:self.view
-                                                                                   attribute:NSLayoutAttributeBottom
-                                                                                  multiplier:1.0
-                                                                                    constant:-kKeysBottomMargin];
-    [self.view addConstraints:@[spaceButtonLeftSideConstraint,
-                                spaceButtonRightSideConstraint,
-                                spaceButtonBottomConstraint,
-                                ]];
-}
-
-- (void)addYoButton {
-    self.yoButton = [Key keyWithStyle:KeyStyleLight title:@"yo"];
-    [self.yoButton addTarget:self action:@selector(yoButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.yoButton];
-    
-    NSLayoutConstraint *yoButtonHorizontalConstraint = [NSLayoutConstraint constraintWithItem:self.yoButton
-                                                                                    attribute:NSLayoutAttributeCenterX
-                                                                                    relatedBy:NSLayoutRelationEqual
-                                                                                       toItem:self.view
-                                                                                    attribute:NSLayoutAttributeCenterX
-                                                                                   multiplier:1.0
-                                                                                     constant:0.0];
-    
-    NSLayoutConstraint *yoButtonVerticalConstraint = [NSLayoutConstraint constraintWithItem:self.yoButton
-                                                                                  attribute:NSLayoutAttributeCenterY
-                                                                                  relatedBy:NSLayoutRelationEqual
-                                                                                     toItem:self.view
-                                                                                  attribute:NSLayoutAttributeCenterY
-                                                                                 multiplier:1.0
-                                                                                   constant:-22.0];
-    
-    NSLayoutConstraint *yoButtonWidthConstraint = [NSLayoutConstraint constraintWithItem:self.yoButton
-                                                                               attribute:NSLayoutAttributeWidth
-                                                                               relatedBy:NSLayoutRelationEqual
-                                                                                  toItem:nil
-                                                                               attribute:NSLayoutAttributeNotAnAttribute
-                                                                              multiplier:1.0
-                                                                                constant:70.0];
-    
-    [self.view addConstraints:@[yoButtonHorizontalConstraint,
-                                yoButtonVerticalConstraint,
-                                yoButtonWidthConstraint,
-                                ]];
-}
-
-- (void)addDeleteButton {
-    UIImage *image = [UIImage imageNamed:@"delete_portrait"];
-    UIImage *highlightedImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    
-    self.deleteButton = [Key keyWithStyle:KeyStyleDark image:image];
-    [self.deleteButton setImage:highlightedImage forState:UIControlStateHighlighted];
-    [self.deleteButton addTarget:self action:@selector(deleteButtonTapped:) forControlEvents:UIControlEventTouchDown];
-    [self.deleteButton addTarget:self action:@selector(deleteButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
-    [self.deleteButton addTarget:self action:@selector(deleteButtonReleased:) forControlEvents:UIControlEventTouchUpOutside];
-    [self.view addSubview:self.deleteButton];
-    
-    NSLayoutConstraint *deleteButtonRightSideConstraint = [NSLayoutConstraint constraintWithItem:self.deleteButton
-                                                                                       attribute:NSLayoutAttributeRight
-                                                                                       relatedBy:NSLayoutRelationEqual
-                                                                                          toItem:self.view
-                                                                                       attribute:NSLayoutAttributeRight
-                                                                                      multiplier:1.0
-                                                                                        constant:-kKeysEdgeMargin];
-    
-    NSLayoutConstraint *deleteButtonWidthConstraint = [NSLayoutConstraint constraintWithItem:self.deleteButton
-                                                                                   attribute:NSLayoutAttributeWidth
-                                                                                   relatedBy:NSLayoutRelationEqual
-                                                                                      toItem:nil
-                                                                                   attribute:NSLayoutAttributeNotAnAttribute
-                                                                                  multiplier:1.0
-                                                                                    constant:37.0];
-    
-    NSLayoutConstraint *deleteButtonBottomConstraint = [NSLayoutConstraint constraintWithItem:self.deleteButton
-                                                                                    attribute:NSLayoutAttributeBottom
-                                                                                    relatedBy:NSLayoutRelationEqual
-                                                                                       toItem:self.returnButton
-                                                                                    attribute:NSLayoutAttributeTop
-                                                                                   multiplier:1.0
-                                                                                     constant:-kKeysRowMargin];
-    [self.view addConstraints:@[deleteButtonRightSideConstraint,
-                                deleteButtonWidthConstraint,
-                                deleteButtonBottomConstraint,
-                                ]];
-}
-
-- (void)addShiftButton {
-
-    self.shiftButton = [LockKey keyWithStyle:KeyStyleDark];
-    
-    self.shiftButton.unlockImage = [UIImage imageNamed:@"shift_portrait"];
-    self.shiftButton.unlockSelectedImage = [self.shiftButton.unlockImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    
-    self.shiftButton.lockImage = [UIImage imageNamed:@"shift_lock_portrait"];
-    self.shiftButton.lockSelectedImage = [self.shiftButton.lockImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    
-    [self.shiftButton addTarget:self action:@selector(shiftButtonTapped:) forControlEvents:UIControlEventTouchDown];
-    [self.shiftButton addTarget:self action:@selector(shiftButtonDoubleTapped:) forControlEvents:UIControlEventTouchDownRepeat];
-    [self.view addSubview:self.shiftButton];
-    
-    NSLayoutConstraint *shiftButtonLeftSideConstraint = [NSLayoutConstraint constraintWithItem:self.shiftButton
-                                                                                       attribute:NSLayoutAttributeLeft
-                                                                                       relatedBy:NSLayoutRelationEqual
-                                                                                          toItem:self.view
-                                                                                       attribute:NSLayoutAttributeLeft
-                                                                                      multiplier:1.0
-                                                                                        constant:kKeysEdgeMargin];
-    
-    NSLayoutConstraint *shiftButtonWidthConstraint = [NSLayoutConstraint constraintWithItem:self.shiftButton
-                                                                                   attribute:NSLayoutAttributeWidth
-                                                                                   relatedBy:NSLayoutRelationEqual
-                                                                                      toItem:nil
-                                                                                   attribute:NSLayoutAttributeNotAnAttribute
-                                                                                  multiplier:1.0
-                                                                                    constant:37.0];
-    
-    NSLayoutConstraint *shiftButtonBottomConstraint = [NSLayoutConstraint constraintWithItem:self.shiftButton
-                                                                                    attribute:NSLayoutAttributeBottom
-                                                                                    relatedBy:NSLayoutRelationEqual
-                                                                                       toItem:self.nextKeyboardButton
-                                                                                    attribute:NSLayoutAttributeTop
-                                                                                   multiplier:1.0
-                                                                                     constant:-kKeysRowMargin];
-    [self.view addConstraints:@[shiftButtonLeftSideConstraint,
-                                shiftButtonWidthConstraint,
-                                shiftButtonBottomConstraint,
-                                ]];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    //DEBUG
-    //    CGRect frame = self.view.frame;
-    //    frame.size.height = 50;
-    //    frame.origin.y = 100;
-    //    self.view.frame = frame;
-    
-    //DEBUG
-    //    self.view.backgroundColor = [UIColor blueColor];
-    //    self.view.backgroundColor = [UIColor yellowColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -300,7 +104,86 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 
-#pragma mark - properties
+#pragma mark - Keys
+
+- (ACKey*)nextKeyboardButton {
+    if (!_nextKeyboardButton) {
+        _nextKeyboardButton = [ACKey keyWithStyle:KeyStyleDark appearance:self.keyAppearance image:[UIImage imageNamed:@"global_portrait"]];
+        [_nextKeyboardButton addTarget:self action:@selector(advanceToNextInputMode) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_nextKeyboardButton];
+    }
+    return _nextKeyboardButton;
+}
+
+- (ACKey*)returnButton {
+    if (!_returnButton) {
+        _returnButton = [ACKey keyWithStyle:KeyStyleDark appearance:self.keyAppearance title:@"return"];
+        [_returnButton addTarget:self action:@selector(returnButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_returnButton];
+    }
+    return _returnButton;
+}
+
+- (ACKey*)spaceButton {
+    if (!_spaceButton) {
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            _spaceButton = [ACKey keyWithStyle:KeyStyleLight appearance:self.keyAppearance];
+        } else {
+            _spaceButton = [ACKey keyWithStyle:KeyStyleLight appearance:self.keyAppearance title:@"space"];
+        }
+        [_spaceButton addTarget:self action:@selector(spaceButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_spaceButton];
+    }
+    return _spaceButton;
+}
+
+- (ACKey*)yoButton {
+    if (!_yoButton) {
+        _yoButton = [ACKey keyWithStyle:KeyStyleLight appearance:self.keyAppearance title:@"YO"];
+        [_yoButton addTarget:self action:@selector(yoButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_yoButton];
+    }
+    return _yoButton;
+}
+
+- (ACKey*)deleteButton {
+    if (!_deleteButton) {
+        UIImage *image = [[UIImage imageNamed:@"delete_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _deleteButton = [ACKey keyWithStyle:KeyStyleDark appearance:self.keyAppearance image:image];
+        [_deleteButton addTarget:self action:@selector(deleteButtonTapped:) forControlEvents:UIControlEventTouchDown];
+        [_deleteButton addTarget:self action:@selector(deleteButtonReleased:) forControlEvents:UIControlEventTouchUpInside];
+        [_deleteButton addTarget:self action:@selector(deleteButtonReleased:) forControlEvents:UIControlEventTouchUpOutside];
+        [self.view addSubview:_deleteButton];
+    }
+    return _deleteButton;
+}
+
+- (ACLockKey*)leftShiftButton {
+    if (!_leftShiftButton) {
+        _leftShiftButton = [ACLockKey keyWithStyle:KeyStyleDark appearance:self.keyAppearance];
+        _leftShiftButton.image = [[UIImage imageNamed:@"shift_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _leftShiftButton.lockImage = [[UIImage imageNamed:@"shift_lock_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [_leftShiftButton addTarget:self action:@selector(shiftButtonTapped:) forControlEvents:UIControlEventTouchDown];
+        [_leftShiftButton addTarget:self action:@selector(shiftButtonDoubleTapped:) forControlEvents:UIControlEventTouchDownRepeat];
+        [self.view addSubview:_leftShiftButton];
+    }
+    return _leftShiftButton;
+}
+
+- (ACLockKey*)rightShiftButton {
+    if (!_rightShiftButton) {
+        _rightShiftButton = [ACLockKey keyWithStyle:KeyStyleDark appearance:self.keyAppearance];
+        _rightShiftButton.image = [[UIImage imageNamed:@"shift_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _rightShiftButton.lockImage = [[UIImage imageNamed:@"shift_lock_portrait"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [_rightShiftButton addTarget:self action:@selector(shiftButtonTapped:) forControlEvents:UIControlEventTouchDown];
+        [_rightShiftButton addTarget:self action:@selector(shiftButtonDoubleTapped:) forControlEvents:UIControlEventTouchDownRepeat];
+        [self.view addSubview:_rightShiftButton];
+    }
+    return _rightShiftButton;
+}
+
+
+#pragma mark - Regular expressions
 
 - (NSRegularExpression*)endOfSentenceRegularExpression {
     if (!_endOfSentenceRegularExpression) {
@@ -320,8 +203,8 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     if (!_beginningOfSentenceRegularExpression) {
         NSError* error = nil;
         _beginningOfSentenceRegularExpression = [NSRegularExpression regularExpressionWithPattern:@"!\\s+\\z"
-                                                                                    options:0
-                                                                                      error:&error];
+                                                                                          options:0
+                                                                                            error:&error];
         
         if (!_beginningOfSentenceRegularExpression) {
             NSLog(@"cannot create regular expression: %@", [error description]);
@@ -334,8 +217,8 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     if (!_beginningOfWordRegularExpression) {
         NSError* error = nil;
         _beginningOfWordRegularExpression = [NSRegularExpression regularExpressionWithPattern:@"\\s+\\z"
-                                                                                    options:NSRegularExpressionCaseInsensitive
-                                                                                      error:&error];
+                                                                                      options:NSRegularExpressionCaseInsensitive
+                                                                                        error:&error];
         
         if (!_beginningOfWordRegularExpression) {
             NSLog(@"cannot create regular expression: %@", [error description]);
@@ -352,18 +235,11 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)textDidChange:(id<UITextInput>)textInput {
-
     [self updateReturnButtonStyle];
     [self updateReturnButtonEnabled];
     [self updateShiftButtonState];
-    
-//    UIColor *textColor = nil;
-//    if (self.textDocumentProxy.keyboardAppearance == UIKeyboardAppearanceDark) {
-//        textColor = [UIColor whiteColor];
-//    } else {
-//        textColor = [UIColor blackColor];
-//    }
-//    [self.nextKeyboardButton setTitleColor:textColor forState:UIControlStateNormal];
+    [self updateFont];
+    [self updateAppearance];
 }
 
 - (void)selectionWillChange:(id<UITextInput>)textInput {
@@ -374,54 +250,60 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
     
 }
 
-#pragma mark - Keys style
+- (KeyAppearance)keyAppearance {
+    switch (self.textDocumentProxy.keyboardAppearance) {
+        case UIKeyboardAppearanceDark:
+            return KeyAppearanceDark;
+        case UIKeyboardAppearanceLight:
+        case UIKeyboardAppearanceDefault:
+        default:
+            return KeyAppearanceLight;
+    }
+}
+
+
+#pragma mark - Keys state
 
 - (void)updateReturnButtonStyle {
     
     switch (self.textDocumentProxy.returnKeyType) {
         case UIReturnKeyDefault:
-            [self.returnButton setTitle:@"return" forState:UIControlStateNormal];
-            break;
         case UIReturnKeyDone:
-            [self.returnButton setTitle:@"Done" forState:UIControlStateNormal];
+            self.returnButton.title = @"return";
             break;
         case UIReturnKeyEmergencyCall:
-            [self.returnButton setTitle:@"Emergency Call" forState:UIControlStateNormal];
+            self.returnButton.title = @"Emergency Call";
             break;
         case UIReturnKeyGo:
-            [self.returnButton setTitle:@"Go" forState:UIControlStateNormal];
-            break;
-        case UIReturnKeyGoogle:
-            [self.returnButton setTitle:@"Search" forState:UIControlStateNormal];
-            break;
-        case UIReturnKeyJoin:
-            [self.returnButton setTitle:@"Join" forState:UIControlStateNormal];
-            break;
-        case UIReturnKeyNext:
-            [self.returnButton setTitle:@"Next" forState:UIControlStateNormal];
-            break;
-        case UIReturnKeyRoute:
-            [self.returnButton setTitle:@"Route" forState:UIControlStateNormal];
+            self.returnButton.title = @"Go";
             break;
         case UIReturnKeySearch:
-            [self.returnButton setTitle:@"Search" forState:UIControlStateNormal];
+        case UIReturnKeyGoogle:
+        case UIReturnKeyYahoo:
+            self.returnButton.title = @"Search";
+            break;
+        case UIReturnKeyJoin:
+            self.returnButton.title = @"Join";
+            break;
+        case UIReturnKeyNext:
+            self.returnButton.title = @"Next";
+            break;
+        case UIReturnKeyRoute:
+            self.returnButton.title = @"Route";
             break;
         case UIReturnKeySend:
-            [self.returnButton setTitle:@"Send" forState:UIControlStateNormal];
-            break;
-        case UIReturnKeyYahoo:
-            [self.returnButton setTitle:@"Search" forState:UIControlStateNormal];
+            self.returnButton.title = @"Send";
             break;
         default:;
     }
     
-    switch (self.textDocumentProxy.returnKeyType) {            
+    switch (self.textDocumentProxy.returnKeyType) {
         case UIReturnKeyDefault:
         case UIReturnKeyNext:
-            [self.returnButton setKeyStyle:KeyStyleDark];
+            self.returnButton.style = KeyStyleDark;
             break;
         default:
-            [self.returnButton setKeyStyle:KeyStyleBlue];
+            self.returnButton.style = KeyStyleBlue;
             break;
     }
 }
@@ -438,7 +320,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)updateShiftButtonState {
-    if (self.shiftButton.isLocked) {
+    if (self.leftShiftButton.isLocked) {
         return;
     }
     
@@ -477,8 +359,30 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
         default:
             break;
     }
+    
+    self.leftShiftButton.selected = _rightShiftButton.selected = selected;
+}
 
-    self.shiftButton.selected = selected;
+- (void)updateFont {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        for (ACKey *key in @[self.returnButton, self.yoButton]) {
+            if ([key isKindOfClass:[ACKey class]]) {
+                if (self.view.frame.size.width >= 1024) {
+                    key.titleFont = [UIFont systemFontOfSize:kKeyPadLandscapeTitleFontSize];
+                } else {
+                    key.titleFont = [UIFont systemFontOfSize:kKeyPadPortraitTitleFontSize];
+                }
+            }
+        }
+    }
+}
+
+- (void)updateAppearance {
+    for (ACKey *key in self.view.subviews) {
+        if ([key isKindOfClass:[ACKey class]]) {
+            key.appearance = self.keyAppearance;
+        }
+    }
 }
 
 
@@ -528,7 +432,7 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (IBAction)yoButtonTapped:(id)sender {
-    if (self.shiftButton.isLocked || self.shiftButton.selected) {
+    if (self.leftShiftButton.isLocked || self.leftShiftButton.selected) {
         [self insertText:@"YO"];
     } else {
         [self insertText:@"yo"];
@@ -568,17 +472,17 @@ static NSTimeInterval kDeleteTimerInterval = 0.1;
 }
 
 - (void)shiftButtonTapped:(id)sender {
-    if (self.shiftButton.isLocked) {
-        self.shiftButton.selected = NO;
-        self.shiftButton.locked = NO;
+    if (self.leftShiftButton.isLocked) {
+        self.leftShiftButton.selected = _rightShiftButton.selected = NO;
+        self.leftShiftButton.locked = _rightShiftButton.locked = NO;
     } else {
-        self.shiftButton.selected = ! self.shiftButton.selected;
+        self.leftShiftButton.selected = _rightShiftButton.selected = ! self.leftShiftButton.selected;
     }
 }
 
 - (void)shiftButtonDoubleTapped:(id)sender {
-    self.shiftButton.selected = YES;
-    self.shiftButton.locked = ! self.shiftButton.isLocked;
+    self.leftShiftButton.selected = _rightShiftButton.selected = YES;
+    self.leftShiftButton.locked = _rightShiftButton.locked = ! self.leftShiftButton.isLocked;
 }
 
 @end

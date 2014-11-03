@@ -1,14 +1,15 @@
 //
 //  ViewController.h
-//  Application
+//  ACKeyboard
 //
 //  Created by Arnaud Coomans on 8/16/14.
 //
 //
 
 #import <UIKit/UIKit.h>
+#import "SettingsTableViewController.h"
 
-@interface ViewController : UIViewController
+@interface TextViewController : UIViewController <SettingsTableViewControllerDelegate>
 @property (nonatomic, weak) IBOutlet UITextView *textView;
 @end
 
