@@ -33,7 +33,17 @@ The keys have the following features:
 
 ## Screenshots
 
-![screenshots](Screenshots/screenshot01.png)
+iPhone portrait:
+
+![screenshots](Screenshots/screenshot02.png)
+
+iPhone landscape:
+
+![screenshots](Screenshots/screenshot03.png)
+
+iPad portrait:
+
+![screenshots](Screenshots/screenshot04.png)
 
 ## Demo
 
@@ -113,8 +123,6 @@ The color sets can vary with the device type. The device can be checked with the
                                        alpha:1.0];
         
     }
-    
-Transparent keys can also use linear interpolation to figure out the colors and alpha values.
 
 ## Documentation
 
