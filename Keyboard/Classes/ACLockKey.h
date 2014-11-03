@@ -8,11 +8,20 @@
 
 #import "ACKey.h"
 
+
+/**
+ * A keyboard key that can be locked
+ */
 @interface ACLockKey : ACKey
 
+/** Wether in the locked or unlocked state
+ */
 @property (nonatomic, assign, getter=isLocked) BOOL locked;
 
 @property (nonatomic, strong) UIImage *image;
+
+/** The image to display when in the lock state
+ */
 @property (nonatomic, strong) UIImage *lockImage;
 
 @end

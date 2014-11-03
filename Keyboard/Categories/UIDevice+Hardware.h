@@ -10,6 +10,8 @@
 
 @interface UIDevice (Hardware)
 
+/** The internal name of the machine, eg "iPhone7,1" for an iPhone 6 Plus
+ */
 - (NSString *)machine;
 
 @end
